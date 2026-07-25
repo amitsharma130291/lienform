@@ -1,0 +1,349 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import FormStepper from '../../../components/FormStepper';
+import DeadlineCalculator from '../../../components/DeadlineCalculator';
+import PDFPreview from '../../../components/PDFPreview';
+import CheckoutButton from '../../../components/CheckoutButton';
+
+const title = "Florida Notice to Owner Form — Free Generator (Fla. Stat. §713.06)";
+const description = "Generate a Florida Notice to Owner form under Fla. Stat. §713.06. Must be served within 45 days of first furnishing. Instant PDF $14.99. Role-aware deadline calculator.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a Notice to Owner in Florida?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Florida Notice to Owner (NTO) is a statutory notice required by Fla. Stat. §713.06 that subcontractors, sub-subcontractors, and material suppliers must serve on the property owner (and general contractor) before they can file a mechanics lien. It is a prerequisite to lien rights — not the lien itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who needs to serve a Florida Notice to Owner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Subcontractors, sub-subcontractors, material suppliers, and anyone who does not have a direct contract with the property owner. General contractors who have a direct written contract with the owner do not need to serve an NTO."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the deadline to serve a Florida Notice to Owner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "45 days from your first day of furnishing labor or materials to the project. The clock starts on day one — not when you finish work or when a dispute arises."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I serve a Florida Notice to Owner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "By certified mail, return receipt requested, to the owner at the address shown on the building permit, AND to the general contractor. Personal service is also valid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I miss the Florida NTO deadline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You lose your lien rights for all work done before the NTO was served. You retain rights only for work done after the date of service — significantly limiting your claim."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do general contractors need to file a Notice to Owner in Florida?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. General contractors who have a direct contract with the property owner do not need to serve an NTO. The requirement applies to subcontractors, sub-subcontractors, and material suppliers who do not have a direct contract with the owner."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Serve a Florida Notice to Owner",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Enter your project details",
+      "text": "Provide your company name, the property address, the owner's name and address, the general contractor's name and address, your first furnishing date, and a description of the labor or materials you are providing."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Preview the document",
+      "text": "Review the completed NTO form. Confirm all names, addresses, and dates are correct before serving."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Download and serve",
+      "text": "Pay $14.99 and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Notice to Owner", "item": "https://lienform.com/notice-to-owner/" },
+    { "@type": "ListItem", "position": 3, "name": "Florida", "item": "https://lienform.com/notice-to-owner/florida/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://lienform.com/notice-to-owner/florida/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/notice-to-owner/" class="hover:text-navy-700">Notice to Owner</a> ›
+    <span class="text-gray-900">Florida</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Florida Notice to Owner Form</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A Florida Notice to Owner (NTO) is a legally required notice that subcontractors, sub-subcontractors, and material suppliers must serve on the property owner (and general contractor) within <strong>45 days of FIRST furnishing</strong> labor or materials. Under Florida Statute §713.06, failing to serve the NTO on time eliminates the right to file a mechanics lien.</p>
+      <p class="text-sm text-navy-600 mt-2">💡 <strong>ntoflorida.com charges to FILE.</strong> We generate the document ($14.99) — you serve it yourself by certified mail.</p>
+    </div>
+
+    <!-- 3-step form -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Florida Notice to Owner</h2>
+      <FormStepper
+        client:load
+        defaultState="florida"
+        documentType="notice-to-owner"
+        onFormComplete={(data) => {}}
+      />
+    </div>
+
+    <!-- Deadline calculator -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold text-navy-800 mb-4">Florida NTO Deadline Calculator</h2>
+      <DeadlineCalculator client:load state="florida" role="" dateType="first-furnishing" />
+    </div>
+
+    <!-- Preview + checkout -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div>
+        <PDFPreview client:load formData={null} state="florida" />
+      </div>
+      <div class="flex flex-col justify-center">
+        <CheckoutButton
+          client:load
+          state="florida"
+          role=""
+          formData={null}
+          price={14.99}
+          productName="Florida Notice to Owner"
+        />
+      </div>
+    </div>
+
+    <!-- SEO content -->
+    <div class="prose prose-navy max-w-none">
+
+      <p>A Florida Notice to Owner (NTO) is a legally required notice that subcontractors, sub-subcontractors, and material suppliers must serve on the property owner (and general contractor) within 45 days of first furnishing labor or materials. Under Florida Statute §713.06, failing to serve the NTO on time eliminates the right to file a mechanics lien.</p>
+
+      <p>Unlike a mechanics lien — which is filed after non-payment to encumber the property — the Notice to Owner is served <strong>before</strong> any dispute arises, at the very start of your work on a project. It is a prerequisite, not a remedy.</p>
+
+      <p><strong>LienForm generates the Florida NTO document for $14.99 — not a service bureau.</strong> Some companies (like ntoflorida.com) charge ongoing fees to handle the filing and mailing for you. LienForm generates the completed document, which you serve yourself. If you are comfortable with certified mail, $14.99 is all you need.</p>
+
+      <h2>Florida Lien Law — Fla. Stat. §713</h2>
+
+      <p>Florida's mechanics lien statute is found at <strong>Florida Statutes Chapter 713</strong>, titled "Mechanic's, Materialman's, and Other Liens." This chapter governs all construction liens on real property in Florida.</p>
+
+      <p><strong>Key sections:</strong></p>
+
+      <ul>
+        <li>§713.01: Definitions (owner, contractor, subcontractor, lienor, direct contract, etc.)</li>
+        <li>§713.05: Liens of persons in privity with the owner (general contractors)</li>
+        <li>§713.06: Liens of persons not in privity with the owner — the section that requires the NTO for subcontractors and suppliers</li>
+        <li>§713.13: Notice of Commencement — the owner's posted notice that triggers lien law protections</li>
+        <li>§713.18: How to serve notices (certified mail or personal delivery)</li>
+        <li>§713.22: Time to bring action on a lien (1 year from recording)</li>
+      </ul>
+
+      <p>The NTO requirement exists because Florida law gives owners a defense against lien claims if they paid the general contractor in full without notice that subcontractors or suppliers remained unpaid. By serving an NTO, you put the owner on formal notice that you are on the project and are owed money — which strips that defense.</p>
+
+      <h2>Who Must Serve a Florida NTO</h2>
+
+      <p><strong>Must serve the NTO:</strong></p>
+
+      <ul>
+        <li>Subcontractors (work under contract with the general contractor)</li>
+        <li>Sub-subcontractors (work under contract with a subcontractor)</li>
+        <li>Material suppliers (supply materials to GC or subcontractors)</li>
+        <li>Labor suppliers (provide employees to the project)</li>
+        <li>Equipment rental companies (rent equipment used on the project)</li>
+        <li>Design professionals who are not in direct contract with the owner</li>
+      </ul>
+
+      <p><strong>Do NOT need to serve the NTO:</strong></p>
+
+      <ul>
+        <li>General contractors who have a direct written contract with the property owner</li>
+        <li>Materialmen or laborers who contract directly with the owner</li>
+      </ul>
+
+      <p><strong>The key test:</strong> Do you have a <strong>direct contract with the property owner</strong>? If yes, no NTO required. If your contract runs through the GC or a subcontractor, you must serve the NTO.</p>
+
+      <p><strong>Special situations:</strong></p>
+
+      <ul>
+        <li><em>Owner-builder projects:</em> When the owner is also the general contractor, all subcontractors and suppliers must still serve the NTO on the owner.</li>
+        <li><em>Condominium projects:</em> Serve notice on the association or developer as applicable.</li>
+        <li><em>Retainage:</em> Your NTO must be served even if you are only owed retainage. The 45-day clock runs from first furnishing, not from when retainage is due.</li>
+      </ul>
+
+      <h2>The 45-Day Deadline — How It's Calculated</h2>
+
+      <p>The 45-day deadline is the most critical — and most commonly missed — element of Florida NTO practice.</p>
+
+      <p><strong>The clock starts on your first day of furnishing.</strong> "First furnishing" means the first day you provide any labor, materials, or services to the project. It does not matter how small the first delivery or first day of work was.</p>
+
+      <p><strong>Examples:</strong></p>
+
+      <ul>
+        <li>You deliver a load of lumber on April 1. Your NTO deadline is May 16 (45 days later).</li>
+        <li>You send three workers to the site on March 15. Your NTO deadline is April 29.</li>
+        <li>You deliver specialty equipment on June 1 and begin installation June 5. Your deadline is July 16 (45 days from June 1, your first day on site).</li>
+      </ul>
+
+      <p><strong>What does NOT restart the clock:</strong></p>
+
+      <ul>
+        <li>Subsequent deliveries or work after the first day</li>
+        <li>The date you finished the job</li>
+        <li>The date an invoice was sent or went unpaid</li>
+        <li>The date a dispute arose</li>
+      </ul>
+
+      <p><strong>LienForm's Florida NTO deadline calculator</strong> asks for your first furnishing date and calculates your deadline automatically, showing exactly how many days remain.</p>
+
+      <p><strong>What if you are already past 45 days?</strong> You can still serve an NTO — but it only protects work done <strong>after</strong> the service date. You lose lien rights for everything done before service. In some cases, serving a late NTO is still worth doing to protect future work on an ongoing project.</p>
+
+      <h2>How to Serve a Florida NTO</h2>
+
+      <p>The method of service matters. Florida Statute §713.18 specifies the acceptable methods:</p>
+
+      <p><strong>Method 1 — Certified Mail, Return Receipt Requested (most common)</strong></p>
+
+      <p>This is the safest and most common method. Send the NTO by certified mail, return receipt requested, addressed to:</p>
+
+      <ol>
+        <li>The property owner at the address shown on the <strong>Notice of Commencement</strong> posted at the jobsite (or recorded with the county clerk if not posted)</li>
+        <li>The general contractor at the address on the Notice of Commencement</li>
+      </ol>
+
+      <p>Keep the USPS tracking receipt and the green return receipt card when it comes back. These are your proof of service.</p>
+
+      <p><strong>Method 2 — Personal Delivery</strong></p>
+
+      <p>You may hand-deliver the NTO to the owner and/or GC personally. Get a signed acknowledgment from the recipient if possible.</p>
+
+      <p><strong>What address to use:</strong> Florida law requires you to use the address from the <strong>Notice of Commencement</strong> — not a business card or a Google Maps address. The Notice of Commencement is typically posted at the construction site or recorded with the county clerk's office.</p>
+
+      <p><strong>What if there is no Notice of Commencement?</strong> Serve the NTO on the owner at the address shown on the building permit, or use the address of the property itself.</p>
+
+      <p><strong>Keeping records:</strong> Retain copies of:</p>
+      <ul>
+        <li>The completed NTO you served</li>
+        <li>The USPS certified mail receipt (proof of mailing)</li>
+        <li>The return receipt card (proof of delivery)</li>
+        <li>The date you mailed it</li>
+      </ul>
+
+      <p>LienForm's $14.99 bundle includes a proof of service affidavit form that documents when, how, and to whom you served the NTO.</p>
+
+      <h2>What to Do If You Miss the Deadline</h2>
+
+      <p>Missing the 45-day NTO deadline does not automatically eliminate all of your options — but it significantly limits them.</p>
+
+      <p><strong>Limited lien rights:</strong> Under Fla. Stat. §713.06, if you serve the NTO late, you retain lien rights only for work performed <strong>after</strong> the date of service. Work performed before that date is not protected.</p>
+
+      <p><strong>Example:</strong> You worked from January 1 through March 31 but did not serve your NTO until March 1. You can only lien for work done March 1–31. Work done January 1–February 28 is unprotected.</p>
+
+      <p><strong>Other possible remedies if lien rights are lost:</strong></p>
+
+      <ul>
+        <li><strong>Breach of contract claim:</strong> You may still have a contract claim against the party who hired you, even without a lien. Contract claims go to court, not the county recorder.</li>
+        <li><strong>Unjust enrichment:</strong> If you improved someone's property and were not paid, you may have an equitable claim regardless of lien rights.</li>
+        <li><strong>Bond claim:</strong> On projects where a payment bond was posted, you may have bond claim rights even without a valid mechanics lien.</li>
+      </ul>
+
+      <p>Consult a Florida construction attorney if you have missed the NTO deadline and are trying to recover a significant amount.</p>
+
+      <h2>NTO vs. Mechanics Lien — What's the Difference</h2>
+
+      <p>Florida contractors sometimes confuse the Notice to Owner with the mechanics lien itself. They are two distinct legal instruments:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Notice to Owner (NTO)</th>
+            <th>Mechanics Lien</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Purpose</td>
+            <td>Preserves your right to file a lien later</td>
+            <td>Encumbers the property title after non-payment</td>
+          </tr>
+          <tr>
+            <td>When served/filed</td>
+            <td>Within 45 days of FIRST furnishing</td>
+            <td>After work is complete and payment is overdue</td>
+          </tr>
+          <tr>
+            <td>Where served/filed</td>
+            <td>Delivered to owner and GC by certified mail</td>
+            <td>Recorded with the county clerk of courts</td>
+          </tr>
+          <tr>
+            <td>Effect</td>
+            <td>Puts owner on notice you are on the project</td>
+            <td>Attaches to property title; blocks sale/refi</td>
+          </tr>
+          <tr>
+            <td>Cost (LienForm)</td>
+            <td>$14.99</td>
+            <td>Separate (not yet available on LienForm)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>The sequence:</strong> Serve the NTO early (within 45 days of starting work). If you finish the job and are not paid, you then have the option to file a mechanics lien. Without a timely NTO, the lien itself is invalid.</p>
+
+      <h2>How LienForm's Florida NTO Generator Works</h2>
+
+      <p>LienForm generates a completed, Florida-statute-compliant Notice to Owner document in three steps:</p>
+
+      <ol>
+        <li><strong>Enter your project details.</strong> Provide your company name and address, the property address, the owner's name and address, the general contractor's name and address, your first furnishing date, and a description of the labor or materials you are providing.</li>
+        <li><strong>Preview the document.</strong> Review the completed NTO form. Confirm all names, addresses, and dates are correct before serving.</li>
+        <li><strong>Download and serve.</strong> Pay $14.99 and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts.</li>
+      </ol>
+
+      <p><strong>No account required.</strong> Your first furnishing date auto-calculates the deadline so you know exactly how much time remains.</p>
+
+      <p><strong>Generate Your Florida NTO — $14.99:</strong> Compliant with Fla. Stat. §713.06 · Role-aware deadline calculator · Instant PDF download · No account required</p>
+
+      <p><em>Content reviewed for accuracy against Fla. Stat. §713.06 and related provisions of Florida Statutes Chapter 713. This is not legal advice. Consult a licensed Florida attorney for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>

@@ -1,0 +1,381 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import FormStepper from '../../../components/FormStepper';
+import DeadlineCalculator from '../../../components/DeadlineCalculator';
+import PDFPreview from '../../../components/PDFPreview';
+import CheckoutButton from '../../../components/CheckoutButton';
+
+const title = "Michigan Mechanics Lien Form 2024 — Construction Lien Generator (MCL 570)";
+const description = "Generate a Michigan mechanics lien form for construction projects. Role-aware deadline calculator. MCL 570.1101–570.1305, 2023 amendments. Instant PDF bundle $24.99.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long do I have to file a mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For residential projects: 90 days from your last day of furnishing labor or materials. For commercial projects: 180 days. These deadlines run from your last day of work, not from the date of non-payment. Missing the deadline permanently forfeits your lien rights."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who can file a mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "General contractors, subcontractors, sub-subcontractors, material suppliers, and equipment rental companies who have provided labor, materials, or equipment to a Michigan construction project."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to file a Notice of Furnishing before my mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Subcontractors and material suppliers (but not general contractors) must serve a Notice of Furnishing within 20 days of first furnishing to preserve their full lien rights. Without it, your lien is limited to work done after the 20-day window."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do I file a mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With the Register of Deeds in the county where the property is located. Recording fees are approximately $15–$30 per document depending on the county."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a Michigan mechanics lien and a vehicle lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Michigan construction mechanics lien (MCL 570.1101) is filed against real property — land and buildings — to secure payment for construction work. A vehicle lien (BDVR-35) is filed with the Secretary of State for motor vehicles. They are completely different legal instruments."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I file a Michigan mechanics lien myself without a lawyer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Michigan law does not require an attorney to file a construction lien. However, the form must be completed accurately and recorded within the deadline. LienForm generates the correct form with your project details pre-filled."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File a Mechanics Lien in Michigan",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Complete the form",
+      "text": "Enter your project details: owner name, property address, county, contract amount, and furnishing dates."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Calculate your deadline",
+      "text": "Use the role-aware deadline calculator. Residential: 90 days from last furnishing. Commercial: 180 days."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Download your bundle",
+      "text": "Pay $24.99 to download your complete lien bundle including the lien claim, deadline confirmation, and county recorder filing guide."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://lienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Michigan", "item": "https://lienform.com/mechanics-lien/michigan/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://lienform.com/mechanics-lien/michigan/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Michigan</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Michigan Mechanics Lien Form</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A Michigan mechanics lien (construction lien) is a legal claim against real property filed by contractors, subcontractors, or material suppliers who haven't been paid for work or materials. Under the Michigan Construction Lien Act (MCL 570.1101–570.1305, as amended 2023), you generally have <strong>90 days from last furnishing</strong> (residential) or <strong>180 days</strong> (commercial) to record your lien with the county Register of Deeds.</p>
+      <p class="text-sm text-navy-600 mt-2">⚠️ Looking for a Michigan vehicle/garage lien? That's a different form (BDVR-35, Secretary of State). This page is for <strong>construction real property liens only</strong>.</p>
+    </div>
+
+    <!-- 3-step form -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Michigan Mechanics Lien</h2>
+      <FormStepper
+        client:load
+        defaultState="michigan"
+        documentType="mechanics-lien"
+        onFormComplete={(data) => {}}
+      />
+    </div>
+
+    <!-- Deadline calculator -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold text-navy-800 mb-4">Michigan Filing Deadline Calculator</h2>
+      <DeadlineCalculator client:load state="michigan" role="" dateType="last-furnishing" />
+    </div>
+
+    <!-- Preview + checkout -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div>
+        <PDFPreview client:load formData={null} state="michigan" />
+      </div>
+      <div class="flex flex-col justify-center">
+        <CheckoutButton
+          client:load
+          state="michigan"
+          role=""
+          formData={null}
+          price={24.99}
+          productName="Michigan Mechanics Lien Bundle"
+        />
+      </div>
+    </div>
+
+    <!-- SEO content -->
+    <div class="prose prose-navy max-w-none">
+
+      <h2>Important Note: This Is a Construction Lien — Not a Vehicle Lien</h2>
+
+      <p>If you searched for "mechanics lien Michigan" and landed here expecting a motor vehicle lien form, you are in the wrong place. The Michigan vehicle lien form (BDVR-35) is filed with the Secretary of State and has nothing to do with construction work.</p>
+
+      <p>This page covers <strong>construction mechanics liens under MCL 570.1101–570.1305</strong> — the legal tool that contractors, subcontractors, and material suppliers use to secure payment for work performed on real property (land and buildings). If someone owes you money for construction work on a Michigan property, read on.</p>
+
+      <p>A Michigan mechanics lien (also called a construction lien) is a legal claim against real property filed by contractors, subcontractors, or material suppliers who have not been paid for work or materials provided. Under MCL 570.1101–570.1305, claimants generally have 90 days from last furnishing (residential) or 180 days (commercial) to record their lien with the county register of deeds.</p>
+
+      <p>When a lien is recorded, it attaches to the property's title. The owner cannot sell or refinance the property without first resolving the lien — which gives contractors and suppliers meaningful leverage to recover payment without resorting to a lawsuit.</p>
+
+      <h2>Michigan Construction Lien Act — Current Law</h2>
+
+      <p>Michigan's mechanics lien statute is the <strong>Construction Lien Act</strong>, codified at MCL 570.1101 through MCL 570.1305. It was originally enacted in 1980 and has been periodically updated since.</p>
+
+      <p><strong>2023 Amendment — HB 4490:</strong> The Michigan Legislature passed House Bill 4490 in 2023, amending several provisions of the Construction Lien Act. The amendments clarified notice requirements and updated certain procedural deadlines. LienForm generates forms that comply with the statute as amended.</p>
+
+      <p><strong>Key provisions of the Act include:</strong></p>
+
+      <ul>
+        <li>MCL 570.1107: Defines who qualifies as a lien claimant (contractors, subcontractors, sub-subcontractors, material suppliers, equipment lessors, and certain design professionals)</li>
+        <li>MCL 570.1109: Notice of Furnishing requirements for subcontractors and suppliers</li>
+        <li>MCL 570.1111: Deadlines for recording a claim of lien</li>
+        <li>MCL 570.1115: Requirements for the content of a claim of lien</li>
+        <li>MCL 570.1117: Owner notification after recording</li>
+      </ul>
+
+      <p>The Act draws a critical distinction between <strong>residential</strong> and <strong>commercial</strong> projects, with different deadlines applying to each.</p>
+
+      <h2>Who Can File a Michigan Mechanics Lien</h2>
+
+      <p>The Michigan Construction Lien Act grants lien rights to a defined set of parties who contribute labor, materials, or equipment to a construction project:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Lien Rights</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>General Contractor (direct contract with owner)</td>
+            <td>Yes — full lien rights without prior notice</td>
+          </tr>
+          <tr>
+            <td>Subcontractor (contract with GC)</td>
+            <td>Yes — Notice of Furnishing required within 20 days</td>
+          </tr>
+          <tr>
+            <td>Sub-subcontractor (contract with sub)</td>
+            <td>Yes — Notice of Furnishing required within 20 days</td>
+          </tr>
+          <tr>
+            <td>Material Supplier (supplies to GC or sub)</td>
+            <td>Yes — Notice of Furnishing required within 20 days</td>
+          </tr>
+          <tr>
+            <td>Equipment Lessor (rents to GC or sub)</td>
+            <td>Yes — Notice of Furnishing required within 20 days</td>
+          </tr>
+          <tr>
+            <td>Design Professionals (architects, engineers)</td>
+            <td>Yes — under specified conditions</td>
+          </tr>
+          <tr>
+            <td>Laborers (employed directly)</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Who cannot file:</strong> Suppliers to suppliers (two steps removed from the owner without a direct contract with the contractor) generally do not have lien rights under the Act. Always verify your contractual relationship in the chain.</p>
+
+      <h2>Michigan Mechanics Lien Deadlines by Role</h2>
+
+      <p>Missing a Michigan mechanics lien deadline is fatal to your claim. The statute does not allow extensions. Deadlines run from your <strong>last day of furnishing</strong> labor or materials — not from the date of non-payment or the date the dispute arose.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Residential Deadline</th>
+            <th>Commercial Deadline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>General Contractor</td>
+            <td>90 days from last furnishing</td>
+            <td>180 days from last furnishing</td>
+          </tr>
+          <tr>
+            <td>Subcontractor</td>
+            <td>90 days from last furnishing</td>
+            <td>180 days from last furnishing</td>
+          </tr>
+          <tr>
+            <td>Sub-subcontractor</td>
+            <td>90 days from last furnishing</td>
+            <td>180 days from last furnishing</td>
+          </tr>
+          <tr>
+            <td>Material Supplier</td>
+            <td>90 days from last furnishing</td>
+            <td>180 days from last furnishing</td>
+          </tr>
+          <tr>
+            <td>Equipment Lessor</td>
+            <td>90 days from last furnishing</td>
+            <td>180 days from last furnishing</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>What counts as "last furnishing"?</strong> The date you last provided labor, materials, or equipment to the project. Warranty work and punch-list items may or may not extend this date depending on the circumstances. Do not include travel days or administrative work.</p>
+
+      <p><strong>LienForm's role-aware deadline calculator</strong> asks you your role, project type, and last furnishing date — then calculates your exact deadline and flags how many days remain.</p>
+
+      <h2>Notice of Furnishing Requirement</h2>
+
+      <p>One of the most commonly missed requirements in Michigan construction lien practice is the <strong>Notice of Furnishing</strong>.</p>
+
+      <p><strong>Who must serve it:</strong> Subcontractors, sub-subcontractors, material suppliers, and equipment lessors — anyone who does not have a direct contract with the property owner.</p>
+
+      <p><strong>Who is exempt:</strong> General contractors who have a direct contract with the owner do not need to serve a Notice of Furnishing.</p>
+
+      <p><strong>When to serve it:</strong> Within <strong>20 days of first furnishing</strong> labor or materials to the project. The clock starts on day one of your work, not when you finish.</p>
+
+      <p><strong>What happens if you miss it:</strong> Your lien rights are not eliminated entirely, but they are <strong>limited to work performed after you served the Notice</strong>. Work done before you served the Notice falls outside your protected lien claim. For a project where you worked for weeks before realizing you needed the Notice, this can eliminate a substantial portion of your claim.</p>
+
+      <p><strong>How to serve it:</strong> The Notice of Furnishing must be served on the owner and the general contractor (if applicable). Under MCL 570.1109, service may be made by personal delivery, certified mail, or registered mail.</p>
+
+      <p><strong>Best practice:</strong> Serve the Notice of Furnishing on the first day you show up to the job, or the day you deliver the first load of materials. Do not wait.</p>
+
+      <p>LienForm generates the Notice of Furnishing as part of its Michigan bundle when you indicate your role as subcontractor, sub-subcontractor, or supplier.</p>
+
+      <h2>County Register of Deeds — Where to File</h2>
+
+      <p>A Michigan mechanics lien must be recorded with the <strong>Register of Deeds</strong> in the county where the property is located. This is a physical filing at the county office (though some counties also accept electronic recordings).</p>
+
+      <p>Key Michigan counties and their recording information:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>County</th>
+            <th>Register of Deeds</th>
+            <th>Recording Fee (approx.)</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Wayne County</td>
+            <td>Coleman A. Young Municipal Center, Detroit</td>
+            <td>$15–$20/doc</td>
+            <td>waynecounty.com/deeds</td>
+          </tr>
+          <tr>
+            <td>Oakland County</td>
+            <td>1200 N. Telegraph Rd., Pontiac</td>
+            <td>$15–$30/doc</td>
+            <td>oakgov.com/clarkston</td>
+          </tr>
+          <tr>
+            <td>Kent County</td>
+            <td>300 Monroe Ave NW, Grand Rapids</td>
+            <td>$15–$20/doc</td>
+            <td>accesskent.com</td>
+          </tr>
+          <tr>
+            <td>Macomb County</td>
+            <td>40 N. Main St., Mt. Clemens</td>
+            <td>$15–$20/doc</td>
+            <td>macombgov.org</td>
+          </tr>
+          <tr>
+            <td>Washtenaw County</td>
+            <td>200 N. Main St., Ann Arbor</td>
+            <td>$15–$25/doc</td>
+            <td>washtenaw.org</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Recording fees are charged per document and vary slightly by county. As of 2024, most Michigan counties charge approximately $15 for the first page and a per-page fee for additional pages. Call ahead or check the county website to confirm current fees before filing.</p>
+
+      <p><strong>What you bring to the Register of Deeds:</strong></p>
+      <ol>
+        <li>The completed, signed Claim of Lien form (generated by LienForm)</li>
+        <li>Recording fee payment (cash or check accepted at most offices; call ahead for credit card acceptance)</li>
+        <li>A self-addressed stamped envelope if you want the recorded original returned by mail</li>
+      </ol>
+
+      <p>After recording, the Register of Deeds will stamp your document with the liber (book) and page number, which serves as your proof of recording.</p>
+
+      <h2>What Happens After You File</h2>
+
+      <p><strong>Notifying the owner:</strong> After recording your lien, you must send a copy of the recorded lien to the property owner. MCL 570.1117 requires this notification. Keep a record of when and how you sent it.</p>
+
+      <p><strong>Enforcement — the lawsuit deadline:</strong> A recorded mechanics lien does not automatically pay you. If the owner still does not pay after the lien is recorded, you must file a lawsuit to enforce (foreclose) the lien. Under the Michigan Construction Lien Act, you generally have <strong>1 year from the date the lien was recorded</strong> to file an enforcement action. Missing this deadline may render the lien unenforceable.</p>
+
+      <p><strong>How most liens resolve:</strong> In practice, many liens resolve before a foreclosure lawsuit is ever filed. A recorded lien clouds the property title, which creates urgency — the owner cannot refinance or sell until the lien is resolved. Many contractors receive payment within weeks of recording.</p>
+
+      <p><strong>Lien releases:</strong> Once you are paid, you should record a Lien Release (also called a Discharge of Lien) with the same Register of Deeds. This clears the cloud from the owner's title. LienForm includes a lien release form in the bundle.</p>
+
+      <h2>How LienForm Works</h2>
+
+      <p>LienForm generates a complete Michigan mechanics lien bundle in three steps:</p>
+
+      <ol>
+        <li><strong>Fill in your project details.</strong> Enter the property address, owner information, your company information, the amount owed, and your last furnishing date. Our role-aware system asks the right questions based on whether you are a GC, subcontractor, or supplier.</li>
+        <li><strong>Preview your documents.</strong> Review the generated lien form before downloading. Confirm all details are correct. For subcontractors and suppliers, your bundle will automatically include the Notice of Furnishing if you have not yet filed one.</li>
+        <li><strong>Download and file.</strong> Pay $24.99 and download your complete PDF bundle instantly. No account required. The bundle includes the Claim of Lien, a deadline confirmation, county recorder filing instructions for your specific county, a proof of service affidavit, and a lien release form.</li>
+      </ol>
+
+      <p><strong>Your bundle includes:</strong> Claim of Lien (MCL 570.1101 compliant) · Deadline confirmation · Wayne/Oakland/Kent county filing guide · Proof of service affidavit · Lien release form · Notice of Furnishing (if required for your role)</p>
+
+      <p>No account required. Instant download.</p>
+
+      <p><em>Content reviewed for accuracy against MCL 570.1101–570.1305 (as amended 2023). This is not legal advice. Consult a licensed Michigan attorney for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>

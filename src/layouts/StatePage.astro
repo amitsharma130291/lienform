@@ -1,0 +1,139 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  schema?: string; // JSON-LD string
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDescription,
+  schema,
+} = Astro.props;
+
+const canonicalUrl = canonical || Astro.url.href;
+const resolvedOgTitle = ogTitle || title;
+const resolvedOgDescription = ogDescription || description;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <title>{title}</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={resolvedOgTitle} />
+    <meta property="og:description" content={resolvedOgDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LienForm" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={resolvedOgTitle} />
+    <meta name="twitter:description" content={resolvedOgDescription} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    {schema && (
+      <script type="application/ld+json" set:html={schema} />
+    )}
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-white font-sans antialiased">
+    <!-- Global Navigation -->
+    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 text-navy-800 font-bold text-xl tracking-tight hover:text-navy-900 transition-colors">
+          <svg class="w-7 h-7" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="6" fill="#1e2f6e"/>
+            <text x="50%" y="55%" dominant-baseline="central" text-anchor="middle"
+                  font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="white">L</text>
+          </svg>
+          LienForm
+        </a>
+
+        <!-- Nav Links -->
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a href="/mechanics-lien/" class="hover:text-navy-700 transition-colors">Mechanics Lien</a>
+          <a href="/notice-to-owner/" class="hover:text-navy-700 transition-colors">Notice to Owner</a>
+          <a href="/pricing/" class="hover:text-navy-700 transition-colors">Pricing</a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-toggle"
+          class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          aria-label="Toggle menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2">
+        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Mechanics Lien</a>
+        <a href="/notice-to-owner/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Notice to Owner</a>
+        <a href="/pricing/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Pricing</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 mt-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-sm text-slate-500 text-center md:text-left">
+            &copy; 2024 LienForm.com &mdash; This form is provided for informational purposes only.
+            Not legal advice. Consult a licensed attorney in your state.
+          </p>
+          <div class="flex items-center gap-4 text-xs text-slate-400">
+            <a href="/privacy/" class="hover:text-slate-600 transition-colors">Privacy</a>
+            <a href="/terms/" class="hover:text-slate-600 transition-colors">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+        });
+      }
+    </script>
+  </body>
+</html>

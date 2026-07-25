@@ -1,0 +1,445 @@
+---
+import StatePage from '../../layouts/StatePage.astro';
+
+const title = "Mechanics Lien Forms — Free State-by-State Generator | LienForm";
+const description = "Generate mechanics lien forms for all 50 states. Role-aware deadline calculator, current statutory citations, county recorder guide. $24.99 PDF bundle. No account required.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A mechanics lien (also called a construction lien, materialman's lien, or contractor's lien) is a legal security interest in real property granted to contractors, subcontractors, laborers, and material suppliers who have contributed to the improvement of the property and have not been fully paid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who can file a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "General contractors, subcontractors, sub-subcontractors, material suppliers, equipment rental companies, architects, and engineers — anyone who has contributed labor, materials, or services to a construction project. Specific eligibility varies by state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does filing a mechanics lien help me get paid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A recorded mechanics lien attaches to the property title. The owner cannot sell or refinance the property with an active lien on title. This gives claimants significant leverage to negotiate payment without going to court."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a preliminary notice and a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A preliminary notice (also called a pre-lien notice or notice to owner) must be served early — typically within 20-45 days of starting work — as a condition of preserving lien rights. The mechanics lien itself is recorded later, after non-payment. The preliminary notice is the prerequisite; the lien is the remedy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after I file a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "After recording, you typically must serve a copy on the owner. If still unpaid, you must file a lawsuit to enforce the lien (foreclose) within a state-specific deadline (often 90 days to 1 year after recording). Most liens get resolved through payment before foreclosure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an attorney to file a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most states do not require an attorney to record a mechanics lien. However, enforcement (foreclosure) typically requires court action and legal representation. LienForm generates the lien document; consult an attorney for disputes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which states have the strongest mechanics lien laws?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "California, Texas, Florida, and Michigan have well-developed mechanics lien statutes with clear deadlines and procedures. California's SB 189 (2012) is considered a model statute. Texas's HB 2237 (2022) significantly clarified the monthly notice requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a mechanics lien and a UCC filing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A mechanics lien attaches to real property (land, buildings). A UCC (Uniform Commercial Code) filing attaches to personal property, equipment, or business assets. For construction disputes over real property, a mechanics lien is the correct remedy."
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://lienform.com/mechanics-lien/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, breadcrumbSchema]);
+
+const activeStates = [
+  { name: "Michigan", slug: "michigan", stat: "MCL 570.1101–570.1305", deadline: "90/180 days" },
+  { name: "California", slug: "california", stat: "Civil Code §8000–9566", deadline: "90 days" },
+  { name: "Texas", slug: "texas", stat: "Tex. Prop. Code Ch. 53", deadline: "4th month 15th" },
+];
+
+const comingSoonStates = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "Colorado", "Connecticut",
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois",
+  "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
+  "Maryland", "Massachusetts", "Minnesota", "Mississippi", "Missouri",
+  "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+  "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+  "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+  "South Dakota", "Tennessee", "Utah", "Vermont", "Virginia",
+  "Washington", "West Virginia", "Wisconsin", "Wyoming"
+];
+
+const docTypes = [
+  { name: "Mechanics Lien Claim", href: "/mechanics-lien/", active: true, desc: "Record a lien against real property to secure payment" },
+  { name: "Preliminary Notice", href: "/preliminary-notice/", active: false, desc: "Pre-lien notice required before filing in most states" },
+  { name: "Notice to Owner", href: "/notice-to-owner/florida/", active: true, desc: "Florida NTO required within 45 days of first furnishing" },
+  { name: "Notice of Furnishing", href: "/notice-of-furnishing/", active: false, desc: "Michigan notice required for subs and suppliers" },
+  { name: "Lien Waiver", href: "/lien-waiver/", active: false, desc: "Release lien rights upon receipt of payment" },
+  { name: "Lien Release", href: "/lien-release/", active: false, desc: "Discharge a recorded lien after payment" },
+  { name: "Notice of Intent", href: "/notice-of-intent/", active: false, desc: "Final warning before recording a mechanics lien" },
+];
+
+const roles = [
+  {
+    title: "General Contractor",
+    abbr: "GC",
+    color: "bg-navy-50 border-navy-200",
+    points: [
+      "Direct contract with the property owner",
+      "No pre-lien notice required in most states",
+      "Deadline typically runs from last day of furnishing",
+      "Strongest lien rights by default"
+    ]
+  },
+  {
+    title: "Subcontractor",
+    abbr: "Sub",
+    color: "bg-blue-50 border-blue-200",
+    points: [
+      "Contract with GC, not directly with owner",
+      "Pre-lien notice required in most states (20–45 days)",
+      "Missing notice limits or eliminates lien rights",
+      "Bundle includes Notice of Furnishing if required"
+    ]
+  },
+  {
+    title: "Sub-Subcontractor",
+    abbr: "Sub-Sub",
+    color: "bg-indigo-50 border-indigo-200",
+    points: [
+      "Contract with subcontractor",
+      "Pre-lien notice required in nearly all states",
+      "Serve notice from day one — don't wait",
+      "Rights vary significantly by state"
+    ]
+  },
+  {
+    title: "Material Supplier",
+    abbr: "Supplier",
+    color: "bg-slate-50 border-slate-200",
+    points: [
+      "Delivers materials to GC, sub, or project",
+      "Pre-lien notice required in most states",
+      "Deadline runs from last delivery date",
+      "Supplier-to-supplier typically has no lien rights"
+    ]
+  }
+];
+---
+
+<StatePage
+  title={title}
+  description={description}
+  canonical="https://lienform.com/mechanics-lien/"
+  schema={schema}
+>
+  <!-- Breadcrumb nav -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 text-sm text-gray-500">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <span class="text-gray-900">Mechanics Lien</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Mechanics Lien Forms by State</h1>
+
+    <!-- Featured snippet box -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-5 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium leading-relaxed">
+        A mechanics lien is a legal claim against real property that contractors, subcontractors, and material
+        suppliers can file when they have not been paid for work or materials provided. Filing a lien attaches
+        the debt to the property title, preventing the owner from selling or refinancing without resolving the
+        debt. Deadlines and requirements vary by state.
+      </p>
+    </div>
+
+    <!-- State grid -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-2">Generate Your Mechanics Lien</h2>
+      <p class="text-slate-600 mb-6">Select your state to get started. Active states generate a complete PDF bundle instantly.</p>
+
+      <!-- Active states -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {activeStates.map((state) => (
+          <a
+            href={`/mechanics-lien/${state.slug}/`}
+            class="block bg-white border-2 border-navy-600 rounded-xl p-5 hover:bg-navy-50 hover:shadow-md transition-all group"
+          >
+            <div class="flex items-start justify-between mb-2">
+              <h3 class="font-bold text-navy-900 text-lg group-hover:text-navy-700">{state.name}</h3>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-navy-100 text-navy-700">Active</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-1">{state.stat}</p>
+            <p class="text-sm text-slate-700">Deadline: {state.deadline}</p>
+            <p class="text-navy-600 text-sm font-medium mt-3 group-hover:underline">Generate Form →</p>
+          </a>
+        ))}
+      </div>
+
+      <!-- Coming soon states -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {comingSoonStates.map((state) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-center opacity-70">
+            <p class="text-sm font-medium text-slate-600">{state}</p>
+            <p class="text-xs text-slate-400 mt-0.5">Coming Soon</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Document types grid -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-2">Document Types</h2>
+      <p class="text-slate-600 mb-6">A complete lien protection strategy may involve several document types, depending on your role, state, and timing.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {docTypes.map((doc) => (
+          doc.active ? (
+            <a
+              href={doc.href}
+              class="block bg-white border border-navy-200 rounded-xl p-5 hover:border-navy-400 hover:shadow-sm transition-all group"
+            >
+              <h3 class="font-semibold text-navy-800 mb-1 group-hover:text-navy-600">{doc.name}</h3>
+              <p class="text-sm text-slate-600">{doc.desc}</p>
+              <p class="text-navy-600 text-xs font-medium mt-3">View →</p>
+            </a>
+          ) : (
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+              <div class="flex items-start justify-between mb-1">
+                <h3 class="font-semibold text-slate-500">{doc.name}</h3>
+                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-500 ml-2 whitespace-nowrap">Coming Soon</span>
+              </div>
+              <p class="text-sm text-slate-400">{doc.desc}</p>
+            </div>
+          )
+        ))}
+      </div>
+    </section>
+
+    <!-- Role guide -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-2">Lien Rights by Role</h2>
+      <p class="text-slate-600 mb-6">Your role determines your deadline, notice requirements, and lien strength. LienForm asks the right questions and tailors your bundle automatically.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {roles.map((role) => (
+          <div class={`border rounded-xl p-5 ${role.color}`}>
+            <div class="inline-block bg-navy-700 text-white text-xs font-bold px-2 py-0.5 rounded mb-2">{role.abbr}</div>
+            <h3 class="font-semibold text-navy-800 mb-3">{role.title}</h3>
+            <ul class="space-y-1.5">
+              {role.points.map((pt) => (
+                <li class="flex items-start gap-1.5 text-sm text-slate-700">
+                  <span class="text-navy-500 mt-0.5 shrink-0">✓</span>
+                  {pt}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Body copy from content -->
+    <section class="prose prose-slate max-w-none mb-12">
+
+      <h2>What Is a Mechanics Lien — And How It Works</h2>
+
+      <p>A mechanics lien (also written as mechanic's lien) is a statutory right granted to construction industry participants by every U.S. state. The core concept is the same everywhere: if you improve someone's property and they do not pay you, you can encumber the property itself as security for the debt.</p>
+
+      <p><strong>The mechanics of a lien:</strong></p>
+      <ol>
+        <li>You complete work (or deliver materials) on a construction project</li>
+        <li>You are not paid as agreed</li>
+        <li>You file (record) a mechanics lien with the appropriate county office</li>
+        <li>The lien appears on the property's title search</li>
+        <li>The owner cannot sell or refinance the property without first satisfying the lien</li>
+        <li>Faced with a clouded title, most owners resolve the lien by paying</li>
+      </ol>
+
+      <p>The lien does not immediately transfer ownership or allow you to take the property. It is a security interest — a legal encumbrance that pressures resolution through payment.</p>
+
+      <p><strong>Enforcement:</strong> If the owner still does not pay after you file the lien, you can file a lawsuit to foreclose on the lien. This step requires an attorney in most states. However, the vast majority of liens are resolved through payment before a foreclosure suit is ever necessary.</p>
+
+      <p><strong>Lien waivers:</strong> When you are paid, you will typically be asked to sign a lien waiver confirming that the lien has been satisfied. LienForm includes a lien waiver/release form in every bundle.</p>
+
+      <h2>Who Can File</h2>
+
+      <p>Mechanics lien rights apply to parties who have contributed value to the improvement of real property:</p>
+
+      <table>
+        <thead>
+          <tr><th>Who</th><th>Can File?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>General contractor (direct contract with owner)</td><td>Yes, in all states</td></tr>
+          <tr><td>Subcontractor (contract with GC)</td><td>Yes, in all states (pre-lien notice often required)</td></tr>
+          <tr><td>Sub-subcontractor</td><td>Yes, in most states (pre-lien notice often required)</td></tr>
+          <tr><td>Material supplier (to GC or sub)</td><td>Yes, in all states (pre-lien notice often required)</td></tr>
+          <tr><td>Equipment rental company</td><td>Yes, in most states</td></tr>
+          <tr><td>Architect / Engineer</td><td>Yes, in most states, under specified conditions</td></tr>
+          <tr><td>Laborer / Worker</td><td>Yes, in most states</td></tr>
+          <tr><td>Supplier to a supplier</td><td>Usually no — too remote from the improvement</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Pre-lien notices:</strong> Many states require subcontractors and suppliers to serve a preliminary notice before they can file a valid lien. Missing this notice — often required within 20–45 days of first furnishing — can permanently eliminate lien rights for work done before the notice was served.</p>
+
+      <h2>How to Use LienForm</h2>
+
+      <p>Generating your lien documents takes less than 5 minutes:</p>
+
+      <ol>
+        <li><strong>Select your state.</strong> Choose from Michigan, California, or Texas. LienForm automatically loads the correct statute and form for your state.</li>
+        <li><strong>Enter your role and project details.</strong> Tell us whether you are a general contractor, subcontractor, or supplier. Enter the property address, owner information, your company details, the amount owed, and your last furnishing date. The system calculates your deadline automatically.</li>
+        <li><strong>Download your bundle.</strong> Pay $24.99 and download your complete PDF bundle instantly. No account required. Your bundle includes the lien form, deadline confirmation, county recorder/clerk filing guide, proof of service affidavit, and lien release form.</li>
+      </ol>
+
+      <p><em>State lien laws change periodically. LienForm uses current statutory citations for all supported states, but this content is for informational purposes only. This is not legal advice. Consult a licensed attorney in your state for advice specific to your situation.</em></p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What is a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            A mechanics lien (also called a construction lien, materialman's lien, or contractor's lien) is a legal security interest in real property granted to contractors, subcontractors, laborers, and material suppliers who have contributed to the improvement of the property and have not been fully paid.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Who can file a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            General contractors, subcontractors, sub-subcontractors, material suppliers, equipment rental companies, architects, and engineers — anyone who has contributed labor, materials, or services to a construction project. Specific eligibility varies by state.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            How does filing a mechanics lien help me get paid?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            A recorded mechanics lien attaches to the property title. The owner cannot sell or refinance the property with an active lien on title. This gives claimants significant leverage to negotiate payment without going to court.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What is the difference between a preliminary notice and a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            A preliminary notice must be served early — typically within 20–45 days of starting work — as a condition of preserving lien rights. The mechanics lien itself is recorded later, after non-payment. The preliminary notice is the prerequisite; the lien is the remedy.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What happens after I file a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            After recording, you typically must serve a copy on the owner. If still unpaid, you must file a lawsuit to enforce the lien (foreclose) within a state-specific deadline — often 90 days to 1 year after recording. Most liens get resolved through payment before foreclosure.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Do I need an attorney to file a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            Most states do not require an attorney to record a mechanics lien. However, enforcement (foreclosure) typically requires court action and legal representation. LienForm generates the lien document; consult an attorney for disputes.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Which states have the strongest mechanics lien laws?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            California, Texas, Florida, and Michigan have well-developed mechanics lien statutes with clear deadlines and procedures. California's SB 189 (2012) is considered a model statute. Texas's HB 2237 (2022) significantly clarified the monthly notice requirements.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What is the difference between a mechanics lien and a UCC filing?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            A mechanics lien attaches to real property (land, buildings). A UCC (Uniform Commercial Code) filing attaches to personal property, equipment, or business assets. For construction disputes over real property, a mechanics lien is the correct remedy.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA row -->
+    <section class="bg-navy-800 rounded-2xl p-8 text-white text-center">
+      <h2 class="text-2xl font-bold mb-2">Start Your Lien</h2>
+      <p class="text-navy-200 mb-6">Select your state to generate a complete PDF bundle. $24.99. No account required.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href="/mechanics-lien/michigan/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Michigan →
+        </a>
+        <a
+          href="/mechanics-lien/california/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          California →
+        </a>
+        <a
+          href="/mechanics-lien/texas/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Texas →
+        </a>
+      </div>
+    </section>
+  </div>
+</StatePage>

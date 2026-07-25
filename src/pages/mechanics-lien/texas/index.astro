@@ -1,0 +1,375 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import FormStepper from '../../../components/FormStepper';
+import DeadlineCalculator from '../../../components/DeadlineCalculator';
+import PDFPreview from '../../../components/PDFPreview';
+import CheckoutButton from '../../../components/CheckoutButton';
+
+const title = "Texas Mechanics Lien Form 2024 — Property Code Ch. 53 (HB 2237) Generator";
+const description = "Generate a Texas mechanics lien (construction, not vehicle) under Tex. Prop. Code Ch. 53, updated by HB 2237 (eff. Jan 1, 2022). Role-aware deadline calculator. $24.99 PDF bundle.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the deadline to file a mechanics lien in Texas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Original (general) contractors: 15th day of the 4th calendar month after the last day of the month in which work was completed. Subcontractors and suppliers on residential projects: 15th day of the 3rd calendar month after the month work was performed. Commercial: 15th day of the 4th calendar month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Texas HB 2237 monthly notice requirement?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under HB 2237 (eff. Jan 1, 2022), subcontractors and suppliers on residential projects must send monthly notices (by the 15th of each month) to both the GC and owner. Failure to send monthly notices limits your lien to amounts unpaid at the time the notice was given."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do I file a Texas mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With the county clerk (not 'county recorder' — Texas uses county clerks) in the county where the property is located. You file an Affidavit Claiming a Lien under Tex. Prop. Code §53.052."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Texas mechanics lien form the same as the VTR-265-M vehicle lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The VTR-265-M is a Texas DMV form for vehicle title liens, processed by TxDMV. A mechanics lien under Tex. Prop. Code Ch. 53 is completely different — it applies to real property (land and buildings), not vehicles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to send a retainage notice in Texas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under HB 2237, subcontractors and suppliers who want to claim against retainage must send a written notice of the retainage claim by the 30th day after the earlier of: (1) the date the owner files a notice of completion, or (2) the date the original contract is terminated."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a material supplier file a mechanics lien in Texas without a written contract?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, under Tex. Prop. Code §53.021, a materialman may claim a lien for furnished materials regardless of whether there is a written contract, as long as the materials were furnished for the construction or repair of real property."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File a Mechanics Lien in Texas",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Complete the form",
+      "text": "Enter your project details: owner name, property address, county, contract amount, and last furnishing month. LienForm's role-aware system calculates your county clerk filing deadline automatically."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Get the document notarized",
+      "text": "Texas requires the Affidavit Claiming a Lien to be notarized before filing. Your bundle includes a notarization block formatted for Texas requirements."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "File with the county clerk",
+      "text": "Pay $24.99 to download your complete bundle, then file the notarized Affidavit Claiming a Lien with the county clerk in the county where the property is located."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://lienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Texas", "item": "https://lienform.com/mechanics-lien/texas/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://lienform.com/mechanics-lien/texas/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Texas</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Texas Mechanics Lien Form for Construction Projects</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">This is a <strong>construction real property lien</strong> under Tex. Prop. Code Ch. 53 (HB 2237, 2022) — NOT a vehicle title lien (VTR-265-M, TxDMV). Original contractors must file by the <strong>15th day of the 4th month</strong> after last work; subcontractors on residential projects by the <strong>15th of the 3rd month</strong>.</p>
+    </div>
+
+    <!-- Monthly notice warning for residential projects -->
+    <div class="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-4">
+      <strong>⚠️ Residential project?</strong> Texas HB 2237 requires subcontractors and suppliers to send monthly notices to the GC and owner by the 15th of each month. Failure to send monthly notices limits your lien rights to unpaid amounts at the time of notice.
+    </div>
+
+    <!-- 3-step form -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Texas Mechanics Lien</h2>
+      <FormStepper
+        client:load
+        defaultState="texas"
+        documentType="mechanics-lien"
+        onFormComplete={(data) => {}}
+      />
+    </div>
+
+    <!-- Deadline calculator -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold text-navy-800 mb-4">Texas Filing Deadline Calculator</h2>
+      <DeadlineCalculator client:load state="texas" role="" dateType="last-furnishing" />
+    </div>
+
+    <!-- Preview + checkout -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div>
+        <PDFPreview client:load formData={null} state="texas" />
+      </div>
+      <div class="flex flex-col justify-center">
+        <CheckoutButton
+          client:load
+          state="texas"
+          role=""
+          formData={null}
+          price={24.99}
+          productName="Texas Mechanics Lien Bundle"
+        />
+      </div>
+    </div>
+
+    <!-- SEO content -->
+    <div class="prose prose-navy max-w-none">
+
+      <h2>Texas Construction Mechanics Lien — Not a Vehicle Lien</h2>
+
+      <p>If you searched for "Texas mechanics lien form" and you are looking for a form related to a motor vehicle — stop. The Texas DMV vehicle lien form (VTR-265-M) is processed through TxDMV and the Texas Department of Motor Vehicles. That form has nothing to do with construction.</p>
+
+      <p>This page covers <strong>Texas mechanic's and materialman's liens under Texas Property Code Chapter 53</strong> — the legal tool that contractors, subcontractors, and material suppliers use to protect their right to payment for construction work on real property (land and buildings).</p>
+
+      <p><strong>Note on terminology:</strong> Texas law uses "mechanic's and materialman's lien" (M&amp;M lien) rather than the generic "mechanics lien." The Affidavit Claiming a Lien under Tex. Prop. Code §53.052 is the document you file with the county clerk.</p>
+
+      <p>A Texas mechanics lien (also called a mechanic's and materialman's lien) is a legal claim against real property under Texas Property Code Chapter 53, updated by HB 2237 (effective January 1, 2022). A recorded Texas M&amp;M lien attaches to the property's title, encumbering the owner's ability to sell or refinance until the lien is resolved.</p>
+
+      <h2>Texas Property Code Chapter 53 — HB 2237 (2022 Update)</h2>
+
+      <p>Texas Property Code Chapter 53 is the governing statute for construction liens on real property in Texas. It covers who can file, how, and when.</p>
+
+      <p><strong>HB 2237 — Major 2022 Reforms:</strong> House Bill 2237 was signed into law in 2021 and took effect <strong>January 1, 2022</strong>. It represented the most significant overhaul of Texas lien law in decades. Key changes include:</p>
+
+      <ul>
+        <li><strong>Clearer monthly notice requirements</strong> for subcontractors and suppliers on residential projects</li>
+        <li><strong>Simplified retainage claim procedures</strong></li>
+        <li><strong>Updated form requirements</strong> for the Affidavit Claiming a Lien</li>
+        <li><strong>Clarification of fund trapping provisions</strong> (protecting subcontractors when GC is paid)</li>
+        <li><strong>Revised constitutional lien provisions</strong> for residential homestead property</li>
+      </ul>
+
+      <p>LienForm generates forms that comply with HB 2237 as in effect after January 1, 2022. Pre-2022 forms are outdated and may not satisfy the current statute.</p>
+
+      <p><strong>Key statutory sections:</strong></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>§53.001</td><td>Definitions</td></tr>
+          <tr><td>§53.021</td><td>Who may claim a lien (materialmen, laborers, contractors, architects, engineers)</td></tr>
+          <tr><td>§53.052</td><td>Affidavit Claiming a Lien — form and requirements</td></tr>
+          <tr><td>§53.053</td><td>Deadline to file the affidavit</td></tr>
+          <tr><td>§53.056</td><td>Notice of lien claim to owner/GC</td></tr>
+          <tr><td>§53.057</td><td>Monthly notices for subcontractors and suppliers</td></tr>
+          <tr><td>§53.058</td><td>Retainage notice requirements</td></tr>
+          <tr><td>§53.154</td><td>Deadline to sue on a lien (1 year after lien filed)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Deadlines by Role</h2>
+
+      <p>Texas lien deadlines are based on calendar months, not day-counts, which makes them somewhat unusual. The deadline is always the <strong>15th day of a specified month</strong> after the month in which work was last performed.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Project Type</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Original Contractor (GC)</td>
+            <td>Residential</td>
+            <td>15th day of the 4th month after the month work was last furnished</td>
+          </tr>
+          <tr>
+            <td>Original Contractor (GC)</td>
+            <td>Commercial</td>
+            <td>15th day of the 4th month after the month work was last furnished</td>
+          </tr>
+          <tr>
+            <td>Subcontractor / Supplier</td>
+            <td>Residential</td>
+            <td>15th day of the 3rd month after the month work was last furnished</td>
+          </tr>
+          <tr>
+            <td>Subcontractor / Supplier</td>
+            <td>Commercial</td>
+            <td>15th day of the 4th month after the month work was last furnished</td>
+          </tr>
+          <tr>
+            <td>Retainage claimant (any)</td>
+            <td>Residential or Commercial</td>
+            <td>30 days after the earlier of: owner's notice of completion OR contract termination</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>How to calculate:</strong></p>
+
+      <p>If you last furnished labor or materials in <strong>October</strong>, count forward to determine your deadline month:</p>
+
+      <ul>
+        <li>GC (residential or commercial): October is month 0 → 4th month forward = February → <strong>February 15</strong></li>
+        <li>Subcontractor (residential): October is month 0 → 3rd month forward = January → <strong>January 15</strong></li>
+        <li>Subcontractor (commercial): October is month 0 → 4th month forward = February → <strong>February 15</strong></li>
+      </ul>
+
+      <p><strong>What is "last furnishing"?</strong> The last calendar month in which you performed work or delivered materials. Warranty calls and minor touch-up work may or may not count — consult an attorney for borderline situations.</p>
+
+      <p>LienForm's deadline calculator asks for your role, project type, and last furnishing month, then calculates the exact date automatically.</p>
+
+      <h2>Monthly Notice Requirements for Residential Projects</h2>
+
+      <p>This is the provision most competitors miss, and it is one of the most important aspects of HB 2237.</p>
+
+      <p><strong>Who must send monthly notices:</strong> Subcontractors and material suppliers who do not have a direct contract with the property owner — on <strong>residential</strong> construction projects.</p>
+
+      <p><strong>When to send them:</strong> By the <strong>15th day of each month</strong>, for each month in which labor or materials were furnished in the preceding month.</p>
+
+      <p><strong>To whom:</strong> Both the general contractor AND the property owner.</p>
+
+      <p><strong>What happens if you don't send them:</strong> You do not lose your lien rights entirely, but your lien is <strong>limited to the amount that was unpaid at the time</strong> the required monthly notice was finally given. If the owner has already paid the GC for your work before you sent the notice, you may have no lien rights for that amount.</p>
+
+      <p><strong>Example:</strong> You provide lumber to a residential project from March through July. You send monthly notices for March through May, but forget June and July. Your lien rights for June and July work are limited to amounts that remained unpaid when you eventually gave notice — amounts already paid by the owner to the GC for June and July are protected only if your notice arrived before payment.</p>
+
+      <p><strong>The practical takeaway:</strong> Set up a calendar reminder on the first of every month to send monthly notices for all active residential projects. This is not optional if you want full lien protection.</p>
+
+      <p>LienForm's Texas bundle includes a monthly notice template and reminder checklist for residential projects.</p>
+
+      <h2>Filing with the County Clerk</h2>
+
+      <p>In Texas, mechanics liens are filed with the <strong>county clerk</strong> — not a county recorder or register of deeds. Texas uses county clerks for real property records.</p>
+
+      <p>The document you file is an <strong>Affidavit Claiming a Lien</strong> under Tex. Prop. Code §53.052. This affidavit must contain:</p>
+
+      <ol>
+        <li>The name and address of the claimant</li>
+        <li>The name of the property owner (as known to the claimant)</li>
+        <li>The name of the party who hired the claimant (owner, GC, or sub)</li>
+        <li>A description of the labor or materials furnished</li>
+        <li>The amount claimed</li>
+        <li>A description of the property</li>
+        <li>The claimant's signature, notarized</li>
+      </ol>
+
+      <p><strong>Notarization is required.</strong> Unlike some other states, Texas requires the Affidavit Claiming a Lien to be signed and notarized before filing with the county clerk. LienForm's Texas bundle includes instructions for notarization and a signature block formatted for Texas requirements.</p>
+
+      <h2>County Clerk Offices</h2>
+
+      <p>File with the county clerk in the county where the property is located:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>County</th>
+            <th>County Clerk Office</th>
+            <th>Filing Fee (approx.)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Harris County (Houston)</td>
+            <td>201 Caroline St., Houston</td>
+            <td>$25–$40</td>
+            <td>E-filing available via county portal</td>
+          </tr>
+          <tr>
+            <td>Dallas County</td>
+            <td>509 Main St., Dallas</td>
+            <td>$25–$40</td>
+            <td>E-filing available</td>
+          </tr>
+          <tr>
+            <td>Tarrant County (Fort Worth)</td>
+            <td>100 W. Weatherford St., Fort Worth</td>
+            <td>$25–$40</td>
+            <td>E-filing available</td>
+          </tr>
+          <tr>
+            <td>Bexar County (San Antonio)</td>
+            <td>100 Dolorosa St., San Antonio</td>
+            <td>$20–$35</td>
+            <td>E-filing available</td>
+          </tr>
+          <tr>
+            <td>Travis County (Austin)</td>
+            <td>5501 Airport Blvd., Austin</td>
+            <td>$20–$35</td>
+            <td>E-filing available</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Filing fees in Texas vary by county and are typically charged per document or per page. Contact the county clerk directly or check their website for current fee schedules. Many larger Texas counties accept electronic filing through county portals or approved third-party systems.</p>
+
+      <h2>Retainage Claims</h2>
+
+      <p>HB 2237 introduced clearer procedures for claiming against <strong>retainage</strong> (the percentage of contract price held back until project completion).</p>
+
+      <p><strong>Why retainage requires special treatment:</strong> On projects where retainage is withheld, a subcontractor or supplier may complete their scope of work months before the owner releases retainage to the GC. Standard lien deadlines could expire before retainage is even released.</p>
+
+      <p><strong>The HB 2237 retainage notice requirement:</strong> To preserve a lien claim against retainage, a subcontractor or supplier must send written notice to the owner by the <strong>30th day after the earlier of:</strong></p>
+
+      <ol>
+        <li>The date the property owner files a notice of completion with the county clerk, or</li>
+        <li>The date the original contract is terminated</li>
+      </ol>
+
+      <p><strong>What the retainage notice must contain:</strong> The amount claimed, the name of the person to whom the claimant furnished labor or materials, and a statement that the claimant asserts a lien claim against retainage.</p>
+
+      <p><strong>Without the retainage notice:</strong> A subcontractor or supplier who fails to send the retainage notice may lose the right to claim against retainage funds, even if they filed a timely Affidavit Claiming a Lien.</p>
+
+      <p>LienForm's Texas bundle includes the retainage notice template and explains when to use it.</p>
+
+      <p><strong>Generate Your Texas Mechanics Lien — $24.99:</strong> Compliant with Tex. Prop. Code Ch. 53 (HB 2237, 2021) · Construction real property only (not a VTR-265-M vehicle lien) · Affidavit Claiming a Lien with notarization block · Monthly notice templates for residential projects · Retainage notice included · Deadline calculator by role and project type</p>
+
+      <p>No account required. Instant download.</p>
+
+      <p><em>Content reviewed for accuracy against Texas Property Code Chapter 53, as updated by HB 2237 (effective January 1, 2022). This is not legal advice. Consult a licensed Texas attorney for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>
