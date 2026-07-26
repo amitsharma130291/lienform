@@ -11,6 +11,7 @@ export interface LienFormData {
   contractAmount: string;
   firstFurnishingDate: string;
   lastFurnishingDate: string;
+  claimantName?: string;
   county: string;
   deadline: string; // pre-calculated ISO date string
   extras: ('lien-waiver' | 'notice-of-intent' | 'lien-release' | 'preliminary-notice')[];
@@ -117,6 +118,32 @@ function roleLabel(role: string): string {
 
 function toTitleCase(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+}
+
+function calculateDeadline(lastFurnishingDate: string, state: string, role: string): string {
+  if (!lastFurnishingDate) return '';
+  const last = new Date(lastFurnishingDate);
+  if (isNaN(last.getTime())) return '';
+
+  if (state === 'texas') {
+    const d = new Date(last);
+    if (role === 'general-contractor') {
+      d.setMonth(d.getMonth() + 4, 15);
+    } else {
+      d.setMonth(d.getMonth() + 3, 15);
+    }
+    return d.toISOString().split('T')[0];
+  }
+
+  const daysMap: Record<string, number> = {
+    michigan: 90,
+    california: 90,
+    florida: 45,
+  };
+  const days = daysMap[state] ?? 90;
+  const deadline = new Date(last);
+  deadline.setDate(deadline.getDate() + days);
+  return deadline.toISOString().split('T')[0];
 }
 
 // ─── PDF Generator ────────────────────────────────────────────────────────────
@@ -250,7 +277,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   // Claimant
   addSectionHeader('Claimant Information');
-  addLabelValue('Claimant Name', '[YOUR NAME OR COMPANY NAME]');
+  addLabelValue('Claimant Name', data.claimantName || '');
   addLabelValue('Role / Capacity', roleLabel(data.role));
   addLabelValue('Contact Email', data.email);
 
@@ -315,7 +342,8 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.addPage();
   resetY();
 
-  const daysLeft = daysUntilDeadline(data.deadline);
+  const computedDeadline = calculateDeadline(data.lastFurnishingDate, data.state, data.role);
+  const daysLeft = daysUntilDeadline(computedDeadline);
 
   doc.setFontSize(16);
   doc.setFont('helvetica', 'bold');
@@ -328,10 +356,10 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addSpacer(4);
   addLine('Your lien must be filed by:', 10, false, [80, 80, 80]);
 
-  const deadlineDate = new Date(data.deadline);
-  const deadlineFmt = deadlineDate.toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  });
+  const deadlineDate = new Date(computedDeadline);
+  const deadlineFmt = !isNaN(deadlineDate.getTime())
+    ? deadlineDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    : 'Unable to calculate — verify your last furnishing date';
   addLine(deadlineFmt, 16, true, [30, 47, 110]);
 
   addSpacer(6);

@@ -20,6 +20,7 @@ export interface LienFormData {
   lastFurnishingDate: string;
   county: string;
   email: string;
+  claimantName: string;
 }
 
 export interface FormStepperProps {
@@ -174,6 +175,7 @@ export default function FormStepper({
     lastFurnishingDate: '',
     county: '',
     email: '',
+    claimantName: '',
   });
 
   const update = (field: keyof LienFormData, value: string) => {
@@ -285,6 +287,20 @@ export default function FormStepper({
         This information will be filled into your lien document.
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Your Name or Company Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            required
+            placeholder="ABC Roofing LLC or John Smith"
+            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            value={formData.claimantName || ''}
+            onChange={(e) => update('claimantName', e.target.value)}
+          />
+          <p className="text-xs text-slate-400 mt-1">This appears as the claimant on your lien document.</p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
