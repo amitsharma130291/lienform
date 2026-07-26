@@ -1,13 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 56" fill="none" role="img" aria-label="MechanicsLienForm">
-  <!-- Shield emblem -->
-  <path d="M10 4 L28 4 L28 32 C28 42 19 48 19 48 C19 48 10 42 10 32 Z" fill="#1e2f6e"/>
-  <path d="M14 10 L24 10 L24 30 C24 37 19 42 19 42 C19 42 14 37 14 30 Z" fill="#ffffff" opacity="0.15"/>
-  <!-- Document lines on shield -->
-  <rect x="14" y="14" width="10" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
-  <rect x="14" y="19" width="10" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
-  <rect x="14" y="24" width="7" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
+<svg width="220" height="44" viewBox="0 0 220 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon mark: document with form lines -->
+  <rect width="44" height="44" rx="10" fill="#1e2f6e"/>
+  <!-- Dog-ear document shape -->
+  <rect x="9" y="7" width="18" height="23" rx="2" fill="white" opacity="0.15"/>
+  <path d="M21 7 L27 7 L27 13 L21 13 Z" fill="#1e2f6e"/>
+  <path d="M21 7 L27 13 L21 13 Z" fill="white" opacity="0.25"/>
+  <!-- Form lines -->
+  <rect x="11" y="15" width="14" height="2" rx="1" fill="white" opacity="0.85"/>
+  <rect x="11" y="19" width="11" height="2" rx="1" fill="white" opacity="0.65"/>
+  <rect x="11" y="23" width="8" height="2" rx="1" fill="white" opacity="0.5"/>
+  <!-- Seal / stamp circle -->
+  <circle cx="30" cy="33" r="8" fill="#2563eb"/>
+  <path d="M27 33 L29.5 35.5 L34 30" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
   <!-- Wordmark -->
-  <text x="36" y="26" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#1e2f6e" letter-spacing="-0.5">MechanicsLienForm</text>
-  <!-- Tagline -->
-  <text x="36" y="40" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="9.5" font-weight="400" fill="#4b5563" letter-spacing="0.2">State-Specific Lien Documents · Free During Beta</text>
+  <text x="54" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#1e2f6e" letter-spacing="0.5">MECHANICS</text>
+  <text x="54" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#1e2f6e" letter-spacing="-0.3">LienForm</text>
+  <text x="54" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="400" fill="#64748b" letter-spacing="0.3">.com</text>
 </svg>
