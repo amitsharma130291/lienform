@@ -1,5 +1,35 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "astro"
+  "framework": "astro",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?!mechanicslienform\\.com).*\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://mechanicslienform.com/$1",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ],
+      "has": [
+        {
+          "type": "host",
+          "value": "(?!mechanicslienform\\.com).*\\.vercel\\.app"
+        }
+      ]
+    }
+  ]
 }
