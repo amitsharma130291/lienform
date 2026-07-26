@@ -36,10 +36,10 @@ export default function DownloadButton({ state, role, formData, productName }: D
         disabled={!formData || loading}
         className="w-full bg-navy-700 hover:bg-navy-800 disabled:bg-gray-300 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors"
       >
-        {loading ? 'Generating PDF...' : `Download ${productName} — Free`}
+        {loading ? 'Generating PDF...' : `Download ${productName} — Free During Beta`}
       </button>
       <p className="text-center text-sm text-gray-500">
-        Free download · No account required · Instant PDF
+        Free during early access · No account required · Instant PDF
       </p>
     </div>
   );
