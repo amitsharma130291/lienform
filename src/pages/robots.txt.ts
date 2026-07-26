@@ -1,15 +1,12 @@
 export const prerender = true;
 
-export async function GET(context: { request: Request }) {
-  const host = new URL(context.request.url).hostname;
-  const isCanonical = host === 'mechanicslienform.com';
+export async function GET() {
+  const body = `User-agent: *
+Allow: /
 
-  // Block indexing on Vercel preview / non-canonical domains
-  const body = isCanonical
-    ? `User-agent: *\nAllow: /\n\nSitemap: https://mechanicslienform.com/sitemap.xml`
-    : `User-agent: *\nDisallow: /`;
+Sitemap: https://mechanicslienform.com/sitemap.xml`;
 
   return new Response(body, {
-    headers: { 'Content-Type': 'text/plain' }
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' }
   });
 }

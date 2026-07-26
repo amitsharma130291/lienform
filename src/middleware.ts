@@ -3,19 +3,10 @@ import { defineMiddleware } from 'astro:middleware';
 const CANONICAL_HOST = 'mechanicslienform.com';
 
 export const onRequest = defineMiddleware((context, next) => {
-  const host = context.request.headers.get('host') || '';
-  const hostname = host.split(':')[0]; // strip port if present
+  const host = (context.request.headers.get('host') || '').split(':')[0].toLowerCase();
 
-  // Redirect any non-canonical host (vercel.app, www, etc.) to the real domain
-  if (hostname !== CANONICAL_HOST && hostname !== `www.${CANONICAL_HOST}`) {
-    const url = new URL(context.request.url);
-    url.protocol = 'https:';
-    url.hostname = CANONICAL_HOST;
-    return Response.redirect(url.toString(), 301);
-  }
-
-  // Redirect www → non-www
-  if (hostname === `www.${CANONICAL_HOST}`) {
+  // Only intercept Vercel preview / deployment URLs — never touch the canonical domain
+  if (host.endsWith('.vercel.app')) {
     const url = new URL(context.request.url);
     url.protocol = 'https:';
     url.hostname = CANONICAL_HOST;
