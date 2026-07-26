@@ -2,16 +2,16 @@ export const prerender = true;
 
 export async function GET() {
   const pages = [
-    { url: 'https://lienform.com/', priority: '1.0', changefreq: 'weekly' },
-    { url: 'https://lienform.com/mechanics-lien/', priority: '0.9', changefreq: 'weekly' },
-    { url: 'https://lienform.com/mechanics-lien/michigan/', priority: '0.8', changefreq: 'monthly' },
-    { url: 'https://lienform.com/mechanics-lien/california/', priority: '0.8', changefreq: 'monthly' },
-    { url: 'https://lienform.com/mechanics-lien/texas/', priority: '0.8', changefreq: 'monthly' },
-    { url: 'https://lienform.com/notice-to-owner/florida/', priority: '0.8', changefreq: 'monthly' },
-    { url: 'https://lienform.com/about/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://lienform.com/contact/', priority: '0.5', changefreq: 'monthly' },
-    { url: 'https://lienform.com/privacy-policy/', priority: '0.3', changefreq: 'yearly' },
-    { url: 'https://lienform.com/terms-of-service/', priority: '0.3', changefreq: 'yearly' },
+    { url: 'https://mechanicslienform.com/', priority: '1.0', changefreq: 'weekly' },
+    { url: 'https://mechanicslienform.com/mechanics-lien/', priority: '0.9', changefreq: 'weekly' },
+    { url: 'https://mechanicslienform.com/mechanics-lien/michigan/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/mechanics-lien/california/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/mechanics-lien/texas/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/notice-to-owner/florida/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/about/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/contact/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/privacy-policy/', priority: '0.3', changefreq: 'yearly' },
+    { url: 'https://mechanicslienform.com/terms-of-service/', priority: '0.3', changefreq: 'yearly' },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

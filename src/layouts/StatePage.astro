@@ -39,12 +39,14 @@ const resolvedOgDescription = ogDescription || description;
     <meta property="og:description" content={resolvedOgDescription} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="LienForm" />
+    <meta property="og:site_name" content="MechanicsLienForm" />
+    <meta property="og:image" content="https://mechanicslienform.com/logo-lockup.png" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={resolvedOgTitle} />
     <meta name="twitter:description" content={resolvedOgDescription} />
+    <meta name="twitter:image" content="https://mechanicslienform.com/logo-lockup.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -68,13 +70,14 @@ const resolvedOgDescription = ogDescription || description;
     <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
       <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <!-- Logo -->
-        <a href="/" class="flex items-center gap-2 text-navy-800 font-bold text-xl tracking-tight hover:text-navy-900 transition-colors">
-          <svg class="w-7 h-7" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="28" height="28" rx="6" fill="#1e2f6e"/>
-            <text x="50%" y="55%" dominant-baseline="central" text-anchor="middle"
-                  font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="white">L</text>
-          </svg>
-          LienForm
+        <a href="/" class="flex items-center gap-2 hover:opacity-90 transition-opacity" aria-label="MechanicsLienForm home">
+          <img
+            src="/logo.svg"
+            alt="MechanicsLienForm"
+            width="220"
+            height="48"
+            class="h-10 w-auto"
+          />
         </a>
 
         <!-- Nav Links -->
@@ -122,7 +125,7 @@ const resolvedOgDescription = ogDescription || description;
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <p class="text-sm text-slate-500 text-center md:text-left">
-            &copy; 2024 LienForm.com &mdash; This form is provided for informational purposes only.
+            &copy; 2024 MechanicsLienForm.com &mdash; This form is provided for informational purposes only.
             Not legal advice. Consult a licensed attorney in your state.
           </p>
           <div class="flex items-center gap-4 text-xs text-slate-400">

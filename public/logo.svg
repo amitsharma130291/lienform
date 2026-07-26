@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 56" fill="none" role="img" aria-label="MechanicsLienForm">
+  <!-- Shield emblem -->
+  <path d="M10 4 L28 4 L28 32 C28 42 19 48 19 48 C19 48 10 42 10 32 Z" fill="#1e2f6e"/>
+  <path d="M14 10 L24 10 L24 30 C24 37 19 42 19 42 C19 42 14 37 14 30 Z" fill="#ffffff" opacity="0.15"/>
+  <!-- Document lines on shield -->
+  <rect x="14" y="14" width="10" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
+  <rect x="14" y="19" width="10" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
+  <rect x="14" y="24" width="7" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
+  <!-- Wordmark -->
+  <text x="36" y="26" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#1e2f6e" letter-spacing="-0.5">MechanicsLienForm</text>
+  <!-- Tagline -->
+  <text x="36" y="40" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="9.5" font-weight="400" fill="#4b5563" letter-spacing="0.2">State-Specific Lien Documents · Free During Beta</text>
+</svg>
