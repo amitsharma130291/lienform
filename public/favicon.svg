@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="6" fill="#1e2f6e"/>
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
-        font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">L</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="#1e2f6e"/>
+  <!-- Document shape -->
+  <rect x="6" y="5" width="14" height="18" rx="2" fill="white" opacity="0.18"/>
+  <!-- Dog-ear fold -->
+  <path d="M14 5 L20 5 L20 10 L14 10 Z" fill="#1e2f6e"/>
+  <path d="M14 5 L20 10 L14 10 Z" fill="white" opacity="0.3"/>
+  <!-- Form lines -->
+  <rect x="8" y="12" width="10" height="1.5" rx="0.75" fill="white" opacity="0.9"/>
+  <rect x="8" y="15" width="8" height="1.5" rx="0.75" fill="white" opacity="0.7"/>
+  <rect x="8" y="18" width="6" height="1.5" rx="0.75" fill="white" opacity="0.5"/>
+  <!-- Blue seal circle -->
+  <circle cx="23" cy="24" r="7" fill="#2563eb"/>
+  <!-- Checkmark -->
+  <path d="M20.5 24 L22.5 26 L26 21.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>

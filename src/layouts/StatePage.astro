@@ -46,14 +46,15 @@ const resolvedOgDescription = ogDescription || description;
     <meta name="twitter:title" content={resolvedOgTitle} />
     <meta name="twitter:description" content={resolvedOgDescription} />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <!-- Favicon: dedicated square icon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.svg" />
 
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -66,24 +67,23 @@ const resolvedOgDescription = ogDescription || description;
   <body class="min-h-screen flex flex-col bg-white font-sans antialiased">
     <!-- Global Navigation -->
     <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
-      <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+      <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between">
+        <!-- Logo — taller for visibility -->
+        <a href="/" class="flex items-center hover:opacity-90 transition-opacity">
           <img
             src="/logo.svg"
             alt="MechanicsLienForm — Free Mechanics Lien Generator"
-            class="h-9 w-auto"
-            width="200"
-            height="36"
+            height="44"
+            style="height:44px; width:auto;"
           />
         </a>
 
         <!-- Nav Links -->
         <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-          <a href="/mechanics-lien/" class="hover:text-navy-700 transition-colors">Mechanics Lien</a>
-          <a href="/notice-to-owner/florida/" class="hover:text-navy-700 transition-colors">Notice to Owner</a>
-          <a href="/mechanics-lien/" class="hover:text-navy-700 transition-colors">All States</a>
-          <a href="/contact/" class="hover:text-navy-700 transition-colors">Contact</a>
+          <a href="/mechanics-lien/" class="hover:text-[#1e2f6e] transition-colors">Mechanics Lien</a>
+          <a href="/notice-to-owner/florida/" class="hover:text-[#1e2f6e] transition-colors">Notice to Owner</a>
+          <a href="/mechanics-lien/" class="hover:text-[#1e2f6e] transition-colors">All States</a>
+          <a href="/contact/" class="hover:text-[#1e2f6e] transition-colors">Contact</a>
         </div>
 
         <!-- Mobile menu button -->
@@ -100,10 +100,10 @@ const resolvedOgDescription = ogDescription || description;
 
       <!-- Mobile menu -->
       <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2">
-        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Mechanics Lien</a>
-        <a href="/notice-to-owner/florida/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Notice to Owner</a>
-        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">All States</a>
-        <a href="/contact/" class="block py-2 text-sm font-medium text-slate-700 hover:text-navy-700">Contact</a>
+        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Mechanics Lien</a>
+        <a href="/notice-to-owner/florida/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Notice to Owner</a>
+        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">All States</a>
+        <a href="/contact/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Contact</a>
       </div>
     </header>
 
@@ -116,10 +116,10 @@ const resolvedOgDescription = ogDescription || description;
     <footer class="bg-slate-50 border-t border-slate-200 mt-16">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-wrap gap-4 justify-center mb-4 text-sm">
-          <a href="/about/" class="text-gray-400 hover:text-white transition-colors">About</a>
-          <a href="/contact/" class="text-gray-400 hover:text-white transition-colors">Contact</a>
-          <a href="/privacy-policy/" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-          <a href="/terms-of-service/" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+          <a href="/about/" class="text-slate-500 hover:text-slate-700 transition-colors">About</a>
+          <a href="/contact/" class="text-slate-500 hover:text-slate-700 transition-colors">Contact</a>
+          <a href="/privacy-policy/" class="text-slate-500 hover:text-slate-700 transition-colors">Privacy Policy</a>
+          <a href="/terms-of-service/" class="text-slate-500 hover:text-slate-700 transition-colors">Terms of Service</a>
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <p class="text-sm text-slate-500 text-center md:text-left">
