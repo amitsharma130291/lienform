@@ -1,9 +1,6 @@
 ---
 import StatePage from '../../../layouts/StatePage.astro';
-import FormStepper from '../../../components/FormStepper';
-import DeadlineCalculator from '../../../components/DeadlineCalculator';
-import PDFPreview from '../../../components/PDFPreview';
-import DownloadButton from '../../../components/DownloadButton';
+import LienFormApp from '../../../components/LienFormApp';
 
 const title = "Michigan Mechanics Lien Form 2024 — Construction Lien Generator (MCL 570)";
 const description = "Generate a Michigan mechanics lien form for construction projects. Role-aware deadline calculator. MCL 570.1101–570.1305, 2023 amendments. Instant free PDF bundle.";
@@ -117,41 +114,15 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p class="text-sm text-navy-600 mt-2">⚠️ Looking for a Michigan vehicle/garage lien? That's a different form (BDVR-35, Secretary of State). This page is for <strong>construction real property liens only</strong>.</p>
     </div>
 
-    <!-- 3-step form -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Michigan Mechanics Lien</h2>
-      <FormStepper
-        client:load
-        defaultState="michigan"
-        documentType="mechanics-lien"
-        onFormComplete={(data) => {}}
-      />
-    </div>
-
-    <!-- Deadline calculator -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-semibold text-navy-800 mb-4">Michigan Filing Deadline Calculator</h2>
-      <DeadlineCalculator client:load state="michigan" role="" dateType="last-furnishing" />
-    </div>
-
-    <!-- Preview + checkout -->
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      <div>
-        <PDFPreview client:load formData={null} state="michigan" />
-      </div>
-      <div class="flex flex-col justify-center">
-        <DownloadButton
-          client:load
-          state="michigan"
-          role=""
-          formData={null}
-          productName="Michigan Mechanics Lien Bundle"
-        />
-      </div>
-    </div>
+    <LienFormApp
+      client:load
+      defaultState="michigan"
+      documentType="mechanics-lien"
+      productName="Michigan Mechanics Lien Bundle"
+    />
 
     <!-- SEO content -->
-    <div class="prose prose-navy max-w-none">
+    <div class="prose prose-lg max-w-none">
 
       <h2>Important Note: This Is a Construction Lien — Not a Vehicle Lien</h2>
 

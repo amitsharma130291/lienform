@@ -1,9 +1,6 @@
 ---
 import StatePage from '../../../layouts/StatePage.astro';
-import FormStepper from '../../../components/FormStepper';
-import DeadlineCalculator from '../../../components/DeadlineCalculator';
-import PDFPreview from '../../../components/PDFPreview';
-import DownloadButton from '../../../components/DownloadButton';
+import LienFormApp from '../../../components/LienFormApp';
 
 const title = "Texas Mechanics Lien Form 2024 — Property Code Ch. 53 (HB 2237) Generator";
 const description = "Generate a Texas mechanics lien (construction, not vehicle) under Tex. Prop. Code Ch. 53, updated by HB 2237 (eff. Jan 1, 2022). Role-aware deadline calculator. Free PDF bundle.";
@@ -121,41 +118,15 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <strong>⚠️ Residential project?</strong> Texas HB 2237 requires subcontractors and suppliers to send monthly notices to the GC and owner by the 15th of each month. Failure to send monthly notices limits your lien rights to unpaid amounts at the time of notice.
     </div>
 
-    <!-- 3-step form -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Texas Mechanics Lien</h2>
-      <FormStepper
-        client:load
-        defaultState="texas"
-        documentType="mechanics-lien"
-        onFormComplete={(data) => {}}
-      />
-    </div>
-
-    <!-- Deadline calculator -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-semibold text-navy-800 mb-4">Texas Filing Deadline Calculator</h2>
-      <DeadlineCalculator client:load state="texas" role="" dateType="last-furnishing" />
-    </div>
-
-    <!-- Preview + checkout -->
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      <div>
-        <PDFPreview client:load formData={null} state="texas" />
-      </div>
-      <div class="flex flex-col justify-center">
-        <DownloadButton
-          client:load
-          state="texas"
-          role=""
-          formData={null}
-          productName="Texas Mechanics Lien Bundle"
-        />
-      </div>
-    </div>
+    <LienFormApp
+      client:load
+      defaultState="texas"
+      documentType="mechanics-lien"
+      productName="Texas Mechanics Lien Bundle"
+    />
 
     <!-- SEO content -->
-    <div class="prose prose-navy max-w-none">
+    <div class="prose prose-lg max-w-none">
 
       <h2>Texas Construction Mechanics Lien — Not a Vehicle Lien</h2>
 

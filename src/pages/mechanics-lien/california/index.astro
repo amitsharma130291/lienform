@@ -1,9 +1,6 @@
 ---
 import StatePage from '../../../layouts/StatePage.astro';
-import FormStepper from '../../../components/FormStepper';
-import DeadlineCalculator from '../../../components/DeadlineCalculator';
-import PDFPreview from '../../../components/PDFPreview';
-import DownloadButton from '../../../components/DownloadButton';
+import LienFormApp from '../../../components/LienFormApp';
 
 const title = "California Mechanics Lien Form 2024 — Civil Code §8000 Generator (Not §3082)";
 const description = "Generate a California mechanics lien under Civil Code §8000–9566 (SB 189, 2019). 20-day Preliminary Notice auto-included for subs. Instant PDF bundle Free.";
@@ -147,41 +144,15 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p class="text-navy-800 font-medium">A California mechanics lien is a legal claim against real property under <strong>Civil Code §8000–9566 (SB 189)</strong>. Note: the old §3082 statute is <strong>repealed</strong> — any form citing §3082 is outdated. Subcontractors and material suppliers must first serve a 20-Day Preliminary Notice (§8200) within 20 days of first furnishing before filing a lien.</p>
     </div>
 
-    <!-- 3-step form -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your California Mechanics Lien</h2>
-      <FormStepper
-        client:load
-        defaultState="california"
-        documentType="mechanics-lien"
-        onFormComplete={(data) => {}}
-      />
-    </div>
-
-    <!-- Deadline calculator -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-semibold text-navy-800 mb-4">California Filing Deadline Calculator</h2>
-      <DeadlineCalculator client:load state="california" role="" dateType="last-furnishing" />
-    </div>
-
-    <!-- Preview + checkout -->
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      <div>
-        <PDFPreview client:load formData={null} state="california" />
-      </div>
-      <div class="flex flex-col justify-center">
-        <DownloadButton
-          client:load
-          state="california"
-          role=""
-          formData={null}
-          productName="California Mechanics Lien Bundle"
-        />
-      </div>
-    </div>
+    <LienFormApp
+      client:load
+      defaultState="california"
+      documentType="mechanics-lien"
+      productName="California Mechanics Lien Bundle"
+    />
 
     <!-- SEO content -->
-    <div class="prose prose-navy max-w-none">
+    <div class="prose prose-lg max-w-none">
 
       <h2>Critical: Use Civil Code §8000 — Not §3082 (Repealed)</h2>
 

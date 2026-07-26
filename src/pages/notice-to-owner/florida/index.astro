@@ -1,9 +1,6 @@
 ---
 import StatePage from '../../../layouts/StatePage.astro';
-import FormStepper from '../../../components/FormStepper';
-import DeadlineCalculator from '../../../components/DeadlineCalculator';
-import PDFPreview from '../../../components/PDFPreview';
-import DownloadButton from '../../../components/DownloadButton';
+import LienFormApp from '../../../components/LienFormApp';
 
 const title = "Florida Notice to Owner Form — Free Generator (Fla. Stat. §713.06)";
 const description = "Generate a Florida Notice to Owner form under Fla. Stat. §713.06. Must be served within 45 days of first furnishing. Instant free PDF. Role-aware deadline calculator.";
@@ -117,41 +114,16 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p class="text-sm text-navy-600 mt-2">💡 <strong>ntoflorida.com charges to FILE.</strong> We generate the document (Free) — you serve it yourself by certified mail.</p>
     </div>
 
-    <!-- 3-step form -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-2xl font-semibold text-navy-800 mb-6">Generate Your Florida Notice to Owner</h2>
-      <FormStepper
-        client:load
-        defaultState="florida"
-        documentType="notice-to-owner"
-        onFormComplete={(data) => {}}
-      />
-    </div>
-
-    <!-- Deadline calculator -->
-    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-semibold text-navy-800 mb-4">Florida NTO Deadline Calculator</h2>
-      <DeadlineCalculator client:load state="florida" role="" dateType="first-furnishing" />
-    </div>
-
-    <!-- Preview + checkout -->
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      <div>
-        <PDFPreview client:load formData={null} state="florida" />
-      </div>
-      <div class="flex flex-col justify-center">
-        <DownloadButton
-          client:load
-          state="florida"
-          role=""
-          formData={null}
-          productName="Florida Notice to Owner"
-        />
-      </div>
-    </div>
+    <LienFormApp
+      client:load
+      defaultState="florida"
+      documentType="notice-to-owner"
+      productName="Florida Notice to Owner"
+      dateType="first-furnishing"
+    />
 
     <!-- SEO content -->
-    <div class="prose prose-navy max-w-none">
+    <div class="prose prose-lg max-w-none">
 
       <p>A Florida Notice to Owner (NTO) is a legally required notice that subcontractors, sub-subcontractors, and material suppliers must serve on the property owner (and general contractor) within 45 days of first furnishing labor or materials. Under Florida Statute §713.06, failing to serve the NTO on time eliminates the right to file a mechanics lien.</p>
 
