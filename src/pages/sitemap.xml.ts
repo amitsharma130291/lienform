@@ -8,6 +8,10 @@ export async function GET() {
     { url: 'https://lienform.com/mechanics-lien/california/', priority: '0.8', changefreq: 'monthly' },
     { url: 'https://lienform.com/mechanics-lien/texas/', priority: '0.8', changefreq: 'monthly' },
     { url: 'https://lienform.com/notice-to-owner/florida/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://lienform.com/about/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://lienform.com/contact/', priority: '0.5', changefreq: 'monthly' },
+    { url: 'https://lienform.com/privacy-policy/', priority: '0.3', changefreq: 'yearly' },
+    { url: 'https://lienform.com/terms-of-service/', priority: '0.3', changefreq: 'yearly' },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
