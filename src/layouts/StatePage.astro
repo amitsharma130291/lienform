@@ -20,6 +20,8 @@ const {
 const canonicalUrl = canonical || Astro.url.href;
 const resolvedOgTitle = ogTitle || title;
 const resolvedOgDescription = ogDescription || description;
+
+const GA_ID = 'G-H68Z9GWZ12';
 ---
 
 <!DOCTYPE html>
@@ -57,6 +59,17 @@ const resolvedOgDescription = ogDescription || description;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Google Analytics 4 -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', GA_ID, {
+        page_path: window.location.pathname,
+      });
+    </script>
 
     <!-- JSON-LD Structured Data -->
     {schema && (
