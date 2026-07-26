@@ -3,10 +3,10 @@ import StatePage from '../../../layouts/StatePage.astro';
 import FormStepper from '../../../components/FormStepper';
 import DeadlineCalculator from '../../../components/DeadlineCalculator';
 import PDFPreview from '../../../components/PDFPreview';
-import CheckoutButton from '../../../components/CheckoutButton';
+import DownloadButton from '../../../components/DownloadButton';
 
 const title = "Texas Mechanics Lien Form 2024 — Property Code Ch. 53 (HB 2237) Generator";
-const description = "Generate a Texas mechanics lien (construction, not vehicle) under Tex. Prop. Code Ch. 53, updated by HB 2237 (eff. Jan 1, 2022). Role-aware deadline calculator. $24.99 PDF bundle.";
+const description = "Generate a Texas mechanics lien (construction, not vehicle) under Tex. Prop. Code Ch. 53, updated by HB 2237 (eff. Jan 1, 2022). Role-aware deadline calculator. Free PDF bundle.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "File with the county clerk",
-      "text": "Pay $24.99 to download your complete bundle, then file the notarized Affidavit Claiming a Lien with the county clerk in the county where the property is located."
+      "text": "Pay Free to download your complete bundle, then file the notarized Affidavit Claiming a Lien with the county clerk in the county where the property is located."
     }
   ]
 };
@@ -144,12 +144,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <PDFPreview client:load formData={null} state="texas" />
       </div>
       <div class="flex flex-col justify-center">
-        <CheckoutButton
+        <DownloadButton
           client:load
           state="texas"
           role=""
           formData={null}
-          price={24.99}
           productName="Texas Mechanics Lien Bundle"
         />
       </div>
@@ -364,7 +363,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p>LienForm's Texas bundle includes the retainage notice template and explains when to use it.</p>
 
-      <p><strong>Generate Your Texas Mechanics Lien — $24.99:</strong> Compliant with Tex. Prop. Code Ch. 53 (HB 2237, 2021) · Construction real property only (not a VTR-265-M vehicle lien) · Affidavit Claiming a Lien with notarization block · Monthly notice templates for residential projects · Retainage notice included · Deadline calculator by role and project type</p>
+      <p><strong>Generate Your Texas Mechanics Lien — Free:</strong> Compliant with Tex. Prop. Code Ch. 53 (HB 2237, 2021) · Construction real property only (not a VTR-265-M vehicle lien) · Affidavit Claiming a Lien with notarization block · Monthly notice templates for residential projects · Retainage notice included · Deadline calculator by role and project type</p>
 
       <p>No account required. Instant download.</p>
 

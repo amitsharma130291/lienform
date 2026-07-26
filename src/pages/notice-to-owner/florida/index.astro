@@ -3,10 +3,10 @@ import StatePage from '../../../layouts/StatePage.astro';
 import FormStepper from '../../../components/FormStepper';
 import DeadlineCalculator from '../../../components/DeadlineCalculator';
 import PDFPreview from '../../../components/PDFPreview';
-import CheckoutButton from '../../../components/CheckoutButton';
+import DownloadButton from '../../../components/DownloadButton';
 
 const title = "Florida Notice to Owner Form — Free Generator (Fla. Stat. §713.06)";
-const description = "Generate a Florida Notice to Owner form under Fla. Stat. §713.06. Must be served within 45 days of first furnishing. Instant PDF $14.99. Role-aware deadline calculator.";
+const description = "Generate a Florida Notice to Owner form under Fla. Stat. §713.06. Must be served within 45 days of first furnishing. Instant free PDF. Role-aware deadline calculator.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Download and serve",
-      "text": "Pay $14.99 and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts."
+      "text": "Pay Free and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts."
     }
   ]
 };
@@ -114,7 +114,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
     <!-- Featured snippet answer -->
     <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
       <p class="text-navy-800 font-medium">A Florida Notice to Owner (NTO) is a legally required notice that subcontractors, sub-subcontractors, and material suppliers must serve on the property owner (and general contractor) within <strong>45 days of FIRST furnishing</strong> labor or materials. Under Florida Statute §713.06, failing to serve the NTO on time eliminates the right to file a mechanics lien.</p>
-      <p class="text-sm text-navy-600 mt-2">💡 <strong>ntoflorida.com charges to FILE.</strong> We generate the document ($14.99) — you serve it yourself by certified mail.</p>
+      <p class="text-sm text-navy-600 mt-2">💡 <strong>ntoflorida.com charges to FILE.</strong> We generate the document (Free) — you serve it yourself by certified mail.</p>
     </div>
 
     <!-- 3-step form -->
@@ -140,12 +140,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <PDFPreview client:load formData={null} state="florida" />
       </div>
       <div class="flex flex-col justify-center">
-        <CheckoutButton
+        <DownloadButton
           client:load
           state="florida"
           role=""
           formData={null}
-          price={14.99}
           productName="Florida Notice to Owner"
         />
       </div>
@@ -158,7 +157,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p>Unlike a mechanics lien — which is filed after non-payment to encumber the property — the Notice to Owner is served <strong>before</strong> any dispute arises, at the very start of your work on a project. It is a prerequisite, not a remedy.</p>
 
-      <p><strong>LienForm generates the Florida NTO document for $14.99 — not a service bureau.</strong> Some companies (like ntoflorida.com) charge ongoing fees to handle the filing and mailing for you. LienForm generates the completed document, which you serve yourself. If you are comfortable with certified mail, $14.99 is all you need.</p>
+      <p><strong>LienForm generates the Florida NTO document for Free — not a service bureau.</strong> Some companies (like ntoflorida.com) charge ongoing fees to handle the filing and mailing for you. LienForm generates the completed document, which you serve yourself. If you are comfortable with certified mail, Free is all you need.</p>
 
       <h2>Florida Lien Law — Fla. Stat. §713</h2>
 
@@ -265,7 +264,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <li>The date you mailed it</li>
       </ul>
 
-      <p>LienForm's $14.99 bundle includes a proof of service affidavit form that documents when, how, and to whom you served the NTO.</p>
+      <p>LienForm's Free bundle includes a proof of service affidavit form that documents when, how, and to whom you served the NTO.</p>
 
       <h2>What to Do If You Miss the Deadline</h2>
 
@@ -320,7 +319,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
           </tr>
           <tr>
             <td>Cost (LienForm)</td>
-            <td>$14.99</td>
+            <td>Free</td>
             <td>Separate (not yet available on LienForm)</td>
           </tr>
         </tbody>
@@ -335,12 +334,12 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <ol>
         <li><strong>Enter your project details.</strong> Provide your company name and address, the property address, the owner's name and address, the general contractor's name and address, your first furnishing date, and a description of the labor or materials you are providing.</li>
         <li><strong>Preview the document.</strong> Review the completed NTO form. Confirm all names, addresses, and dates are correct before serving.</li>
-        <li><strong>Download and serve.</strong> Pay $14.99 and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts.</li>
+        <li><strong>Download and serve.</strong> Pay Free and download your PDF immediately. Print two copies — one for the owner and one for the GC. Mail both by certified mail, return receipt requested, and keep your tracking receipts.</li>
       </ol>
 
       <p><strong>No account required.</strong> Your first furnishing date auto-calculates the deadline so you know exactly how much time remains.</p>
 
-      <p><strong>Generate Your Florida NTO — $14.99:</strong> Compliant with Fla. Stat. §713.06 · Role-aware deadline calculator · Instant PDF download · No account required</p>
+      <p><strong>Generate Your Florida NTO — Free:</strong> Compliant with Fla. Stat. §713.06 · Role-aware deadline calculator · Instant PDF download · No account required</p>
 
       <p><em>Content reviewed for accuracy against Fla. Stat. §713.06 and related provisions of Florida Statutes Chapter 713. This is not legal advice. Consult a licensed Florida attorney for advice specific to your situation.</em></p>
 

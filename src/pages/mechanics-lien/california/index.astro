@@ -3,10 +3,10 @@ import StatePage from '../../../layouts/StatePage.astro';
 import FormStepper from '../../../components/FormStepper';
 import DeadlineCalculator from '../../../components/DeadlineCalculator';
 import PDFPreview from '../../../components/PDFPreview';
-import CheckoutButton from '../../../components/CheckoutButton';
+import DownloadButton from '../../../components/DownloadButton';
 
 const title = "California Mechanics Lien Form 2024 — Civil Code §8000 Generator (Not §3082)";
-const description = "Generate a California mechanics lien under Civil Code §8000–9566 (SB 189, 2019). 20-day Preliminary Notice auto-included for subs. Instant PDF bundle $24.99.";
+const description = "Generate a California mechanics lien under Civil Code §8000–9566 (SB 189, 2019). 20-day Preliminary Notice auto-included for subs. Instant PDF bundle Free.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Download your bundle",
-      "text": "Pay $24.99 to download your complete lien bundle including the Claim of Lien, 20-Day Preliminary Notice (if applicable), deadline confirmation, and county recorder filing guide."
+      "text": "Pay Free to download your complete lien bundle including the Claim of Lien, 20-Day Preliminary Notice (if applicable), deadline confirmation, and county recorder filing guide."
     }
   ]
 };
@@ -170,12 +170,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <PDFPreview client:load formData={null} state="california" />
       </div>
       <div class="flex flex-col justify-center">
-        <CheckoutButton
+        <DownloadButton
           client:load
           state="california"
           role=""
           formData={null}
-          price={24.99}
           productName="California Mechanics Lien Bundle"
         />
       </div>
@@ -323,7 +322,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <h2>LienForm California Bundle — What's Included</h2>
 
-      <p>For California subcontractors and suppliers, the $24.99 bundle automatically includes:</p>
+      <p>For California subcontractors and suppliers, the Free bundle automatically includes:</p>
 
       <ul>
         <li><strong>Claim of Lien</strong> (Civ. Code §8410 compliant, with required statutory warning)</li>
@@ -385,7 +384,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p>Recording fees in California are set by state law and charged per page. As of 2024, the base recording fee is approximately $15 for the first page and $3 per additional page, though some counties charge slightly more. Contact the specific county recorder or check their website to confirm current fees.</p>
 
-      <p><strong>Generate Your California Mechanics Lien — $24.99:</strong> For subcontractors and suppliers: Includes Preliminary Notice automatically · Claim of Lien (Civ. Code §8000 compliant, not the repealed §3082) · Deadline confirmation · County recorder guide · Proof of service affidavit · Lien release</p>
+      <p><strong>Generate Your California Mechanics Lien — Free:</strong> For subcontractors and suppliers: Includes Preliminary Notice automatically · Claim of Lien (Civ. Code §8000 compliant, not the repealed §3082) · Deadline confirmation · County recorder guide · Proof of service affidavit · Lien release</p>
 
       <p>No account required. Instant download.</p>
 

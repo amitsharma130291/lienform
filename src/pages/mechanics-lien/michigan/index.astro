@@ -3,10 +3,10 @@ import StatePage from '../../../layouts/StatePage.astro';
 import FormStepper from '../../../components/FormStepper';
 import DeadlineCalculator from '../../../components/DeadlineCalculator';
 import PDFPreview from '../../../components/PDFPreview';
-import CheckoutButton from '../../../components/CheckoutButton';
+import DownloadButton from '../../../components/DownloadButton';
 
 const title = "Michigan Mechanics Lien Form 2024 — Construction Lien Generator (MCL 570)";
-const description = "Generate a Michigan mechanics lien form for construction projects. Role-aware deadline calculator. MCL 570.1101–570.1305, 2023 amendments. Instant PDF bundle $24.99.";
+const description = "Generate a Michigan mechanics lien form for construction projects. Role-aware deadline calculator. MCL 570.1101–570.1305, 2023 amendments. Instant free PDF bundle.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Download your bundle",
-      "text": "Pay $24.99 to download your complete lien bundle including the lien claim, deadline confirmation, and county recorder filing guide."
+      "text": "Pay free to download your complete lien bundle including the lien claim, deadline confirmation, and county recorder filing guide."
     }
   ]
 };
@@ -140,12 +140,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <PDFPreview client:load formData={null} state="michigan" />
       </div>
       <div class="flex flex-col justify-center">
-        <CheckoutButton
+        <DownloadButton
           client:load
           state="michigan"
           role=""
           formData={null}
-          price={24.99}
           productName="Michigan Mechanics Lien Bundle"
         />
       </div>
@@ -367,7 +366,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <ol>
         <li><strong>Fill in your project details.</strong> Enter the property address, owner information, your company information, the amount owed, and your last furnishing date. Our role-aware system asks the right questions based on whether you are a GC, subcontractor, or supplier.</li>
         <li><strong>Preview your documents.</strong> Review the generated lien form before downloading. Confirm all details are correct. For subcontractors and suppliers, your bundle will automatically include the Notice of Furnishing if you have not yet filed one.</li>
-        <li><strong>Download and file.</strong> Pay $24.99 and download your complete PDF bundle instantly. No account required. The bundle includes the Claim of Lien, a deadline confirmation, county recorder filing instructions for your specific county, a proof of service affidavit, and a lien release form.</li>
+        <li><strong>Download and file.</strong> Pay free and download your complete PDF bundle instantly. No account required. The bundle includes the Claim of Lien, a deadline confirmation, county recorder filing instructions for your specific county, a proof of service affidavit, and a lien release form.</li>
       </ol>
 
       <p><strong>Your bundle includes:</strong> Claim of Lien (MCL 570.1101 compliant) · Deadline confirmation · Wayne/Oakland/Kent county filing guide · Proof of service affidavit · Lien release form · Notice of Furnishing (if required for your role)</p>
