@@ -1,28 +1,35 @@
 // POST /api/checkout
 // Creates a Dodo Payments checkout session and returns the redirect URL.
-// The form data is encoded in the success_url so we can regenerate the PDF
-// after payment without storing anything server-side.
 
 export const prerender = false;
 
-const DODO_API_KEY = import.meta.env.DODO_API_KEY;
-const DODO_PRODUCT_ID = import.meta.env.DODO_PRODUCT_ID;
-const DODO_TEST_MODE = import.meta.env.DODO_TEST_MODE === 'true';
-const BASE_URL = import.meta.env.BASE_URL || 'https://mechanicslienform.com';
-
-const DODO_BASE = DODO_TEST_MODE
-  ? 'https://test.dodopayments.com'
-  : 'https://live.dodopayments.com';
-
 export async function POST({ request }: { request: Request }) {
   try {
+    // Read env vars inside the function (not at module level) so they're
+    // always fresh from the Vercel runtime environment
+    const DODO_API_KEY = process.env.DODO_API_KEY;
+    const DODO_PRODUCT_ID = process.env.DODO_PRODUCT_ID;
+    const DODO_TEST_MODE = process.env.DODO_TEST_MODE === 'true';
+    const SITE_URL = process.env.SITE_URL || 'https://mechanicslienform.com';
+
+    if (!DODO_API_KEY) {
+      console.error('DODO_API_KEY not set');
+      return new Response(
+        JSON.stringify({ error: 'Payment not configured', debug: 'missing DODO_API_KEY' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const DODO_BASE = DODO_TEST_MODE
+      ? 'https://test.dodopayments.com'
+      : 'https://live.dodopayments.com';
+
     const body = await request.json();
 
     // Encode form data as base64 to pass through the redirect URL
     const formDataEncoded = btoa(encodeURIComponent(JSON.stringify(body)));
-
-    const successUrl = `${BASE_URL}/success?data=${formDataEncoded}`;
-    const cancelUrl = `${BASE_URL}/mechanics-lien/`;
+    const successUrl = `${SITE_URL}/success?data=${formDataEncoded}`;
+    const cancelUrl = `${SITE_URL}/mechanics-lien/`;
 
     const checkoutPayload = {
       product_cart: [
@@ -41,6 +48,8 @@ export async function POST({ request }: { request: Request }) {
       },
     };
 
+    console.log('Calling Dodo API:', DODO_BASE, 'test mode:', DODO_TEST_MODE);
+
     const response = await fetch(`${DODO_BASE}/checkouts`, {
       method: 'POST',
       headers: {
@@ -50,24 +59,42 @@ export async function POST({ request }: { request: Request }) {
       body: JSON.stringify(checkoutPayload),
     });
 
+    const responseText = await response.text();
+    console.log('Dodo response status:', response.status);
+    console.log('Dodo response body:', responseText);
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Dodo API error:', response.status, errorText);
       return new Response(
-        JSON.stringify({ error: 'Payment session creation failed', details: errorText }),
+        JSON.stringify({
+          error: 'Payment session creation failed',
+          status: response.status,
+          details: responseText,
+        }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const session = await response.json();
+    let session: any;
+    try {
+      session = JSON.parse(responseText);
+    } catch {
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON from Dodo', raw: responseText }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
-    // Dodo returns a checkout URL in the response
-    const checkoutUrl = session.url || session.payment_url || session.checkout_url;
+    // Dodo returns checkout URL — try multiple possible field names
+    const checkoutUrl =
+      session.url ||
+      session.payment_url ||
+      session.checkout_url ||
+      session.link ||
+      session.redirect_url;
 
     if (!checkoutUrl) {
-      console.error('No checkout URL in Dodo response:', session);
       return new Response(
-        JSON.stringify({ error: 'No checkout URL returned', session }),
+        JSON.stringify({ error: 'No checkout URL in response', session }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -76,10 +103,10 @@ export async function POST({ request }: { request: Request }) {
       JSON.stringify({ url: checkoutUrl }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
-  } catch (err) {
+  } catch (err: any) {
     console.error('Checkout error:', err);
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ error: 'Internal server error', message: err.message }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
