@@ -43,6 +43,38 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      "name": "How much does it cost to file a mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The county recording fee is typically $15–$30 per document (varies by county and number of pages). Wayne County charges approximately $15 for the first page. There are no state filing fees beyond the county recording fee. MechanicsLienForm generates your lien documents free during early access so the only cost is the county recording fee."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a homeowner file a mechanics lien in Michigan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Under MCL 570.1107, mechanics lien rights belong to contractors, subcontractors, material suppliers, equipment lessors, and design professionals who have provided labor, materials, or services to a construction project. A property owner cannot file a mechanics lien against their own property. If you are a homeowner dealing with a lien filed against your property, consult a Michigan construction attorney."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I remove a mechanics lien from my Michigan property?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A Michigan mechanics lien can be removed by: (1) paying the claimant, who then records a Lien Release; (2) posting a lien bond (surety bond) equal to 1.5x the lien amount, which discharges the lien from the property; (3) filing a lawsuit challenging the lien's validity; or (4) waiting — if the claimant does not file an enforcement lawsuit within 1 year of recording, the lien expires. Consult a Michigan attorney for your specific situation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if my Michigan mechanics lien deadline has passed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If the 90-day (residential) or 180-day (commercial) deadline has passed, you cannot file a valid mechanics lien. However, you may still have options: (1) file a breach of contract lawsuit — the statute of limitations for contract claims is 6 years in Michigan; (2) pursue payment through small claims court for amounts under $7,000; (3) report non-payment to the contractor's licensing board; (4) send a demand letter threatening litigation. Consult a Michigan attorney immediately if your deadline has passed."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What is the difference between a Michigan mechanics lien and a vehicle lien?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -54,7 +86,7 @@ const faqSchema = {
       "name": "Can I file a Michigan mechanics lien myself without a lawyer?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Michigan law does not require an attorney to file a construction lien. However, the form must be completed accurately and recorded within the deadline. LienForm generates the correct form with your project details pre-filled."
+        "text": "Yes. Michigan law does not require an attorney to file a construction lien. However, the form must be completed accurately, notarized, and recorded within the deadline. MechanicsLienForm generates the correct form with your project details pre-filled."
       }
     }
   ]
@@ -78,7 +110,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Download your bundle",
-      "text": "Pay free to download your complete lien bundle including the lien claim, deadline confirmation, and county recorder filing guide."
+      "text": "Download your complete lien bundle including the lien claim, deadline confirmation, and county recorder filing guide."
     }
   ]
 };
@@ -122,7 +154,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
     />
 
     <!-- SEO content -->
-    <div class="prose prose-lg max-w-none">
+    <div class="prose prose-lg max-w-none mt-12">
 
       <h2>Important Note: This Is a Construction Lien — Not a Vehicle Lien</h2>
 
@@ -145,6 +177,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <ul>
         <li>MCL 570.1107: Defines who qualifies as a lien claimant (contractors, subcontractors, sub-subcontractors, material suppliers, equipment lessors, and certain design professionals)</li>
         <li>MCL 570.1109: Notice of Furnishing requirements for subcontractors and suppliers</li>
+        <li>MCL 570.1110: Sworn statement requirements for general contractors</li>
         <li>MCL 570.1111: Deadlines for recording a claim of lien</li>
         <li>MCL 570.1115: Requirements for the content of a claim of lien</li>
         <li>MCL 570.1117: Owner notification after recording</li>
@@ -313,7 +346,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p><strong>What you bring to the Register of Deeds:</strong></p>
       <ol>
-        <li>The completed, signed Claim of Lien form (generated by LienForm)</li>
+        <li>The completed, notarized Claim of Lien form (generated by LienForm)</li>
         <li>Recording fee payment (cash or check accepted at most offices; call ahead for credit card acceptance)</li>
         <li>A self-addressed stamped envelope if you want the recorded original returned by mail</li>
       </ol>
@@ -337,14 +370,143 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <ol>
         <li><strong>Fill in your project details.</strong> Enter the property address, owner information, your company information, the amount owed, and your last furnishing date. Our role-aware system asks the right questions based on whether you are a GC, subcontractor, or supplier.</li>
         <li><strong>Preview your documents.</strong> Review the generated lien form before downloading. Confirm all details are correct. For subcontractors and suppliers, your bundle will automatically include the Notice of Furnishing if you have not yet filed one.</li>
-        <li><strong>Download and file.</strong> Pay free and download your complete PDF bundle instantly. No account required. The bundle includes the Claim of Lien, a deadline confirmation, county recorder filing instructions for your specific county, a proof of service affidavit, and a lien release form.</li>
+        <li><strong>Download and file.</strong> Download your complete PDF bundle instantly. No account required. The bundle includes the Claim of Lien, a deadline confirmation, county recorder filing instructions for your specific county, a proof of service affidavit, and a lien release form.</li>
       </ol>
 
       <p><strong>Your bundle includes:</strong> Claim of Lien (MCL 570.1101 compliant) · Deadline confirmation · Wayne/Oakland/Kent county filing guide · Proof of service affidavit · Lien release form · Notice of Furnishing (if required for your role)</p>
 
       <p>No account required. Instant download.</p>
 
-      <p><em>Content reviewed for accuracy against MCL 570.1101–570.1305 (as amended 2023). This is not legal advice. Consult a licensed Michigan attorney for advice specific to your situation.</em></p>
+      <!-- ════════════════════════════════════════════════════════════════════ -->
+      <!-- FAQ SECTION — ChatGPT recommended additions -->
+      <!-- ════════════════════════════════════════════════════════════════════ -->
+
+      <h2 id="faq">Michigan Mechanics Lien FAQ</h2>
+
+      <div class="not-prose space-y-4 mt-6">
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            How much does it cost to file a mechanics lien in Michigan?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>The county <strong>recording fee</strong> is typically <strong>$15–$30 per document</strong> (varies by county and number of pages). Wayne County charges approximately $15 for the first page; Oakland and Kent are similar. There are no state filing fees beyond the county recording fee.</p>
+            <p class="mt-2">MechanicsLienForm generates your lien documents <strong>free during early access</strong> — so the only out-of-pocket cost is the county recording fee when you go to file.</p>
+            <p class="mt-2">For context: attorneys typically charge $300–$1,500 to prepare and file a mechanics lien in Michigan. Commercial lien filing services charge $150–$400. Doing it yourself with the right form costs $15–$30 at the recorder's office.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can a homeowner file a mechanics lien in Michigan?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p><strong>No.</strong> Under MCL 570.1107, mechanics lien rights belong to <strong>contractors, subcontractors, material suppliers, equipment lessors, and design professionals</strong> who have provided labor, materials, or services to a construction project. A property owner cannot file a mechanics lien against their own property.</p>
+            <p class="mt-2">If you are a homeowner dealing with a lien filed <em>against</em> your property by a contractor or supplier, you have several options:</p>
+            <ul class="list-disc ml-5 mt-2 space-y-1">
+              <li>Pay the valid amount owed to discharge the lien</li>
+              <li>Post a lien bond (surety bond for 1.5× the lien amount) to discharge it from title</li>
+              <li>Challenge the lien in court if it is invalid or overstated</li>
+              <li>Wait — if the lienor doesn't sue within 1 year of recording, the lien expires</li>
+            </ul>
+            <p class="mt-2">Consult a Michigan construction attorney if a lien has been filed against your property.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can I remove a mechanics lien from my Michigan property?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Yes. A Michigan mechanics lien can be removed several ways:</p>
+            <ol class="list-decimal ml-5 mt-2 space-y-2">
+              <li><strong>Pay the claimant.</strong> Once paid, the contractor records a Lien Release with the Register of Deeds, clearing the title. This is the most common resolution.</li>
+              <li><strong>Post a lien bond.</strong> You can file a surety bond equal to 1.5× the lien amount (MCL 570.1203). This discharges the lien from the property and transfers the claim to the bond. The property is free to sell or refinance.</li>
+              <li><strong>Challenge the lien in court.</strong> If the lien is defective (wrong amounts, missed deadlines, improper notice), you can petition to have it discharged.</li>
+              <li><strong>Wait it out.</strong> If the lienor fails to file an enforcement lawsuit within <strong>1 year of recording</strong>, the lien expires automatically and can be removed from title.</li>
+            </ol>
+            <p class="mt-2">Consult a Michigan construction attorney for advice specific to your situation.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What if my Michigan mechanics lien deadline has already passed?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>If the 90-day (residential) or 180-day (commercial) lien filing deadline has passed, <strong>you cannot file a valid mechanics lien</strong>. The Michigan Construction Lien Act does not allow extensions or late filings.</p>
+            <p class="mt-2">However, you may still have other options to recover payment:</p>
+            <ul class="list-disc ml-5 mt-2 space-y-1">
+              <li><strong>Breach of contract lawsuit</strong> — the statute of limitations for contract claims is 6 years in Michigan. File suit in circuit court (or district court for smaller amounts).</li>
+              <li><strong>Small claims court</strong> — for amounts up to $7,000, Michigan small claims court is faster and cheaper than circuit court.</li>
+              <li><strong>Payment bond claim</strong> — on public projects, you may be able to claim against the contractor's payment bond even after the lien deadline.</li>
+              <li><strong>Contractor licensing complaint</strong> — unlicensed work or non-payment can be reported to the Michigan Department of Licensing and Regulatory Affairs (LARA).</li>
+              <li><strong>Demand letter / negotiation</strong> — a formal demand letter from an attorney often prompts payment even without a lien.</li>
+            </ul>
+            <p class="mt-2 font-semibold text-red-700">Do not wait. Consult a Michigan construction attorney immediately if your lien deadline has passed — other remedies also have deadlines.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Do I need an attorney to file a Michigan mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. Michigan law does not require an attorney to file a mechanics lien. Many contractors file liens themselves every year. The key requirements are:</p>
+            <ul class="list-disc ml-5 mt-2 space-y-1">
+              <li>Complete the form accurately with the correct parties and amounts</li>
+              <li>Get it <strong>notarized</strong> before filing</li>
+              <li>File within the statutory deadline (90 or 180 days)</li>
+              <li>Serve a copy on the property owner after recording</li>
+            </ul>
+            <p class="mt-2">MechanicsLienForm handles the form generation and deadline calculation. You handle notarization and filing at the Register of Deeds.</p>
+            <p class="mt-2">That said, for complex disputes — especially if the lien is likely to be contested, if you're dealing with a public project, or if litigation is likely — hiring a Michigan construction attorney is worth the investment.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What is the difference between a Michigan mechanics lien and a vehicle lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>They are completely different legal instruments filed with different government offices:</p>
+            <table class="text-xs w-full mt-2 border-collapse">
+              <thead>
+                <tr class="bg-slate-100">
+                  <th class="text-left p-2 border border-slate-200">Type</th>
+                  <th class="text-left p-2 border border-slate-200">Filed With</th>
+                  <th class="text-left p-2 border border-slate-200">Statute</th>
+                  <th class="text-left p-2 border border-slate-200">Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-2 border border-slate-200">Construction lien</td>
+                  <td class="p-2 border border-slate-200">County Register of Deeds</td>
+                  <td class="p-2 border border-slate-200">MCL 570.1101</td>
+                  <td class="p-2 border border-slate-200">Unpaid construction work on real property</td>
+                </tr>
+                <tr class="bg-slate-50">
+                  <td class="p-2 border border-slate-200">Vehicle lien (BDVR-35)</td>
+                  <td class="p-2 border border-slate-200">Secretary of State</td>
+                  <td class="p-2 border border-slate-200">MCL 440.9301</td>
+                  <td class="p-2 border border-slate-200">Security interest in a motor vehicle</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="mt-2">If you are looking to place a lien on a vehicle (e.g., for unpaid auto repair), you need the BDVR-35 form from the Michigan Secretary of State, not this form.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <p class="mt-8"><em>Content reviewed for accuracy against MCL 570.1101–570.1305 (as amended 2023). This is not legal advice. Consult a licensed Michigan attorney for advice specific to your situation.</em></p>
 
     </div>
   </div>
