@@ -10,21 +10,17 @@ export type UserRole =
 export interface LienFormData {
   state: string;
   role: UserRole;
-  // Claimant
   claimantName: string;
   claimantAddress: string;
   email: string;
-  // Owner
   ownerName: string;
   ownerAddress: string;
-  // Property
   propertyAddress: string;
+  legalDescription: string;  // NEW: separate legal description field
   county: string;
-  // Contracting / GC
   gcName: string;
-  hiringParty: string; // who contracted the claimant
-  // Project
-  projectType: 'residential' | 'commercial'; // affects Michigan deadline
+  hiringParty: string;
+  projectType: 'residential' | 'commercial';
   contractAmount: string;
   firstFurnishingDate: string;
   lastFurnishingDate: string;
@@ -99,7 +95,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     state: defaultState, role: undefined,
     claimantName: '', claimantAddress: '', email: '',
     ownerName: '', ownerAddress: '',
-    propertyAddress: '', county: '',
+    propertyAddress: '', legalDescription: '', county: '',
     gcName: '', hiringParty: '',
     projectType: 'residential',
     contractAmount: '', firstFurnishingDate: '', lastFurnishingDate: '',
@@ -123,7 +119,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     if (!formData.firstFurnishingDate?.trim()) e.firstFurnishingDate = 'Required.';
     if (!formData.lastFurnishingDate?.trim()) e.lastFurnishingDate = 'Required.';
     if (!formData.email?.trim()) e.email = 'Required.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Invalid email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Invalid email.';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -135,8 +131,8 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
   };
 
   const isMichigan = formData.state === 'michigan';
-  const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role || '');
   const isGC = formData.role === 'general-contractor';
+  const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role || '');
 
   const fieldClass = (field: keyof LienFormData) =>
     `block w-full px-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${errors[field] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-navy-600'}`;
@@ -193,34 +189,33 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
       <h2 className="text-xl font-semibold text-slate-900 mb-2">Project details</h2>
       <p className="text-slate-500 text-sm mb-5">This information will be filled into your lien document.</p>
 
-      {/* Michigan + sub warning */}
+      {/* Michigan Notice of Furnishing warning for subs */}
       {isMichigan && isSubOrSupplier && (
         <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
           <p className="text-xs font-semibold text-orange-800 mb-1">⚠ Michigan Notice of Furnishing Required</p>
-          <p className="text-xs text-orange-700">As a subcontractor/supplier in Michigan, you must serve a <strong>Notice of Furnishing within 20 days</strong> of first furnishing (MCL 570.1109). Your bundle includes this form on the last page.</p>
+          <p className="text-xs text-orange-700">Serve a <strong>Notice of Furnishing within 20 days</strong> of first furnishing (MCL 570.1109). Your bundle includes this form on the last page.</p>
         </div>
       )}
 
-      {/* Michigan GC sworn statement warning */}
+      {/* Michigan GC sworn statement */}
       {isMichigan && isGC && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-xs font-semibold text-blue-800 mb-1">ℹ Michigan General Contractor — Sworn Statement</p>
-          <p className="text-xs text-blue-700">Michigan law (MCL 570.1110) may require you to provide a <strong>sworn statement</strong> listing subcontractors and suppliers before payment is due. Consult an attorney for your specific project.</p>
+          <p className="text-xs font-semibold text-blue-800 mb-1">ℹ Michigan GC — Sworn Statement Requirement</p>
+          <p className="text-xs text-blue-700">Michigan law (MCL 570.1110) may require a <strong>sworn statement</strong> listing subcontractors before payment is due. Consult an attorney.</p>
         </div>
       )}
 
       <div className="space-y-4">
-
-        {/* Project type — affects Michigan deadline */}
+        {/* Michigan project type */}
         {isMichigan && (
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">Project Type <span className="text-red-500">*</span></label>
             <div className="grid grid-cols-2 gap-3">
               {(['residential', 'commercial'] as const).map((type) => (
-                <label key={type} className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer capitalize transition-all ${formData.projectType === type ? 'border-navy-600 bg-navy-50' : 'border-slate-200 hover:border-slate-300'}`}>
+                <label key={type} className={`flex items-center justify-between p-3 rounded-lg border-2 cursor-pointer transition-all ${formData.projectType === type ? 'border-navy-600 bg-navy-50' : 'border-slate-200 hover:border-slate-300'}`}>
                   <input type="radio" name="projectType" value={type} checked={formData.projectType === type} onChange={() => update('projectType', type)} className="sr-only" />
                   <span className="font-semibold text-slate-800 text-sm capitalize">{type}</span>
-                  <span className="text-xs text-slate-500">{type === 'residential' ? '90-day deadline' : '180-day deadline'}</span>
+                  <span className="text-xs text-slate-500">{type === 'residential' ? '90-day' : '180-day'}</span>
                 </label>
               ))}
             </div>
@@ -261,9 +256,6 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             <label className="block text-sm font-medium text-slate-700 mb-1">Property Address <span className="text-red-500">*</span></label>
             <input type="text" placeholder="123 Main Street, Detroit, MI 48201" className={fieldClass('propertyAddress')} value={formData.propertyAddress || ''} onChange={(e) => update('propertyAddress', e.target.value)} />
             <FieldError field="propertyAddress" />
-            {isMichigan && !errors.propertyAddress && (
-              <p className="text-xs text-orange-600 mt-1">⚠ Include legal description from deed records if available.</p>
-            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">County <span className="text-red-500">*</span></label>
@@ -272,18 +264,45 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
         </div>
 
+        {/* Legal description — recommended for Michigan */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Legal Property Description
+            {isMichigan
+              ? <span className="text-orange-600 text-xs ml-1">⚠ Recommended for Michigan</span>
+              : <span className="text-slate-400 text-xs ml-1">(optional)</span>}
+          </label>
+          <textarea
+            rows={3}
+            placeholder="e.g. Lot 14, Block 3, Wayne County Plat No. 47, as recorded in Liber 212 Page 84..."
+            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm resize-none"
+            value={formData.legalDescription || ''}
+            onChange={(e) => update('legalDescription', e.target.value)}
+          />
+          <p className="text-xs text-slate-400 mt-1">Find this on your deed or from the county assessor / Register of Deeds.</p>
+        </div>
+
         {/* GC / Hiring party */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               General Contractor Name
-              <span className="text-slate-400 text-xs ml-1">{isGC ? '(leave blank — you are the GC)' : '(optional)'}</span>
+              {isGC
+                ? <span className="text-slate-400 text-xs ml-1">(you are the GC — optional)</span>
+                : <span className="text-slate-400 text-xs ml-1">(optional)</span>}
             </label>
-            <input type="text" placeholder="ABC Construction LLC" className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm" value={formData.gcName || ''} onChange={(e) => update('gcName', e.target.value)} disabled={isGC} />
+            {/* GC field is always editable — even if you ARE the GC you may want to note another GC managed the site */}
+            <input
+              type="text"
+              placeholder="ABC Construction LLC"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              value={formData.gcName || ''}
+              onChange={(e) => update('gcName', e.target.value)}
+            />
           </div>
           {isSubOrSupplier && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Who Contracted You? <span className="text-slate-400 text-xs">(hiring party)</span></label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Who Contracted You?</label>
               <input type="text" placeholder="XYZ Framing LLC" className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm" value={formData.hiringParty || ''} onChange={(e) => update('hiringParty', e.target.value)} />
               <p className="text-xs text-slate-400 mt-1">The party who hired you (may differ from GC).</p>
             </div>
@@ -330,19 +349,16 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
         <span className="text-xs text-slate-400 font-medium">Step {step} of {TOTAL_STEPS}</span>
       </div>
       <StepIndicator current={step} total={TOTAL_STEPS} />
-
       <div className="min-h-[280px]">
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
       </div>
-
       <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
         <button type="button" onClick={() => step > 1 && setStep((s) => s - 1)} disabled={step === 1} className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-600 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back
         </button>
-
         {step < TOTAL_STEPS ? (
           <button type="button" onClick={() => setStep((s) => s + 1)} disabled={step === 1 ? !formData.state : !formData.role} className="inline-flex items-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-white bg-navy-700 rounded-lg hover:bg-navy-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
             Next
