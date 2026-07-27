@@ -9,7 +9,17 @@ interface LienFormAppProps {
   dateType?: 'last-furnishing' | 'first-furnishing';
 }
 
-// Inline preview panel — shows key fields from the submitted form
+function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className="flex justify-between gap-2 py-1.5 border-b border-slate-50">
+      <span className="text-slate-500 text-xs shrink-0">{label}</span>
+      <span className={`text-right text-xs font-medium ${highlight ? 'text-green-700' : 'text-slate-800'}`}>
+        {value || '—'}
+      </span>
+    </div>
+  );
+}
+
 function PreviewPanel({ formData }: { formData: any }) {
   const formatCurrency = (amount: string) => {
     const num = parseFloat(amount?.replace(/,/g, '') || '0');
@@ -18,31 +28,21 @@ function PreviewPanel({ formData }: { formData: any }) {
   };
 
   const toTitleCase = (str: string) =>
-    str ? str.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : '';
+    str ? str.split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') : '';
 
-  const normaliseCounty = (county: string) => {
-    const tc = toTitleCase(county?.trim() || '');
-    return tc.replace(/\s+County$/i, '').trim();
-  };
+  const normaliseCounty = (county: string) =>
+    toTitleCase(county?.trim() || '').replace(/\s+County$/i, '').trim();
 
   const countyDisplay = `${normaliseCounty(formData.county)} County`;
 
-  const STATE_LABELS: Record<string, string> = {
-    michigan: 'Michigan',
-    california: 'California',
-    texas: 'Texas',
-    florida: 'Florida',
-  };
-
+  const STATE_LABELS: Record<string, string> = { michigan: 'Michigan', california: 'California', texas: 'Texas', florida: 'Florida' };
   const ROLE_LABELS: Record<string, string> = {
-    'general-contractor': 'General Contractor',
-    'subcontractor': 'Subcontractor',
-    'sub-subcontractor': 'Sub-Subcontractor',
-    'material-supplier': 'Material Supplier',
+    'general-contractor': 'General Contractor', 'subcontractor': 'Subcontractor',
+    'sub-subcontractor': 'Sub-Subcontractor', 'material-supplier': 'Material Supplier',
     'equipment-rental': 'Equipment Rental',
   };
 
-  const deadlineMap: Record<string, number> = { michigan: 90, california: 90, florida: 45 };
+  const projectType = formData.projectType ?? 'residential';
   const computeDeadline = () => {
     const last = new Date(formData.lastFurnishingDate);
     if (isNaN(last.getTime())) return null;
@@ -51,7 +51,8 @@ function PreviewPanel({ formData }: { formData: any }) {
       d.setMonth(d.getMonth() + (formData.role === 'general-contractor' ? 4 : 3), 15);
       return d;
     }
-    const days = deadlineMap[formData.state] ?? 90;
+    let days = formData.state === 'michigan' && projectType === 'commercial' ? 180 : 90;
+    if (formData.state === 'florida') days = 45;
     const d = new Date(last);
     d.setDate(d.getDate() + days);
     return d;
@@ -61,99 +62,71 @@ function PreviewPanel({ formData }: { formData: any }) {
     ? Math.ceil((deadline.getTime() - new Date().setHours(0, 0, 0, 0)) / 86400000)
     : null;
 
+  const isMichigan = formData.state === 'michigan';
+  const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role);
+
+  const bundleItems = [
+    'Page 1: Mechanics Lien Claim + Notarization',
+    'Page 2: Deadline Confirmation',
+    'Page 3: County Filing Instructions',
+    'Page 4: Proof of Service Affidavit',
+    'Page 5: Lien Release Form',
+    isMichigan && isSubOrSupplier ? 'Page 6: Notice of Furnishing (MCL 570.1109)' : null,
+    !isMichigan && (formData.state === 'california' || formData.state === 'florida') && isSubOrSupplier
+      ? `Page 6: ${formData.state === 'california' ? '20-Day Preliminary Notice' : 'Notice to Owner'}`
+      : null,
+  ].filter(Boolean);
+
   return (
     <div className="h-full flex flex-col">
-      {/* Header */}
       <div className="rounded-t-xl p-4 text-white text-center" style={{ backgroundColor: '#1e2f6e' }}>
         <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Document Preview</p>
         <h3 className="text-lg font-bold">
-          {formData.state === 'florida' && formData.role !== 'general-contractor'
-            ? 'Notice to Owner'
-            : 'Claim of Mechanics Lien'}
+          {formData.state === 'florida' && formData.role !== 'general-contractor' ? 'Notice to Owner' : 'Claim of Mechanics Lien'}
         </h3>
         <p className="text-sm opacity-80">{STATE_LABELS[formData.state] || toTitleCase(formData.state)} — {countyDisplay}</p>
       </div>
 
-      {/* Preview content */}
       <div className="flex-1 bg-white border border-t-0 border-slate-200 rounded-b-xl overflow-y-auto p-5 space-y-4 text-sm">
-
-        {/* Deadline banner */}
         {deadline && daysLeft !== null && (
-          <div
-            className={`rounded-lg px-4 py-3 text-center font-semibold ${
-              daysLeft < 0
-                ? 'bg-red-100 text-red-700'
-                : daysLeft <= 30
-                ? 'bg-orange-100 text-orange-700'
-                : 'bg-green-100 text-green-700'
-            }`}
-          >
+          <div className={`rounded-lg px-4 py-3 text-center font-semibold text-sm ${daysLeft < 0 ? 'bg-red-100 text-red-700' : daysLeft <= 30 ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}`}>
             {daysLeft < 0
               ? `⚠ Deadline passed ${Math.abs(daysLeft)} days ago`
-              : daysLeft === 0
-              ? '⚠ Deadline is TODAY'
-              : `✓ File by ${deadline.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} — ${daysLeft} days remaining`}
+              : daysLeft === 0 ? '⚠ Deadline is TODAY'
+              : `✓ File by ${deadline.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} — ${daysLeft} days`}
           </div>
         )}
 
-        {/* Fields */}
-        <div className="space-y-3">
+        <div className="space-y-1">
           <Row label="Claimant" value={formData.claimantName} />
+          {formData.claimantAddress && <Row label="Address" value={formData.claimantAddress} />}
           <Row label="Role" value={ROLE_LABELS[formData.role] || formData.role} />
           <Row label="Property Owner" value={formData.ownerName} />
-          <Row label="Property Address" value={formData.propertyAddress} />
+          <Row label="Property" value={formData.propertyAddress} />
           <Row label="County" value={countyDisplay} />
+          {formData.state === 'michigan' && <Row label="Project Type" value={`${toTitleCase(projectType)} (${projectType === 'commercial' ? '180' : '90'}-day deadline)`} />}
           <Row label="Amount Claimed" value={formatCurrency(formData.contractAmount)} highlight />
-          <Row label="First Furnishing" value={formData.firstFurnishingDate} />
           <Row label="Last Furnishing" value={formData.lastFurnishingDate} />
         </div>
 
         <div className="border-t border-slate-100 pt-3">
-          <p className="text-xs text-slate-500 font-medium mb-2">Bundle includes (6 pages):</p>
-          <ul className="space-y-1 text-xs text-slate-600">
-            {[
-              'Mechanics Lien Claim',
-              'Deadline Confirmation',
-              'County Filing Instructions',
-              'Proof of Service Affidavit',
-              'Lien Release Form',
-              formData.state === 'california' || formData.state === 'florida'
-                ? 'Preliminary Notice / NTO'
-                : null,
-            ]
-              .filter(Boolean)
-              .map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> {item}
-                </li>
-              ))}
+          <p className="text-xs text-slate-500 font-medium mb-2">Bundle ({bundleItems.length} pages):</p>
+          <ul className="space-y-1">
+            {bundleItems.map((item) => (
+              <li key={item as string} className="flex items-start gap-2 text-xs text-slate-600">
+                <span className="text-green-500 shrink-0">✓</span> {item}
+              </li>
+            ))}
           </ul>
         </div>
 
-        <p className="text-xs text-slate-400 italic">
-          Not legal advice. Consult a licensed attorney in your state.
-        </p>
+        <p className="text-xs text-slate-400 italic">Not legal advice. Sign before a notary before filing. Consult a licensed attorney for your specific situation.</p>
       </div>
     </div>
   );
 }
 
-function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
-  return (
-    <div className="flex justify-between gap-2 py-1.5 border-b border-slate-50">
-      <span className="text-slate-500 shrink-0">{label}</span>
-      <span className={`text-right font-medium ${highlight ? 'text-green-700' : 'text-slate-800'}`}>
-        {value || '—'}
-      </span>
-    </div>
-  );
-}
-
-export default function LienFormApp({
-  defaultState,
-  documentType = 'mechanics-lien',
-  productName,
-}: LienFormAppProps) {
+export default function LienFormApp({ defaultState, documentType = 'mechanics-lien', productName }: LienFormAppProps) {
   const [formData, setFormData] = useState<any>(null);
   const [role, setRole] = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
@@ -163,41 +136,23 @@ export default function LienFormApp({
     setRole(data.role || '');
   };
 
-  // On mobile: scroll preview into view when form completes
   useEffect(() => {
-    if (formData && previewRef.current) {
-      const isMobile = window.innerWidth < 768;
-      if (isMobile) {
-        previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    if (formData && previewRef.current && window.innerWidth < 768) {
+      previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [formData]);
 
   return (
     <div className="w-full">
-      {/* Side-by-side layout on desktop, stacked on mobile */}
       <div className="grid md:grid-cols-2 gap-6 items-start">
-
-        {/* LEFT: Form */}
         <div>
-          <FormStepper
-            defaultState={defaultState}
-            documentType={documentType}
-            onFormComplete={handleFormComplete}
-          />
+          <FormStepper defaultState={defaultState} documentType={documentType} onFormComplete={handleFormComplete} />
         </div>
-
-        {/* RIGHT: Preview + Download */}
         <div ref={previewRef} className="md:sticky md:top-24">
           {formData ? (
             <div className="space-y-4">
               <PreviewPanel formData={formData} />
-              <DownloadButton
-                state={defaultState}
-                role={role}
-                formData={formData}
-                productName={productName}
-              />
+              <DownloadButton state={defaultState} role={role} formData={formData} productName={productName} />
             </div>
           ) : (
             <div className="border-2 border-dashed border-slate-200 rounded-xl p-10 text-center text-slate-400 bg-slate-50">
@@ -207,7 +162,6 @@ export default function LienFormApp({
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
