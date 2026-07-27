@@ -33,19 +33,21 @@ const STATE_CITATIONS: Record<string, string> = {
 const FILING_INSTRUCTIONS: Record<string, string> = {
   michigan: `Michigan Construction Lien Filing Instructions
 
-1. The Claim of Lien must be filed with the Register of Deeds in the county where the property is located.
-2. Filing fee is typically $30–$60 depending on the county.
-3. The lien must be filed within the statutory deadline (90 days from last furnishing for residential; 180 days for commercial).
-4. After recording, serve a copy on the property owner via certified mail or personal delivery.
-5. A copy of the notice of furnishing (if required) must be filed BEFORE filing the lien claim.
-6. Contact the county Register of Deeds for current fee schedules and accepted formats.`,
+1. BEFORE FILING: If you are a subcontractor or supplier, confirm you served a Notice of Furnishing within 20 days of first providing labor or materials (MCL 570.1109). Failure to do so may limit your lien rights.
+2. The Claim of Lien must be NOTARIZED before it can be filed. Sign before a notary public.
+3. File the notarized Claim of Lien with the Register of Deeds in the county where the property is located.
+4. Filing fee is typically $30–$60 depending on the county.
+5. The lien must be filed within the statutory deadline: 90 days from last furnishing (residential) or 180 days (commercial).
+6. After recording, serve a copy on the property owner via certified mail or personal delivery within the required time.
+7. File an Affidavit of Service with the Register of Deeds after serving the owner.
+8. NOTE: Michigan law requires a sufficient LEGAL DESCRIPTION of the property — a street address alone may not be sufficient. Obtain the legal description from the county assessor or deed records.`,
 
   california: `California Mechanics Lien Filing Instructions
 
-1. Record the Claim of Mechanics Lien with the County Recorder's Office in the county where the property is located.
-2. Filing fees are set by the county (typically $15–$25 for the first page plus $3 per additional page).
-3. After recording, serve the property owner within 20 days via certified mail.
-4. A Preliminary Notice (20-Day Notice) must have been served within 20 days of first furnishing materials/labor.
+1. A Preliminary Notice (20-Day Notice) must have been served within 20 days of first furnishing materials/labor.
+2. Record the Claim of Mechanics Lien with the County Recorder's Office in the county where the property is located.
+3. Filing fees are set by the county (typically $15–$25 for the first page plus $3 per additional page).
+4. After recording, serve the property owner within 20 days via certified mail.
 5. A mechanics lien expires 90 days from recording unless a lawsuit is filed to enforce it.
 6. Go to your county recorder's website for current hours, fees, and e-recording options.`,
 
@@ -126,13 +128,8 @@ function toTitleCase(str: string): string {
     .replace(/-/g, ' ');
 }
 
-// Normalise county: title-case and strip trailing " County" if already included
-// e.g. "wayne county" → "Wayne" (we add "County" in the template)
-// e.g. "Wayne" → "Wayne"
-// e.g. "Wayne County" → "Wayne"
 function normaliseCounty(county: string): string {
   const tc = toTitleCase(county.trim());
-  // Strip " County" suffix so we never double it
   return tc.replace(/\s+County$/i, '').trim();
 }
 
@@ -165,16 +162,32 @@ function calculateDeadline(lastFurnishingDate: string, state: string, role: stri
 // ─── PDF Generator ────────────────────────────────────────────────────────────
 
 export async function generateLienBundle(data: LienFormData): Promise<Blob> {
-  // Normalise all optional fields — never crash on undefined
   const extras = data.extras ?? [];
   const email = data.email ?? '';
   const gcName = data.gcName ?? '';
   const claimantName = data.claimantName ?? '';
-  // Normalise county: title-case + strip trailing "County" word
-  const countyBase = normaliseCounty(data.county); // e.g. "Wayne"
-  const countyDisplay = `${countyBase} County`;    // e.g. "Wayne County"
+  const countyBase = normaliseCounty(data.county);
+  const countyDisplay = `${countyBase} County`;
 
-  // Dynamic import — jsPDF is browser-only
+  // Michigan requires notarization; determine page counts dynamically
+  const needsMichiganNoticeOfFurnishing =
+    data.state === 'michigan' &&
+    (data.role === 'subcontractor' ||
+      data.role === 'sub-subcontractor' ||
+      data.role === 'material-supplier' ||
+      data.role === 'equipment-rental');
+
+  const needsPreliminaryNotice =
+    (data.state === 'california' || data.state === 'florida') &&
+    (data.role === 'subcontractor' || data.role === 'material-supplier');
+
+  const hasExtraPage =
+    needsMichiganNoticeOfFurnishing ||
+    needsPreliminaryNotice ||
+    extras.includes('preliminary-notice');
+
+  const totalPages = hasExtraPage ? 6 : 5;
+
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
 
@@ -182,8 +195,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const PAGE_WIDTH = 215.9;
   const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
   let y = MARGIN;
-
-  // ── Helpers ────────────────────────────────────────────────────────────────
 
   const resetY = () => { y = MARGIN; };
 
@@ -256,11 +267,41 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
     y += 2;
   };
 
-  const addPageNumber = (pageNum: number, totalPages: number) => {
+  const addNotaryBlock = () => {
+    checkPageBreak(50);
+    addSpacer(6);
+    addDivider();
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 30, 30);
+    doc.text('NOTARIZATION', MARGIN, y);
+    y += 6;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(60, 60, 60);
+    const notaryText = `State of ${toTitleCase(data.state)}\nCounty of ${countyDisplay}\n\nSubscribed and sworn to before me this _______ day of __________________, 20____`;
+    const notaryLines = doc.splitTextToSize(notaryText, CONTENT_WIDTH);
+    doc.text(notaryLines, MARGIN, y);
+    y += notaryLines.length * 4.5 + 6;
+
+    doc.line(MARGIN, y, MARGIN + 80, y);
+    doc.text('Notary Public Signature', MARGIN, y + 4);
+    doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
+    doc.text('Commission Expires', PAGE_WIDTH / 2 + 5, y + 4);
+    y += 14;
+
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(120, 120, 120);
+    doc.text('[NOTARY SEAL]', MARGIN, y);
+    y += 6;
+  };
+
+  const addPageNumber = (pageNum: number, total: number) => {
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(150, 150, 150);
-    doc.text(`Page ${pageNum} of ${totalPages}`, PAGE_WIDTH / 2, 285, { align: 'center' });
+    doc.text(`Page ${pageNum} of ${total}`, PAGE_WIDTH / 2, 285, { align: 'center' });
     doc.text('MechanicsLienForm.com', MARGIN, 285);
   };
 
@@ -287,12 +328,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text(
-    `State of ${toTitleCase(data.state)} — ${countyDisplay}`,
-    PAGE_WIDTH / 2,
-    y,
-    { align: 'center' }
-  );
+  doc.text(`State of ${toTitleCase(data.state)} — ${countyDisplay}`, PAGE_WIDTH / 2, y, { align: 'center' });
   y += 8;
 
   addDivider();
@@ -306,9 +342,24 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLabelValue('Owner Name', data.ownerName);
 
   addSectionHeader('Property Subject to Lien');
-  addLabelValue('Property Address', data.propertyAddress);
+  addLabelValue('Property Address / Legal Description', data.propertyAddress);
   addLabelValue('County', countyDisplay);
   addLabelValue('State', toTitleCase(data.state));
+
+  // Michigan-specific note about legal description
+  if (data.state === 'michigan') {
+    addSpacer(2);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(150, 80, 0);
+    const miNote = doc.splitTextToSize(
+      'IMPORTANT (Michigan): A street address alone may be insufficient. Attach or insert the full legal property description from county deed records.',
+      CONTENT_WIDTH
+    );
+    doc.text(miNote, MARGIN, y);
+    y += miNote.length * 3.5 + 4;
+    doc.setTextColor(30, 30, 30);
+  }
 
   if (gcName) {
     addSectionHeader('General Contractor');
@@ -331,7 +382,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.text(stmtLines, MARGIN, y);
   y += stmtLines.length * 5 + 8;
 
-  checkPageBreak(40);
+  checkPageBreak(60);
   addDivider();
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
@@ -347,8 +398,12 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.text('Printed Name', MARGIN, y + 4);
   doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
   doc.text('Title / Capacity', PAGE_WIDTH / 2 + 5, y + 4);
+  y += 14;
 
-  addPageNumber(1, 6);
+  // Notarization block (required for Michigan; recommended for all states)
+  addNotaryBlock();
+
+  addPageNumber(1, totalPages);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 2: Deadline Confirmation
@@ -413,9 +468,10 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const afterFiling = [
     '1. File this Claim of Lien with the County Recorder/Clerk within the deadline shown above.',
     '2. Serve a copy on the property owner via certified mail within the time required by your state.',
-    '3. Retain proof of service, the recorded lien copy, and all supporting documentation.',
-    '4. If payment is not received, consult an attorney to enforce the lien through litigation.',
-    '5. Be aware of the statute of limitations to file suit: varies by state, typically 1-2 years from filing.',
+    '3. File an Affidavit of Service with the county recording office.',
+    '4. Retain proof of service, the recorded lien copy, and all supporting documentation.',
+    '5. If payment is not received, consult an attorney to enforce the lien through litigation.',
+    '6. Statute of limitations to file suit: typically 1–2 years from filing date.',
   ];
   afterFiling.forEach((item) => {
     addLine(item, 9, false, [60, 60, 60]);
@@ -428,12 +484,11 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setTextColor(120, 120, 120);
   doc.text(
     'This deadline confirmation is for informational purposes only. Verify with a licensed attorney in your state.',
-    PAGE_WIDTH / 2,
-    270,
+    PAGE_WIDTH / 2, 270,
     { align: 'center', maxWidth: CONTENT_WIDTH }
   );
 
-  addPageNumber(2, 6);
+  addPageNumber(2, totalPages);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 3: County Recorder / Clerk Filing Instructions
@@ -467,19 +522,22 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   addLine('Documents Required for Filing:', 10, true);
   addSpacer(3);
-  const docs = [
-    '[ ]  Original signed Claim of Lien (this document)',
-    '[ ]  Copy of the Notice of Furnishing (if required by your state)',
+  const michiganDocs = data.state === 'michigan';
+  const requiredDocs = [
+    michiganDocs
+      ? '[ ]  Notarized Claim of Lien (MUST be signed before a notary public)'
+      : '[ ]  Original signed Claim of Lien (this document)',
+    '[ ]  Copy of the Notice of Furnishing (subcontractors/suppliers — if applicable)',
     '[ ]  Photo ID (in some counties)',
     '[ ]  Recording fee (cash, check, or credit card depending on county)',
     '[ ]  Self-addressed stamped envelope (for return of recorded document)',
   ];
-  docs.forEach((d) => {
+  requiredDocs.forEach((d) => {
     addLine(d, 9, false, [50, 50, 50]);
     addSpacer(3);
   });
 
-  addPageNumber(3, 6);
+  addPageNumber(3, totalPages);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 4: Proof of Service Affidavit
@@ -523,38 +581,32 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   });
 
   addBlankField('Date of Service', 1);
-  addSpacer(8);
+  addSpacer(6);
   addDivider();
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(60, 60, 60);
-  const oath = 'I declare under penalty of perjury under the laws of the State of ' +
-    toTitleCase(data.state) + ' that the foregoing is true and correct.';
+  const oath = `I declare under penalty of perjury under the laws of the State of ${toTitleCase(data.state)} that the foregoing is true and correct.`;
   const oathLines = doc.splitTextToSize(oath, CONTENT_WIDTH);
   doc.text(oathLines, MARGIN, y);
   y += oathLines.length * 5 + 10;
 
-  checkPageBreak(30);
-  doc.line(MARGIN, y, MARGIN + 80, y);
+  checkPageBreak(20);
   doc.setFont('helvetica', 'normal');
+  doc.line(MARGIN, y, MARGIN + 80, y);
   doc.text('Affiant Signature', MARGIN, y + 4);
   doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
   doc.text('Date Signed', PAGE_WIDTH / 2 + 5, y + 4);
   y += 16;
 
-  addLine('NOTARY PUBLIC (if required by your state):', 9, true);
-  addSpacer(4);
-  checkPageBreak(20);
-  doc.line(MARGIN, y, MARGIN + 80, y);
-  doc.text('Notary Signature', MARGIN, y + 4);
-  doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
-  doc.text('Commission Expires', PAGE_WIDTH / 2 + 5, y + 4);
+  // Notary block on affidavit
+  addNotaryBlock();
 
-  addPageNumber(4, 6);
+  addPageNumber(4, totalPages);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // PAGE 5: Lien Release Form
+  // PAGE 5: Lien Release Form (with notarization)
   // ═══════════════════════════════════════════════════════════════════════════
 
   doc.addPage();
@@ -568,12 +620,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text(
-    'Complete this form upon receiving full payment to release the recorded lien.',
-    PAGE_WIDTH / 2,
-    y,
-    { align: 'center' }
-  );
+  doc.text('Complete this form upon receiving full payment to release the recorded lien.', PAGE_WIDTH / 2, y, { align: 'center' });
   y += 10;
   addDivider();
 
@@ -604,35 +651,99 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFontSize(9);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(60, 60, 60);
-  const releaseOath =
-    'I declare under penalty of perjury that I have received full payment and that the mechanics lien described above is hereby fully and unconditionally released and discharged.';
+  const releaseOath = 'I declare under penalty of perjury that I have received full payment and that the mechanics lien described above is hereby fully and unconditionally released and discharged.';
   const relOathLines = doc.splitTextToSize(releaseOath, CONTENT_WIDTH);
   doc.text(relOathLines, MARGIN, y);
   y += relOathLines.length * 5 + 10;
 
-  doc.line(MARGIN, y, MARGIN + 80, y);
   doc.setFont('helvetica', 'normal');
+  doc.line(MARGIN, y, MARGIN + 80, y);
   doc.text('Claimant Signature', MARGIN, y + 4);
   doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
   doc.text('Date', PAGE_WIDTH / 2 + 5, y + 4);
-  y += 16;
+  y += 14;
 
   doc.line(MARGIN, y, MARGIN + 80, y);
   doc.text('Printed Name', MARGIN, y + 4);
   doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
   doc.text('Title', PAGE_WIDTH / 2 + 5, y + 4);
+  y += 14;
 
-  addPageNumber(5, 6);
+  // Notary block on release form
+  addNotaryBlock();
+
+  addPageNumber(5, totalPages);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // PAGE 6 (CONDITIONAL): Preliminary Notice
+  // PAGE 6 (CONDITIONAL): Michigan Notice of Furnishing OR CA/FL Preliminary Notice
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const needsPreliminaryNotice =
-    (data.state === 'california' || data.state === 'florida') &&
-    (data.role === 'subcontractor' || data.role === 'material-supplier');
+  if (needsMichiganNoticeOfFurnishing) {
+    doc.addPage();
+    resetY();
 
-  if (needsPreliminaryNotice || extras.includes('preliminary-notice')) {
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(100, 100, 100);
+    doc.text('Pursuant to MCL 570.1109 (Michigan Construction Lien Act)', PAGE_WIDTH / 2, y, { align: 'center' });
+    y += 6;
+
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 47, 110);
+    doc.text('NOTICE OF FURNISHING', PAGE_WIDTH / 2, y, { align: 'center' });
+    y += 12;
+
+    addDivider();
+
+    addLine(
+      'IMPORTANT: This notice MUST be served on the property owner and the general contractor within 20 days of first furnishing labor or materials. Failure to timely serve this notice may limit your lien rights under MCL 570.1109.',
+      9, true, [150, 60, 0]
+    );
+    addSpacer(6);
+
+    addLine('TO: Property Owner / General Contractor', 10, true);
+    addSpacer(4);
+    addLabelValue('Property Owner', data.ownerName);
+    addLabelValue('General Contractor', gcName || '[General Contractor Name]');
+    addSpacer(4);
+
+    addLine('PLEASE TAKE NOTICE that the undersigned is furnishing or will furnish the following labor, material, or equipment to the project:', 9, false, [50, 50, 50]);
+    addSpacer(4);
+    addBlankField('Description of Labor / Materials / Equipment', 3);
+
+    addLine('To the project known as:', 9, false, [50, 50, 50]);
+    addLabelValue('Property Address', data.propertyAddress);
+    addLabelValue('County', countyDisplay);
+    addLabelValue('State', 'Michigan');
+    addSpacer(4);
+
+    addLabelValue('Date First Furnished', data.firstFurnishingDate);
+    addLabelValue('Claimant (Furnisher)', claimantName);
+    addLabelValue('Role', roleLabel(data.role));
+    addSpacer(6);
+
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(60, 60, 60);
+    const miNote2 = doc.splitTextToSize(
+      'This notice must be served by personal delivery or first-class mail with a certificate of mailing or delivery. Retain proof of service.',
+      CONTENT_WIDTH
+    );
+    doc.text(miNote2, MARGIN, y);
+    y += miNote2.length * 4 + 8;
+
+    checkPageBreak(25);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(30, 30, 30);
+    doc.line(MARGIN, y, MARGIN + 80, y);
+    doc.text('Signature of Furnisher', MARGIN, y + 4);
+    doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
+    doc.text('Date', PAGE_WIDTH / 2 + 5, y + 4);
+
+    addPageNumber(6, totalPages);
+
+  } else if (needsPreliminaryNotice || extras.includes('preliminary-notice')) {
     doc.addPage();
     resetY();
 
@@ -657,27 +768,18 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
     addDivider();
 
     if (isPrelimCA) {
-      addLine(
-        'TO: Property Owner and/or Direct Contractor\n\nPURSUANT TO CALIFORNIA CIVIL CODE §8204, THIS IS TO ADVISE YOU THAT:',
-        10, true, [50, 50, 50]
-      );
+      addLine('TO: Property Owner and/or Direct Contractor\n\nPURSUANT TO CALIFORNIA CIVIL CODE §8204, THIS IS TO ADVISE YOU THAT:', 10, true, [50, 50, 50]);
       addSpacer(4);
-      addLine(
-        'The undersigned has furnished or will furnish labor, services, equipment, or materials of the following general description:',
-        9, false, [50, 50, 50]
-      );
+      addLine('The undersigned has furnished or will furnish labor, services, equipment, or materials of the following general description:', 9, false, [50, 50, 50]);
       addBlankField('Description of Labor / Materials', 3);
       addLine('To the jobsite located at:', 9, false, [50, 50, 50]);
       addLabelValue('Property Address', data.propertyAddress);
-      addLine('An estimate of the total price of the labor, services, equipment, or materials:', 9, false, [50, 50, 50]);
+      addLine('An estimate of the total price:', 9, false, [50, 50, 50]);
       addLabelValue('Estimated Value', formatCurrency(data.contractAmount));
-      addLine('The name of the person or firm who contracted for the purchase of such labor, services, equipment, or materials:', 9, false, [50, 50, 50]);
+      addLine('The person or firm who contracted for the purchase:', 9, false, [50, 50, 50]);
       addLabelValue('Contracting Party', gcName || '[Property Owner / General Contractor]');
     } else {
-      addLine(
-        'TO: Property Owner and/or General Contractor\n\nNOTICE TO OWNER\n\nFLORIDA LAW PRESCRIBES THE SERVING OF THIS NOTICE AND RESTRICTS YOUR RIGHT TO MAKE PAYMENTS UNDER YOUR CONTRACT IN ACCORDANCE WITH SECTION 713.06, FLORIDA STATUTES.',
-        10, true, [50, 50, 50]
-      );
+      addLine('TO: Property Owner and/or General Contractor\n\nNOTICE TO OWNER\n\nFLORIDA LAW PRESCRIBES THE SERVING OF THIS NOTICE AND RESTRICTS YOUR RIGHT TO MAKE PAYMENTS UNDER YOUR CONTRACT IN ACCORDANCE WITH SECTION 713.06, FLORIDA STATUTES.', 10, true, [50, 50, 50]);
       addSpacer(4);
       addLine('This notice is to advise you that the undersigned is providing services or materials of the following nature:', 9, false, [50, 50, 50]);
       addBlankField('Description of Services / Materials', 3);
@@ -686,19 +788,20 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
       addLabelValue('County', countyDisplay);
       addLine('Under a contract with:', 9, false, [50, 50, 50]);
       addLabelValue('Contracting Party', gcName || '[General Contractor / Owner]');
-      addLine('Estimated value of services / materials:', 9, false, [50, 50, 50]);
+      addLine('Estimated value:', 9, false, [50, 50, 50]);
       addLabelValue('Estimated Value', formatCurrency(data.contractAmount));
     }
 
     addSpacer(6);
     addDivider();
 
+    doc.setFont('helvetica', 'normal');
     doc.line(MARGIN, y, MARGIN + 80, y);
     doc.text('Claimant Signature', MARGIN, y + 4);
     doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
     doc.text('Date', PAGE_WIDTH / 2 + 5, y + 4);
 
-    addPageNumber(6, 6);
+    addPageNumber(6, totalPages);
   }
 
   return doc.output('blob');
