@@ -118,7 +118,22 @@ function roleLabel(role: string): string {
 }
 
 function toTitleCase(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+  if (!str) return '';
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+    .replace(/-/g, ' ');
+}
+
+// Normalise county: title-case and strip trailing " County" if already included
+// e.g. "wayne county" → "Wayne" (we add "County" in the template)
+// e.g. "Wayne" → "Wayne"
+// e.g. "Wayne County" → "Wayne"
+function normaliseCounty(county: string): string {
+  const tc = toTitleCase(county.trim());
+  // Strip " County" suffix so we never double it
+  return tc.replace(/\s+County$/i, '').trim();
 }
 
 function calculateDeadline(lastFurnishingDate: string, state: string, role: string): string {
@@ -150,11 +165,14 @@ function calculateDeadline(lastFurnishingDate: string, state: string, role: stri
 // ─── PDF Generator ────────────────────────────────────────────────────────────
 
 export async function generateLienBundle(data: LienFormData): Promise<Blob> {
-  // Normalise optional fields so we never hit undefined errors
+  // Normalise all optional fields — never crash on undefined
   const extras = data.extras ?? [];
   const email = data.email ?? '';
   const gcName = data.gcName ?? '';
   const claimantName = data.claimantName ?? '';
+  // Normalise county: title-case + strip trailing "County" word
+  const countyBase = normaliseCounty(data.county); // e.g. "Wayne"
+  const countyDisplay = `${countyBase} County`;    // e.g. "Wayne County"
 
   // Dynamic import — jsPDF is browser-only
   const { jsPDF } = await import('jspdf');
@@ -270,7 +288,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
   doc.text(
-    `State of ${toTitleCase(data.state)} — ${data.county} County`,
+    `State of ${toTitleCase(data.state)} — ${countyDisplay}`,
     PAGE_WIDTH / 2,
     y,
     { align: 'center' }
@@ -289,7 +307,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   addSectionHeader('Property Subject to Lien');
   addLabelValue('Property Address', data.propertyAddress);
-  addLabelValue('County', data.county);
+  addLabelValue('County', countyDisplay);
   addLabelValue('State', toTitleCase(data.state));
 
   if (gcName) {
@@ -432,7 +450,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
-  doc.text(`${toTitleCase(data.state)} — ${data.county} County`, PAGE_WIDTH / 2, y, { align: 'center' });
+  doc.text(`${toTitleCase(data.state)} — ${countyDisplay}`, PAGE_WIDTH / 2, y, { align: 'center' });
   y += 10;
 
   addDivider();
@@ -477,7 +495,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   y += 12;
   addDivider();
 
-  const affidavitIntro = `State of ${toTitleCase(data.state)}\nCounty of ${data.county}\n\nThe undersigned, being duly sworn, states the following:`;
+  const affidavitIntro = `State of ${toTitleCase(data.state)}\nCounty of ${countyDisplay}\n\nThe undersigned, being duly sworn, states the following:`;
   addLine(affidavitIntro, 10, false, [50, 50, 50]);
   addSpacer(6);
 
@@ -517,6 +535,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.text(oathLines, MARGIN, y);
   y += oathLines.length * 5 + 10;
 
+  checkPageBreak(30);
   doc.line(MARGIN, y, MARGIN + 80, y);
   doc.setFont('helvetica', 'normal');
   doc.text('Affiant Signature', MARGIN, y + 4);
@@ -526,6 +545,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   addLine('NOTARY PUBLIC (if required by your state):', 9, true);
   addSpacer(4);
+  checkPageBreak(20);
   doc.line(MARGIN, y, MARGIN + 80, y);
   doc.text('Notary Signature', MARGIN, y + 4);
   doc.line(PAGE_WIDTH / 2 + 5, y, PAGE_WIDTH - MARGIN, y);
@@ -570,7 +590,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLine('Property from which the lien is released:', 10, true);
   addSpacer(2);
   addLabelValue('Property Address', data.propertyAddress);
-  addLabelValue('County', data.county);
+  addLabelValue('County', countyDisplay);
   addLabelValue('State', toTitleCase(data.state));
   addSpacer(4);
 
@@ -606,7 +626,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 6 (CONDITIONAL): Preliminary Notice
-  // Include for CA or FL when role = subcontractor or material-supplier
   // ═══════════════════════════════════════════════════════════════════════════
 
   const needsPreliminaryNotice =
@@ -664,7 +683,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
       addBlankField('Description of Services / Materials', 3);
       addLine('To the project located at:', 9, false, [50, 50, 50]);
       addLabelValue('Property Address', data.propertyAddress);
-      addLabelValue('County', data.county);
+      addLabelValue('County', countyDisplay);
       addLine('Under a contract with:', 9, false, [50, 50, 50]);
       addLabelValue('Contracting Party', gcName || '[General Contractor / Owner]');
       addLine('Estimated value of services / materials:', 9, false, [50, 50, 50]);
