@@ -7,14 +7,15 @@ export interface LienFormData {
   role: string;
   ownerName: string;
   propertyAddress: string;
-  gcName: string;
+  gcName?: string;
   contractAmount: string;
   firstFurnishingDate: string;
   lastFurnishingDate: string;
   claimantName?: string;
+  email?: string;
   county: string;
-  deadline: string; // pre-calculated ISO date string
-  extras: ('lien-waiver' | 'notice-of-intent' | 'lien-release' | 'preliminary-notice')[];
+  deadline?: string;
+  extras?: ('lien-waiver' | 'notice-of-intent' | 'lien-release' | 'preliminary-notice')[];
 }
 
 // ─── Static Data ──────────────────────────────────────────────────────────────
@@ -149,6 +150,12 @@ function calculateDeadline(lastFurnishingDate: string, state: string, role: stri
 // ─── PDF Generator ────────────────────────────────────────────────────────────
 
 export async function generateLienBundle(data: LienFormData): Promise<Blob> {
+  // Normalise optional fields so we never hit undefined errors
+  const extras = data.extras ?? [];
+  const email = data.email ?? '';
+  const gcName = data.gcName ?? '';
+  const claimantName = data.claimantName ?? '';
+
   // Dynamic import — jsPDF is browser-only
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
@@ -191,7 +198,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const addSectionHeader = (text: string) => {
     addSpacer(4);
     checkPageBreak(12);
-    doc.setFillColor(30, 47, 110); // navy-800
+    doc.setFillColor(30, 47, 110);
     doc.rect(MARGIN, y - 1, CONTENT_WIDTH, 8, 'F');
     doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
@@ -236,7 +243,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(150, 150, 150);
     doc.text(`Page ${pageNum} of ${totalPages}`, PAGE_WIDTH / 2, 285, { align: 'center' });
-    doc.text('LienForm.com', MARGIN, 285);
+    doc.text('MechanicsLienForm.com', MARGIN, 285);
   };
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -246,7 +253,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const docTitle = getDocumentTitle(data.state, data.role);
   const citation = getStateCitation(data.state);
 
-  // Citation
   doc.setFontSize(7);
   doc.setFont('helvetica', 'italic');
   doc.setTextColor(100, 100, 100);
@@ -254,14 +260,12 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.text(citLines, MARGIN, y);
   y += citLines.length * 4 + 4;
 
-  // Document title
   doc.setFontSize(16);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(30, 47, 110); // navy-800
+  doc.setTextColor(30, 47, 110);
   doc.text(docTitle, PAGE_WIDTH / 2, y, { align: 'center' });
   y += 10;
 
-  // Jurisdiction
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
@@ -275,36 +279,30 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
 
   addDivider();
 
-  // Claimant
   addSectionHeader('Claimant Information');
-  addLabelValue('Claimant Name', data.claimantName || '');
+  addLabelValue('Claimant Name', claimantName);
   addLabelValue('Role / Capacity', roleLabel(data.role));
-  addLabelValue('Contact Email', data.email);
+  if (email) addLabelValue('Contact Email', email);
 
-  // Owner
   addSectionHeader('Property Owner');
   addLabelValue('Owner Name', data.ownerName);
 
-  // Property
   addSectionHeader('Property Subject to Lien');
   addLabelValue('Property Address', data.propertyAddress);
   addLabelValue('County', data.county);
   addLabelValue('State', toTitleCase(data.state));
 
-  // Contractor (if applicable)
-  if (data.gcName) {
+  if (gcName) {
     addSectionHeader('General Contractor');
-    addLabelValue('General Contractor Name', data.gcName);
+    addLabelValue('General Contractor Name', gcName);
   }
 
-  // Claim
   addSectionHeader('Claim Details');
   addLabelValue('Amount Claimed', formatCurrency(data.contractAmount));
   addLabelValue('First Furnishing Date', data.firstFurnishingDate);
   addLabelValue('Last Furnishing Date', data.lastFurnishingDate);
   addLabelValue('Nature of Claim', 'Labor, materials, and/or equipment furnished to the above-described project.');
 
-  // Statement
   addSpacer(6);
   checkPageBreak(30);
   doc.setFontSize(9);
@@ -315,7 +313,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.text(stmtLines, MARGIN, y);
   y += stmtLines.length * 5 + 8;
 
-  // Signature block
   checkPageBreak(40);
   addDivider();
   doc.setFontSize(9);
@@ -352,7 +349,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   y += 12;
 
   addDivider();
-
   addSpacer(4);
   addLine('Your lien must be filed by:', 10, false, [80, 80, 80]);
 
@@ -371,9 +367,9 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...daysColor);
   if (daysLeft < 0) {
-    doc.text(`⚠ DEADLINE PASSED ${Math.abs(daysLeft)} DAYS AGO`, PAGE_WIDTH / 2, y, { align: 'center' });
+    doc.text(`WARNING: DEADLINE PASSED ${Math.abs(daysLeft)} DAYS AGO`, PAGE_WIDTH / 2, y, { align: 'center' });
   } else if (daysLeft === 0) {
-    doc.text('⚠ YOUR DEADLINE IS TODAY', PAGE_WIDTH / 2, y, { align: 'center' });
+    doc.text('WARNING: YOUR DEADLINE IS TODAY', PAGE_WIDTH / 2, y, { align: 'center' });
   } else {
     doc.text(`As of today, you have ${daysLeft} days remaining.`, PAGE_WIDTH / 2, y, { align: 'center' });
   }
@@ -401,7 +397,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
     '2. Serve a copy on the property owner via certified mail within the time required by your state.',
     '3. Retain proof of service, the recorded lien copy, and all supporting documentation.',
     '4. If payment is not received, consult an attorney to enforce the lien through litigation.',
-    `5. Be aware of the statute of limitations to file suit: varies by state, typically 1–2 years from filing.`,
+    '5. Be aware of the statute of limitations to file suit: varies by state, typically 1-2 years from filing.',
   ];
   afterFiling.forEach((item) => {
     addLine(item, 9, false, [60, 60, 60]);
@@ -444,7 +440,6 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const instructions = getFilingInstructions(data.state);
   const instrLines = instructions.split('\n');
   instrLines.forEach((line) => {
-    const isBold = line.includes('Instructions') || /^\d+\./.test(line.trim()) === false && line.trim() !== '';
     addLine(line, line.match(/^\d+\./) ? 9 : 10, line === instrLines[0], [50, 50, 50]);
     if (line.trim() === '') addSpacer(2);
   });
@@ -455,11 +450,11 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLine('Documents Required for Filing:', 10, true);
   addSpacer(3);
   const docs = [
-    '☐  Original signed Claim of Lien (this document)',
-    '☐  Copy of the Notice of Furnishing (if required by your state)',
-    '☐  Photo ID (in some counties)',
-    '☐  Recording fee (cash, check, or credit card depending on county)',
-    '☐  Self-addressed stamped envelope (for return of recorded document)',
+    '[ ]  Original signed Claim of Lien (this document)',
+    '[ ]  Copy of the Notice of Furnishing (if required by your state)',
+    '[ ]  Photo ID (in some counties)',
+    '[ ]  Recording fee (cash, check, or credit card depending on county)',
+    '[ ]  Self-addressed stamped envelope (for return of recorded document)',
   ];
   docs.forEach((d) => {
     addLine(d, 9, false, [50, 50, 50]);
@@ -499,10 +494,10 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLine('Method of Service:', 10, false, [50, 50, 50]);
   addSpacer(2);
   const methods = [
-    '☐  Personal Delivery',
-    '☐  Certified Mail — Tracking #: _______________________________',
-    '☐  First Class Mail',
-    '☐  Other (describe): _________________________________________',
+    '[ ]  Personal Delivery',
+    '[ ]  Certified Mail — Tracking #: _______________________________',
+    '[ ]  First Class Mail',
+    '[ ]  Other (describe): _________________________________________',
   ];
   methods.forEach((m) => {
     addLine(m, 9, false, [50, 50, 50]);
@@ -618,7 +613,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
     (data.state === 'california' || data.state === 'florida') &&
     (data.role === 'subcontractor' || data.role === 'material-supplier');
 
-  if (needsPreliminaryNotice || data.extras.includes('preliminary-notice')) {
+  if (needsPreliminaryNotice || extras.includes('preliminary-notice')) {
     doc.addPage();
     resetY();
 
@@ -658,9 +653,8 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
       addLine('An estimate of the total price of the labor, services, equipment, or materials:', 9, false, [50, 50, 50]);
       addLabelValue('Estimated Value', formatCurrency(data.contractAmount));
       addLine('The name of the person or firm who contracted for the purchase of such labor, services, equipment, or materials:', 9, false, [50, 50, 50]);
-      addLabelValue('Contracting Party', data.gcName || '[Property Owner / General Contractor]');
+      addLabelValue('Contracting Party', gcName || '[Property Owner / General Contractor]');
     } else {
-      // Florida NTO preamble
       addLine(
         'TO: Property Owner and/or General Contractor\n\nNOTICE TO OWNER\n\nFLORIDA LAW PRESCRIBES THE SERVING OF THIS NOTICE AND RESTRICTS YOUR RIGHT TO MAKE PAYMENTS UNDER YOUR CONTRACT IN ACCORDANCE WITH SECTION 713.06, FLORIDA STATUTES.',
         10, true, [50, 50, 50]
@@ -672,7 +666,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
       addLabelValue('Property Address', data.propertyAddress);
       addLabelValue('County', data.county);
       addLine('Under a contract with:', 9, false, [50, 50, 50]);
-      addLabelValue('Contracting Party', data.gcName || '[General Contractor / Owner]');
+      addLabelValue('Contracting Party', gcName || '[General Contractor / Owner]');
       addLine('Estimated value of services / materials:', 9, false, [50, 50, 50]);
       addLabelValue('Estimated Value', formatCurrency(data.contractAmount));
     }
