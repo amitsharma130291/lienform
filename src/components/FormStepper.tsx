@@ -178,8 +178,15 @@ export default function FormStepper({
     claimantName: '',
   });
 
+  // Track validation errors for step 3
+  const [errors, setErrors] = useState<Partial<Record<keyof LienFormData, string>>>({});
+
   const update = (field: keyof LienFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error on update
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
   };
 
   const handleNext = () => {
@@ -190,8 +197,44 @@ export default function FormStepper({
     if (step > 1) setStep((s) => s - 1);
   };
 
+  // Explicit validation for step 3 required fields
+  const validateStep3 = (): boolean => {
+    const newErrors: Partial<Record<keyof LienFormData, string>> = {};
+
+    if (!formData.claimantName?.trim()) {
+      newErrors.claimantName = 'Your name or company name is required.';
+    }
+    if (!formData.ownerName?.trim()) {
+      newErrors.ownerName = 'Property owner name is required.';
+    }
+    if (!formData.county?.trim()) {
+      newErrors.county = 'County is required.';
+    }
+    if (!formData.propertyAddress?.trim()) {
+      newErrors.propertyAddress = 'Property address is required.';
+    }
+    if (!formData.contractAmount?.trim()) {
+      newErrors.contractAmount = 'Contract amount is required.';
+    }
+    if (!formData.firstFurnishingDate?.trim()) {
+      newErrors.firstFurnishingDate = 'First furnishing date is required.';
+    }
+    if (!formData.lastFurnishingDate?.trim()) {
+      newErrors.lastFurnishingDate = 'Last furnishing date is required.';
+    }
+    if (!formData.email?.trim()) {
+      newErrors.email = 'Email address is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateStep3()) return; // Block submission if validation fails
     onFormComplete(formData as LienFormData);
   };
 
@@ -278,6 +321,19 @@ export default function FormStepper({
     </div>
   );
 
+  // Helper to render a field error
+  const FieldError = ({ field }: { field: keyof LienFormData }) =>
+    errors[field] ? (
+      <p className="text-red-500 text-xs mt-1">{errors[field]}</p>
+    ) : null;
+
+  const fieldClass = (field: keyof LienFormData) =>
+    `block w-full px-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${
+      errors[field]
+        ? 'border-red-400 focus:ring-red-400'
+        : 'border-slate-300 focus:ring-navy-600'
+    }`;
+
   // ── Step 3: Project Details ───────────────────────────────────────────────
 
   const renderStep3 = () => (
@@ -286,21 +342,24 @@ export default function FormStepper({
       <p className="text-slate-500 text-sm mb-6">
         This information will be filled into your lien document.
       </p>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
             Your Name or Company Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            required
             placeholder="ABC Roofing LLC or John Smith"
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            className={fieldClass('claimantName')}
             value={formData.claimantName || ''}
             onChange={(e) => update('claimantName', e.target.value)}
           />
-          <p className="text-xs text-slate-400 mt-1">This appears as the claimant on your lien document.</p>
+          <FieldError field="claimantName" />
+          {!errors.claimantName && (
+            <p className="text-xs text-slate-400 mt-1">This appears as the claimant on your lien document.</p>
+          )}
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -308,12 +367,12 @@ export default function FormStepper({
             </label>
             <input
               type="text"
-              required
               placeholder="Jane Smith"
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={fieldClass('ownerName')}
               value={formData.ownerName || ''}
               onChange={(e) => update('ownerName', e.target.value)}
             />
+            <FieldError field="ownerName" />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -321,12 +380,12 @@ export default function FormStepper({
             </label>
             <input
               type="text"
-              required
               placeholder="Wayne County"
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={fieldClass('county')}
               value={formData.county || ''}
               onChange={(e) => update('county', e.target.value)}
             />
+            <FieldError field="county" />
           </div>
         </div>
 
@@ -336,12 +395,12 @@ export default function FormStepper({
           </label>
           <input
             type="text"
-            required
             placeholder="123 Main Street, Detroit, MI 48201"
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            className={fieldClass('propertyAddress')}
             value={formData.propertyAddress || ''}
             onChange={(e) => update('propertyAddress', e.target.value)}
           />
+          <FieldError field="propertyAddress" />
         </div>
 
         <div>
@@ -366,13 +425,15 @@ export default function FormStepper({
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
             <input
               type="text"
-              required
               placeholder="25,000.00"
-              className="block w-full pl-7 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={`block w-full pl-7 pr-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${
+                errors.contractAmount ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-navy-600'
+              }`}
               value={formData.contractAmount || ''}
               onChange={(e) => update('contractAmount', e.target.value)}
             />
           </div>
+          <FieldError field="contractAmount" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -382,11 +443,11 @@ export default function FormStepper({
             </label>
             <input
               type="date"
-              required
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={fieldClass('firstFurnishingDate')}
               value={formData.firstFurnishingDate || ''}
               onChange={(e) => update('firstFurnishingDate', e.target.value)}
             />
+            <FieldError field="firstFurnishingDate" />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -394,11 +455,11 @@ export default function FormStepper({
             </label>
             <input
               type="date"
-              required
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={fieldClass('lastFurnishingDate')}
               value={formData.lastFurnishingDate || ''}
               onChange={(e) => update('lastFurnishingDate', e.target.value)}
             />
+            <FieldError field="lastFurnishingDate" />
           </div>
         </div>
 
@@ -408,15 +469,17 @@ export default function FormStepper({
           </label>
           <input
             type="email"
-            required
             placeholder="you@company.com"
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            className={fieldClass('email')}
             value={formData.email || ''}
             onChange={(e) => update('email', e.target.value)}
           />
-          <p className="text-xs text-slate-400 mt-1">Used to deliver your completed document.</p>
+          <FieldError field="email" />
+          {!errors.email && (
+            <p className="text-xs text-slate-400 mt-1">Used to deliver your completed document.</p>
+          )}
         </div>
-      </form>
+      </div>
     </div>
   );
 
@@ -468,9 +531,10 @@ export default function FormStepper({
           </button>
         ) : (
           <button
-            type="submit"
+            type="button"
             onClick={handleSubmit}
-            className="inline-flex items-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-white bg-trust-green rounded-lg hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors"
+            style={{ backgroundColor: '#16a34a' }}
           >
             Generate Document
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
