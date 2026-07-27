@@ -1,0 +1,157 @@
+---
+import StatePage from '../layouts/StatePage.astro';
+---
+
+<StatePage
+  title="Payment Successful — Downloading Your Lien Bundle | MechanicsLienForm"
+  description="Your payment was successful. Your mechanics lien PDF bundle is downloading now."
+  canonical="https://mechanicslienform.com/success/"
+>
+  <section class="max-w-2xl mx-auto px-4 py-16 text-center">
+    <!-- Success icon -->
+    <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style="background-color:#dcfce7;">
+      <svg class="w-10 h-10" style="color:#16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+
+    <h1 class="text-3xl font-bold mb-3" style="color:#1e2f6e;">Payment Successful!</h1>
+    <p class="text-slate-600 text-lg mb-8">
+      Your 6-page mechanics lien bundle is being prepared. Your download will start automatically in a moment.
+    </p>
+
+    <!-- Loading state -->
+    <div id="loading-state" class="mb-8">
+      <div class="flex items-center justify-center gap-3 text-slate-500">
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <span>Generating your PDF bundle…</span>
+      </div>
+    </div>
+
+    <!-- Download button (shown after generation) -->
+    <div id="download-state" class="hidden mb-8">
+      <button
+        id="download-btn"
+        class="inline-flex items-center gap-2 text-white font-bold px-8 py-4 rounded-xl text-lg shadow-lg hover:opacity-90 transition-opacity"
+        style="background-color:#1e2f6e;"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Download Lien Bundle (PDF)
+      </button>
+      <p class="text-sm text-slate-500 mt-3">If download didn't start automatically, click the button above.</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" class="hidden mb-8">
+      <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-left">
+        <p class="font-semibold text-red-700 mb-2">Something went wrong generating your PDF.</p>
+        <p class="text-sm text-red-600 mb-4">Your payment was processed. Please contact us and we'll send your document manually.</p>
+        <a href="/contact/" class="text-red-700 underline font-medium">Contact Support →</a>
+      </div>
+    </div>
+
+    <!-- What's in your bundle -->
+    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-left mt-8">
+      <h2 class="font-bold text-slate-800 mb-4">Your bundle includes:</h2>
+      <ul class="space-y-2 text-sm text-slate-600">
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 1: Mechanics Lien Claim (state-specific, current statute)</li>
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 2: Deadline Confirmation with days remaining</li>
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 3: County Recorder filing instructions</li>
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 4: Proof of Service Affidavit</li>
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 5: Lien Release Form</li>
+        <li class="flex items-start gap-2"><span class="text-green-500 font-bold mt-0.5">✓</span> Page 6: Preliminary Notice (if required for your state/role)</li>
+      </ul>
+    </div>
+
+    <!-- Upsell: Annual Pass -->
+    <div class="border border-blue-200 rounded-xl p-6 mt-6 text-left" style="background-color:#eff6ff;">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 class="font-bold text-lg mb-1" style="color:#1e2f6e;">File liens regularly?</h3>
+          <p class="text-sm text-slate-600">Get unlimited lien bundles across all states for <strong>$89/year</strong> — that's less than 5 individual bundles.</p>
+        </div>
+        <a
+          href="/pricing/"
+          class="shrink-0 text-white text-sm font-semibold px-4 py-2 rounded-lg whitespace-nowrap"
+          style="background-color:#2563eb;"
+        >
+          Learn More
+        </a>
+      </div>
+    </div>
+
+    <p class="text-xs text-slate-400 mt-8">
+      Not legal advice. Consult a licensed attorney in your state. 
+      <a href="/contact/" class="underline">Contact support</a> with any questions.
+    </p>
+  </section>
+</StatePage>
+
+<script>
+  // Parse form data from URL, generate PDF, trigger download
+  async function generateAndDownload() {
+    const params = new URLSearchParams(window.location.search);
+    const encodedData = params.get('data');
+
+    if (!encodedData) {
+      showError();
+      return;
+    }
+
+    try {
+      const formData = JSON.parse(decodeURIComponent(atob(encodedData)));
+
+      // Dynamically import the PDF generator (client-side only)
+      const { generateLienBundle } = await import('../components/PDFGenerator');
+
+      const blob = await generateLienBundle(formData);
+
+      // Trigger download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const state = formData.state || 'lien';
+      const county = formData.county || '';
+      a.download = `mechanics-lien-${state}${county ? `-${county}` : ''}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Show download button too (for manual re-download)
+      showDownload(blob, a.download);
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      showError();
+    }
+  }
+
+  function showDownload(blob: Blob, filename: string) {
+    document.getElementById('loading-state')?.classList.add('hidden');
+    document.getElementById('download-state')?.classList.remove('hidden');
+
+    document.getElementById('download-btn')?.addEventListener('click', () => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  function showError() {
+    document.getElementById('loading-state')?.classList.add('hidden');
+    document.getElementById('error-state')?.classList.remove('hidden');
+  }
+
+  // Run on page load
+  generateAndDownload();
+</script>
