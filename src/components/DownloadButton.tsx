@@ -4,12 +4,15 @@ import type { LienFormData } from './PDFGenerator';
 interface Props {
   formData: LienFormData;
   disabled?: boolean;
+  state?: string;
+  role?: string;
+  productName?: string;
 }
 
 // ─── PAYMENT MODE TOGGLE ───────────────────────────────────────────────────
-// Set to true to enable paid checkout via Dodo Payments.
-// Set to false for free beta (direct PDF download, no payment).
-const PAID_MODE = false;
+// true  = paid checkout via Dodo Payments ($19)
+// false = free beta (direct PDF download, no payment)
+const PAID_MODE = true;
 // ──────────────────────────────────────────────────────────────────────────
 
 export default function DownloadButton({ formData, disabled }: Props) {
