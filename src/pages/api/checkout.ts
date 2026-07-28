@@ -1,16 +1,34 @@
 // POST /api/checkout
 // Creates a Dodo Payments checkout session and returns the redirect URL.
+// In TEST_BYPASS mode, skips Dodo and redirects directly to /success.
 
 export const prerender = false;
 
 export async function POST({ request }: { request: Request }) {
   try {
-    // Read env vars inside the function (not at module level) so they're
-    // always fresh from the Vercel runtime environment
     const DODO_API_KEY = process.env.DODO_API_KEY;
     const DODO_PRODUCT_ID = process.env.DODO_PRODUCT_ID;
     const DODO_TEST_MODE = process.env.DODO_TEST_MODE === 'true';
     const SITE_URL = process.env.SITE_URL || 'https://mechanicslienform.com';
+
+    const body = await request.json();
+
+    // Encode form data as base64 to pass through the redirect URL
+    const formDataEncoded = btoa(encodeURIComponent(JSON.stringify(body)));
+    const successUrl = `${SITE_URL}/success?data=${formDataEncoded}`;
+
+    // ── TEST BYPASS ────────────────────────────────────────────────────────
+    // When Dodo card payments aren't yet activated, skip checkout and
+    // go straight to /success so we can verify the PDF generation flow.
+    // REMOVE this block before going live.
+    if (DODO_TEST_MODE) {
+      console.log('TEST BYPASS: skipping Dodo checkout, redirecting to success');
+      return new Response(
+        JSON.stringify({ url: successUrl }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    // ── END TEST BYPASS ────────────────────────────────────────────────────
 
     if (!DODO_API_KEY) {
       console.error('DODO_API_KEY not set');
@@ -20,24 +38,11 @@ export async function POST({ request }: { request: Request }) {
       );
     }
 
-    const DODO_BASE = DODO_TEST_MODE
-      ? 'https://test.dodopayments.com'
-      : 'https://live.dodopayments.com';
-
-    const body = await request.json();
-
-    // Encode form data as base64 to pass through the redirect URL
-    const formDataEncoded = btoa(encodeURIComponent(JSON.stringify(body)));
-    const successUrl = `${SITE_URL}/success?data=${formDataEncoded}`;
+    const DODO_BASE = 'https://live.dodopayments.com';
     const cancelUrl = `${SITE_URL}/mechanics-lien/`;
 
     const checkoutPayload = {
-      product_cart: [
-        {
-          product_id: DODO_PRODUCT_ID,
-          quantity: 1,
-        },
-      ],
+      product_cart: [{ product_id: DODO_PRODUCT_ID, quantity: 1 }],
       payment_link: true,
       success_url: successUrl,
       cancel_url: cancelUrl,
@@ -48,7 +53,7 @@ export async function POST({ request }: { request: Request }) {
       },
     };
 
-    console.log('Calling Dodo API:', DODO_BASE, 'test mode:', DODO_TEST_MODE);
+    console.log('Calling Dodo live API');
 
     const response = await fetch(`${DODO_BASE}/checkouts`, {
       method: 'POST',
@@ -61,7 +66,6 @@ export async function POST({ request }: { request: Request }) {
 
     const responseText = await response.text();
     console.log('Dodo response status:', response.status);
-    console.log('Dodo response body:', responseText);
 
     if (!response.ok) {
       return new Response(
@@ -84,7 +88,6 @@ export async function POST({ request }: { request: Request }) {
       );
     }
 
-    // Dodo returns checkout URL — try multiple possible field names
     const checkoutUrl =
       session.url ||
       session.payment_url ||
