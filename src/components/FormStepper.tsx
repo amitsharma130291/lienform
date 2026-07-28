@@ -16,7 +16,7 @@ export interface LienFormData {
   ownerName: string;
   ownerAddress: string;
   propertyAddress: string;
-  legalDescription: string;  // NEW: separate legal description field
+  legalDescription: string;
   county: string;
   gcName: string;
   hiringParty: string;
@@ -189,7 +189,6 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
       <h2 className="text-xl font-semibold text-slate-900 mb-2">Project details</h2>
       <p className="text-slate-500 text-sm mb-5">This information will be filled into your lien document.</p>
 
-      {/* Michigan Notice of Furnishing warning for subs */}
       {isMichigan && isSubOrSupplier && (
         <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
           <p className="text-xs font-semibold text-orange-800 mb-1">⚠ Michigan Notice of Furnishing Required</p>
@@ -197,7 +196,6 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
         </div>
       )}
 
-      {/* Michigan GC sworn statement */}
       {isMichigan && isGC && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-xs font-semibold text-blue-800 mb-1">ℹ Michigan GC — Sworn Statement Requirement</p>
@@ -264,7 +262,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
         </div>
 
-        {/* Legal description — recommended for Michigan */}
+        {/* Legal description */}
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
             Legal Property Description
@@ -282,8 +280,27 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           <p className="text-xs text-slate-400 mt-1">Find this on your deed or from the county assessor / Register of Deeds.</p>
         </div>
 
-        {/* GC / Hiring party */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* GC name — full width when no hiringParty field, half when hiringParty is shown */}
+        {isSubOrSupplier ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">General Contractor Name <span className="text-slate-400 text-xs">(optional)</span></label>
+              <input
+                type="text"
+                placeholder="ABC Construction LLC"
+                className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+                value={formData.gcName || ''}
+                onChange={(e) => update('gcName', e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Who Contracted You?</label>
+              <input type="text" placeholder="XYZ Framing LLC" className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm" value={formData.hiringParty || ''} onChange={(e) => update('hiringParty', e.target.value)} />
+              <p className="text-xs text-slate-400 mt-1">The party who hired you (may differ from GC).</p>
+            </div>
+          </div>
+        ) : (
+          /* Full width when only GC name is shown (no hiring party field) */
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
               General Contractor Name
@@ -291,7 +308,6 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
                 ? <span className="text-slate-400 text-xs ml-1">(you are the GC — optional)</span>
                 : <span className="text-slate-400 text-xs ml-1">(optional)</span>}
             </label>
-            {/* GC field is always editable — even if you ARE the GC you may want to note another GC managed the site */}
             <input
               type="text"
               placeholder="ABC Construction LLC"
@@ -300,14 +316,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
               onChange={(e) => update('gcName', e.target.value)}
             />
           </div>
-          {isSubOrSupplier && (
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Who Contracted You?</label>
-              <input type="text" placeholder="XYZ Framing LLC" className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm" value={formData.hiringParty || ''} onChange={(e) => update('hiringParty', e.target.value)} />
-              <p className="text-xs text-slate-400 mt-1">The party who hired you (may differ from GC).</p>
-            </div>
-          )}
-        </div>
+        )}
 
         {/* Amount */}
         <div>
