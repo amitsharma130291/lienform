@@ -12,14 +12,13 @@ interface Props {
 // ─── PAYMENT MODE TOGGLE ───────────────────────────────────────────────────
 // true  = paid checkout via Dodo Payments ($19)
 // false = free beta (direct PDF download, no payment)
-const PAID_MODE = true;
+const PAID_MODE = false;
 // ──────────────────────────────────────────────────────────────────────────
 
 export default function DownloadButton({ formData, disabled }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // ── Free mode: generate PDF directly ──────────────────────────────────
   const handleFreeDownload = async () => {
     setLoading(true);
     setError('');
@@ -44,7 +43,6 @@ export default function DownloadButton({ formData, disabled }: Props) {
     }
   };
 
-  // ── Paid mode: redirect to Dodo checkout ──────────────────────────────
   const handleCheckout = async () => {
     setLoading(true);
     setError('');
