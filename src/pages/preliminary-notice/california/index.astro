@@ -1,0 +1,304 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+
+const title = "California Preliminary Notice: The Complete Guide for Subs and Suppliers";
+const description = "California's 20-day preliminary notice is required to preserve lien rights. Learn who must serve it, exactly how, what happens if you miss it, and key deadlines.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the California preliminary notice the same as a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A preliminary notice is a prerequisite to filing a mechanics lien — it's a warning document served on the owner before any dispute arises. A mechanics lien is a recorded claim against the property filed after nonpayment. The notice comes first; the lien comes later, if necessary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do general contractors need to serve a preliminary notice in California?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. General contractors with a direct contract with the property owner are exempt from the preliminary notice requirement. Only parties without a direct owner contract — subcontractors, suppliers, equipment lessors — must serve it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I serve the preliminary notice electronically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "California law does not currently recognize email as a valid service method for preliminary notices. Stick to certified mail, overnight courier, or personal delivery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the penalty for serving a false preliminary notice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Civil Code §8218 imposes liability on any claimant who willfully gives false information in a preliminary notice. Courts can award the owner attorney fees and actual damages."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I served the notice to the wrong address. What do I do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If the address was your good-faith best effort (using county records, permit records, or contract documents), California courts have generally upheld notices served to the best-available address. If you have better information now, re-serve immediately to the correct address. Document both attempts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to serve a new notice if the project scope expands?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generally no — one preliminary notice covers the entire project, including additional work you perform or materials you supply later. You don't need to serve a new notice every time you show up on the job. The exception is if there's a very long gap in your furnishing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I don't serve the California preliminary notice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you never serve the notice, you have no mechanics lien rights for work performed more than 20 days before you do serve it. If a project is complete by the time you realize you missed it, you may have no lien rights at all. You can still sue on the contract, but a mechanics lien against the property is a much more powerful remedy."
+      }
+    }
+  ]
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "California Preliminary Notice: The Complete Guide for Subs and Suppliers",
+  "description": "California's 20-day preliminary notice is required to preserve lien rights. Learn who must serve it, exactly how, what happens if you miss it, and key deadlines.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LienForm",
+    "url": "https://mechanicslienform.com"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Preliminary Notice", "item": "https://mechanicslienform.com/preliminary-notice/" },
+    { "@type": "ListItem", "position": 3, "name": "California", "item": "https://mechanicslienform.com/preliminary-notice/california/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, articleSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/preliminary-notice/california/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6 max-w-4xl mx-auto px-4 pt-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/preliminary-notice/" class="hover:text-navy-700">Preliminary Notice</a> ›
+    <span class="text-gray-900">California</span>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">California Preliminary Notice: Who Must Serve It, How It Works, and What Happens If You Miss It</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">In California, subcontractors and material suppliers who don't have a direct contract with the property owner must serve a 20-day preliminary notice under Civil Code §8200 to preserve their mechanics lien rights. The notice must be served within 20 days of first furnishing labor or materials — by certified mail to the owner, general contractor, and construction lender. Serving it late still preserves lien rights for work done within 20 days before the late service date.</p>
+    </div>
+
+    <div class="prose prose-lg max-w-none">
+
+      <p>The California 20-day preliminary notice is one of the most misunderstood requirements in construction law. Contractors assume the general contractor handles it. Suppliers assume notice isn't required for materials. Property owners assume they'll hear about a lien problem only at the last minute. All of these assumptions create expensive problems.</p>
+
+      <p>This is the definitive guide to California's preliminary notice requirement — what the law actually requires, who it applies to, how to serve it correctly, what happens when you get it wrong, and how it fits into the broader timeline of California lien rights. For the mechanics lien filing process itself, see the <a href="/mechanics-lien/california/">California mechanics lien guide</a>.</p>
+
+      <h2>What Is a California Preliminary Notice?</h2>
+
+      <p>A California preliminary notice — formally governed by <strong>Civil Code §8200–8216</strong> — is a written notice that a subcontractor, material supplier, or equipment lessor must serve on the property owner, the direct hiring party, and the construction lender (if any) within 20 days of first furnishing labor, services, equipment, or materials on a project.</p>
+
+      <p>The notice is not a lien. It does not claim any debt or create any cloud on title. It is a <strong>statutory alert</strong> — it tells the owner and lender, in plain terms: "I am working on or supplying this project, and I may have lien rights if I'm not paid."</p>
+
+      <h3>Why the "20-day" Name Can Mislead</h3>
+
+      <p>The notice is called a 20-day preliminary notice because it must be served within 20 days of first furnishing. But you can serve it after 20 days — you just lose protection for work done more than 20 days before the late service. A contractor who starts work January 1 and serves the notice February 15 can still lien for work done on or after January 26 (20 days before service). The work done January 1–25 is unprotected.</p>
+
+      <p>This "rolling 20-day" concept is critical. Most contractors who realize they forgot the notice assume they've lost everything. They haven't — at least not for recent work.</p>
+
+      <h2>Who Must Serve the California Preliminary Notice?</h2>
+
+      <h3>Parties Who MUST Serve the Notice</h3>
+
+      <p>Under Civil Code §8200, these parties must serve a preliminary notice to preserve lien rights:</p>
+      <ul>
+        <li><strong>Subcontractors</strong> (any tier) who do not have a direct contract with the property owner</li>
+        <li><strong>Material suppliers</strong> who provide materials to anyone on the project except under a direct contract with the owner</li>
+        <li><strong>Equipment lessors</strong> who lease equipment for use on the project</li>
+        <li><strong>Certain laborers</strong> providing professional or licensed services who are paid other than as employees</li>
+      </ul>
+
+      <h3>Parties Who Do NOT Need to Serve the Notice</h3>
+
+      <ul>
+        <li>The <strong>general contractor</strong> who has a direct contract with the property owner is NOT required to serve a preliminary notice</li>
+        <li>Day laborers who are W-2 employees (their employer handles the lien rights question)</li>
+        <li>The property owner themselves</li>
+      </ul>
+
+      <h2>What Happens If You Don't Serve the Preliminary Notice?</h2>
+
+      <p>The consequences depend on who you are and when you catch the problem:</p>
+
+      <p><strong>For subcontractors with no direct contract with the owner:</strong> If you never serve the notice, you have <strong>no mechanics lien rights</strong> for work performed more than 20 days before you do serve it. If a project is complete by the time you realize you missed it, you may have no lien rights at all.</p>
+
+      <p><strong>For material suppliers:</strong> Same result — no notice, no lien protection for materials delivered more than 20 days before the notice date.</p>
+
+      <p><strong>Can you still sue on the contract?</strong> Yes. The preliminary notice is a prerequisite for mechanics lien rights, not for all legal remedies. You can still sue the GC or the party that hired you for breach of contract. But a mechanics lien against the property is a much more powerful remedy, especially when the GC is struggling financially.</p>
+
+      <h2>How to Serve the California Preliminary Notice</h2>
+
+      <h3>Who Receives the Notice?</h3>
+
+      <p>Under Civil Code §8200, the notice must be served on:</p>
+      <ol>
+        <li>The <strong>owner</strong> of the property (or reputed owner)</li>
+        <li>The <strong>general contractor</strong> or the direct hiring party</li>
+        <li>The <strong>construction lender</strong> or reputed construction lender, if any</li>
+      </ol>
+
+      <h3>Service Methods</h3>
+
+      <p>Civil Code §8106 specifies acceptable service methods. You have three options:</p>
+
+      <p><strong>1. Personal service</strong> — Hand-deliver a copy to the recipient. Get a signature acknowledging receipt.</p>
+
+      <p><strong>2. First-class registered or certified mail, return receipt requested</strong> — Send to the recipient's business address or residence. The postmark date counts as the service date even if the mail is returned undelivered.</p>
+
+      <p><strong>3. Overnight delivery by an express service carrier</strong> — Use FedEx, UPS, or similar. Keep the tracking confirmation.</p>
+
+      <h3>What the Notice Must Contain</h3>
+
+      <p>Under Civil Code §8102 and §8204, the preliminary notice must include:</p>
+      <ul>
+        <li><strong>Claimant's name and address</strong></li>
+        <li><strong>Name and address of the person who hired you</strong></li>
+        <li><strong>Description of the labor, services, equipment, or materials</strong> you're providing</li>
+        <li><strong>Estimated value of the work</strong> (a good-faith estimate)</li>
+        <li><strong>Description of the jobsite</strong> (street address is sufficient)</li>
+        <li><strong>Name and address of the owner or reputed owner</strong></li>
+        <li><strong>Name and address of the construction lender, if known</strong></li>
+      </ul>
+
+      <p>For residential projects, the notice must also include this verbatim statutory warning in at least 10-point bold type:</p>
+
+      <blockquote>
+        <strong>NOTICE TO PROPERTY OWNER:</strong> If bills are not paid in full for the labor, services, equipment, or materials furnished or to be furnished, a mechanic's lien leading to the loss, through court foreclosure proceedings, of all or part of your property being so improved may be placed against your property even though you have paid your contractor in full. You may wish to protect yourself against this consequence by (1) requiring your contractor to furnish a signed release by the person or firm giving you this notice before making payment to your contractor, or (2) any other method or device that is appropriate under the circumstances.
+      </blockquote>
+
+      <h2>The Timing Rule in Detail</h2>
+
+      <h3>Serving on Time (Within 20 Days)</h3>
+
+      <p>If you serve the notice within 20 days of first furnishing, you're protected from day one. Your potential lien can cover everything you do on the project from your first day through your last.</p>
+
+      <h3>Serving Late</h3>
+
+      <p>If you serve after day 20, you lose protection for work done more than 20 days before the service date.</p>
+
+      <p><strong>Example:</strong> You start work March 1 but don't serve until April 15. Your protected window starts March 26 (20 days before April 15). All work March 1–25 is outside your lien protection. The decision to serve late rather than not at all is almost always the right one.</p>
+
+      <h2>How the Preliminary Notice Fits Into the Full California Lien Timeline</h2>
+
+      <ol>
+        <li><strong>Day 1:</strong> First furnishing — the clock starts</li>
+        <li><strong>Day 20:</strong> Preliminary notice deadline (serve by this date for full protection)</li>
+        <li><strong>[Last day of work]:</strong> Your last furnishing date — this is when the lien deadline clock starts</li>
+        <li><strong>90 days after completion/cessation:</strong> Deadline to record the mechanics lien (Civil Code §8412)</li>
+        <li><strong>30 days after recording the lien:</strong> Deadline to serve a copy of the lien on the owner</li>
+        <li><strong>90 days after recording the lien:</strong> Deadline to file a lawsuit to enforce the lien (Civil Code §8460)</li>
+      </ol>
+
+      <p>For the complete breakdown of deadlines and how to file the lien itself, see the <a href="/mechanics-lien/california/">California mechanics lien guide</a>. For the step-by-step process of serving the notice itself, see our <a href="/20-day-preliminary-notice/california/">step-by-step guide to serving the 20-day notice</a>.</p>
+
+      <h2 id="faq">California Preliminary Notice FAQ</h2>
+
+      <div class="not-prose space-y-4 mt-6">
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Is the California preliminary notice the same as a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. A preliminary notice is a prerequisite to filing a mechanics lien — it's a warning document served on the owner before any dispute arises. A mechanics lien is a recorded claim against the property filed after nonpayment. The notice comes first; the lien comes later, if necessary.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Do general contractors need to serve a preliminary notice in California?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. General contractors with a direct contract with the property owner are exempt from the preliminary notice requirement. Only parties without a direct owner contract — subcontractors, suppliers, equipment lessors — must serve it.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What happens if I don't serve the preliminary notice?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>If you never serve the notice, you have no mechanics lien rights for work performed more than 20 days before you do serve it. If a project is complete by the time you realize you missed it, you may have no lien rights at all. You can still sue the GC for breach of contract, but a mechanics lien is a much more powerful remedy.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can I serve the preliminary notice electronically?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>California law does not currently recognize email as a valid service method for preliminary notices. Stick to certified mail, overnight courier, or personal delivery.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Does the preliminary notice protect me on a bonded project?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Partially. Serving the preliminary notice is a condition for bond claims on many private projects that require payment bonds. But the notice requirements for bond claims can differ from lien claims — check the specific bond requirements for your project.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Do I need a new notice if the project scope expands?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Generally no — one preliminary notice covers the entire project, including additional work you perform or materials you supply later. The exception is if there's a very long pause in your work. If there's a gap of several months and you start a genuinely new scope of work, re-serving a notice is the safest approach.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What if the GC won't give me the owner's address?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Look it up independently. California law allows you to serve the "reputed owner" — the owner you can identify through reasonable investigation (county assessor records, permit records, the deed). Document your investigation. Courts don't penalize claimants for serving the wrong owner if they made a good-faith effort.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <p class="mt-8"><em>This is not legal advice. Consult a licensed California attorney for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>

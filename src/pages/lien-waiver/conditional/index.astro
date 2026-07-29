@@ -1,0 +1,333 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+
+const title = "Conditional Lien Waiver: What It Is, What It Means, and When to Sign";
+const description = "A conditional lien waiver protects you until payment clears. Learn the difference from unconditional waivers, what the form must say, and state-specific rules including California's statutory forms.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is a conditional lien waiver legally binding?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — once the condition is met (payment clears), the conditional waiver is fully binding. Until then, the waiver has no legal effect. Courts in all major construction states have upheld this structure consistently."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I sign a conditional waiver and still file a lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If the payment referenced in the conditional waiver never clears (check bounced, wire reversed, payment stopped), then the condition was never met and the waiver has no effect — you retain your lien rights. If the payment did clear, the waiver applies to that payment amount and period, and you cannot file a lien for amounts already waived."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a lien waiver and a lien release?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A lien waiver is a prospective agreement — you agree not to file a lien (or waive lien rights for work already done) before a lien has been recorded. A lien release discharges a lien that has already been filed and recorded with the county. They serve different purposes at different stages of the payment cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does California require lien waivers to be notarized?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. California's statutory lien waiver forms do not require notarization. The waiver is effective as a signed written document without notarization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if the GC fills in the dollar amount incorrectly?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Before signing, verify the dollar amount on the waiver matches what you're actually receiving. If the amount is wrong — higher or lower — correct it before signing or ask for a corrected form. Signing a waiver for $75,000 when you're only receiving $50,000 could be construed as waiving rights to the additional $25,000."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a subcontract require me to waive lien rights before I start work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In Texas, such clauses are unenforceable (§53.283). In California, pre-work lien waivers in construction contracts are also generally void under Civil Code §8122. In Florida and Michigan, the rules are more nuanced — Florida allows pre-work waivers in certain contexts. Read the specific state law before agreeing to any contract clause that purports to require advance waiver of lien rights."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My GC is using a custom form that says 'conditional' but the language doesn't include a condition. What should I do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Refuse to sign it until the conditional language is added. In California, insist on using the statutory form. For other states, write in your own condition: 'This waiver is effective only upon actual receipt and clearance of the above-referenced payment.' Initial the change. If the GC refuses to accept your edit, that's a warning sign."
+      }
+    }
+  ]
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Conditional Lien Waiver: What It Is, What It Means, and When to Sign",
+  "description": "A conditional lien waiver protects you until payment clears. Learn the difference from unconditional waivers, what the form must say, and state-specific rules.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LienForm",
+    "url": "https://mechanicslienform.com"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Lien Waiver", "item": "https://mechanicslienform.com/lien-waiver/" },
+    { "@type": "ListItem", "position": 3, "name": "Conditional", "item": "https://mechanicslienform.com/lien-waiver/conditional/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, articleSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/lien-waiver/conditional/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6 max-w-4xl mx-auto px-4 pt-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/lien-waiver/" class="hover:text-navy-700">Lien Waiver</a> ›
+    <span class="text-gray-900">Conditional</span>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Conditional Lien Waiver: What It Means, Why It Protects You, and When the Other Party Will Push Back</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A conditional lien waiver waives your mechanics lien rights only if and when the payment referenced in the waiver actually clears. If the check bounces after you sign a conditional waiver, the condition was never met and your lien rights remain intact. It's the appropriate waiver to sign when receiving a check — not an unconditional waiver, which takes effect immediately upon signing regardless of whether the check clears.</p>
+    </div>
+
+    <div class="prose prose-lg max-w-none">
+
+      <p>Every payment on a construction project eventually comes with a request: "Sign this waiver and we'll release your check." The form arrives already drafted, and the pressure to sign it quickly — especially on a large job where cash flow matters — is real.</p>
+
+      <p>What most contractors don't realize is that there are four types of lien waivers, and the difference between a conditional waiver and an unconditional one can determine whether you have any recourse at all if that check bounces or the payment falls short.</p>
+
+      <h2>The Four Types of Lien Waivers</h2>
+
+      <p>Lien waivers come in two dimensions: conditional vs. unconditional, and progress vs. final. That creates four combinations:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Conditional</th>
+            <th>Unconditional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Progress</strong></td>
+            <td>Used during the project for partial payments — conditioned on the specific payment clearing</td>
+            <td>Used during the project — waives lien rights immediately, regardless of whether payment clears</td>
+          </tr>
+          <tr>
+            <td><strong>Final</strong></td>
+            <td>Used for final payment — conditioned on the final payment clearing</td>
+            <td>Used for final payment — immediately and permanently waives all lien rights</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>What a Conditional Lien Waiver Actually Does</h2>
+
+      <p>A conditional lien waiver contains language that makes its effect contingent on a specific condition — typically, that the payment described in the waiver is actually received.</p>
+
+      <p>Here's what the conditionality means in practice:</p>
+      <ul>
+        <li>You sign the waiver and hand it to the GC</li>
+        <li>The GC hands you a check for $50,000</li>
+        <li>If the check clears: the waiver is effective, and your lien rights for that $50,000 of work are waived</li>
+        <li>If the check bounces: the waiver never became effective — the condition was never met — and your lien rights for that work are fully intact</li>
+      </ul>
+
+      <h3>The Critical Clause</h3>
+
+      <p>Every conditional waiver should contain language substantially like this:</p>
+
+      <blockquote>
+        "This waiver and release applies to lien rights and claims claimant has for labor, services, equipment, or materials furnished through [specific date] to the extent that claimant has actually received payment in the amount of [dollar amount]."
+      </blockquote>
+
+      <p>The key phrase is "to the extent that claimant has actually received payment." That's the condition.</p>
+
+      <h2>What an Unconditional Waiver Does</h2>
+
+      <p>An unconditional waiver is effective immediately upon signing. The payment condition is absent. You sign it, it works — regardless of whether the check clears.</p>
+
+      <p>Unconditional waivers are appropriate in limited situations:</p>
+      <ul>
+        <li>You've already received payment and it has cleared</li>
+        <li>You're waiving final payment rights after confirmed wire receipt</li>
+        <li>You're settling a dispute and the settlement funds are already in your account</li>
+      </ul>
+
+      <h2>The Scenario Where Contractors Get Hurt Most Often</h2>
+
+      <p>A GC is struggling financially. Payments on the project are slow. You're owed $80,000. The GC calls with good news: "We've got your check ready. Come pick it up — just need you to sign the lien waiver." You go to the office. They hand you the check and a waiver form. Three days later, the check bounces.</p>
+
+      <p><strong>If you signed a conditional waiver:</strong> Your lien rights are intact. The condition (payment actually clearing) was never met. You can file a lien.</p>
+
+      <p><strong>If you signed an unconditional waiver:</strong> Your lien rights are gone. The waiver is effective as of the moment you signed it. The fact that the check bounced is not a defense to the waiver.</p>
+
+      <h2>How to Protect Yourself: Practical Rules</h2>
+
+      <p><strong>Rule 1: Always sign a conditional waiver when receiving a check.</strong> If payment is by check, the waiver should be conditional. The condition is that the check clears.</p>
+
+      <p><strong>Rule 2: Accept unconditional waivers only after confirmed clearance.</strong> For wire transfers, verify receipt in real time by checking your bank. For checks, wait 3–5 business days for clearance.</p>
+
+      <p><strong>Rule 3: Read the form before you sign it.</strong> The word "conditional" in the title is not enough. Read the body of the form. Confirm it includes language making the waiver effective only upon actual receipt of payment.</p>
+
+      <p><strong>Rule 4: Never sign a final unconditional waiver as a condition of receiving payment.</strong> A final unconditional waiver given as a condition of a final payment that hasn't cleared is the worst-case scenario.</p>
+
+      <p><strong>Rule 5: Know what the waiver covers.</strong> The waiver should specify a date through which it applies and a specific dollar amount. If the waiver is open-ended, you may be waiving more than you realize.</p>
+
+      <h2>California: Statutory Waiver Forms</h2>
+
+      <p>California is the most important state to understand here because it has <strong>statutory lien waiver forms</strong> that are legally mandatory.</p>
+
+      <p>Under <strong>Civil Code §8132–8138</strong>, California law provides four statutory forms:</p>
+      <ol>
+        <li><strong>Conditional Waiver and Release on Progress Payment</strong> (§8132)</li>
+        <li><strong>Unconditional Waiver and Release on Progress Payment</strong> (§8134)</li>
+        <li><strong>Conditional Waiver and Release on Final Payment</strong> (§8136)</li>
+        <li><strong>Unconditional Waiver and Release on Final Payment</strong> (§8138)</li>
+      </ol>
+
+      <p><strong>The critical rule:</strong> California waivers must be "substantially" in the form set out by statute. Always use the statutory forms in California to be safe.</p>
+
+      <p>The California conditional progress payment form (§8132) includes this language:</p>
+
+      <blockquote>
+        "CONDITIONAL RELEASE: This release is effective only on claimant's receipt of payment from the financial institution on which the above check is drawn."
+      </blockquote>
+
+      <p><strong>Important:</strong> California's statutory forms also release <strong>stop payment notice</strong> rights and <strong>payment bond</strong> rights, not just mechanics lien rights. Make sure you understand the full scope of what you're releasing before signing.</p>
+
+      <h2>Texas, Florida, and Michigan</h2>
+
+      <h3>Texas</h3>
+
+      <p>Texas does not have statutory waiver forms. Under <strong>Texas Property Code §53.281–53.284</strong>:</p>
+      <ul>
+        <li>A waiver of lien rights must be in writing</li>
+        <li>Oral waivers are not enforceable</li>
+        <li>A waiver executed before the labor or materials are provided is not enforceable (§53.283)</li>
+        <li>Texas does not have a built-in conditional/unconditional distinction — write in the condition yourself</li>
+      </ul>
+
+      <h3>Florida</h3>
+
+      <p>Florida's lien waiver laws are set out in <strong>§713.20 of the Florida Statutes</strong>. There are no statutory forms. The lack of statutory forms means waiver language varies widely — be careful about overly broad waivers that could be read as waiving rights beyond the payment in question.</p>
+
+      <h3>Michigan</h3>
+
+      <p>Michigan follows the rule that lien waivers are enforceable as written under <strong>MCL 570.1115</strong>. There are no statutory forms. Michigan courts have generally enforced conditional waivers according to their terms — if a check bounces after you signed a Michigan conditional waiver, courts will look at whether the condition was met.</p>
+
+      <h2>Conditional Waiver Checklist</h2>
+
+      <p>Before signing any lien waiver, verify:</p>
+      <ul>
+        <li>The form is labeled "conditional" — and the body language confirms conditionality</li>
+        <li>The payment amount is specific and matches the check/wire you're receiving</li>
+        <li>The "through date" covers only the period you're being paid for (not all work on the project)</li>
+        <li>You understand whether the waiver also releases bond and stop-notice rights</li>
+        <li>In California: the form is substantially in the statutory form</li>
+        <li>You are NOT signing an unconditional waiver before funds have cleared</li>
+        <li>You have a copy of the signed waiver for your file</li>
+      </ul>
+
+      <p>For related topics, see our guide to <a href="/mechanics-lien/release/">mechanics lien releases</a> (how to discharge a filed lien after payment) and the <a href="/preliminary-notice/california/">California preliminary notice guide</a>.</p>
+
+      <h2 id="faq">Conditional Lien Waiver FAQ</h2>
+
+      <div class="not-prose space-y-4 mt-6">
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Is a conditional lien waiver legally binding?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Yes — once the condition is met (payment clears), the conditional waiver is fully binding. Until then, the waiver has no legal effect. Courts in all major construction states have upheld this structure consistently.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can I sign a conditional waiver and still file a lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>If the payment referenced in the conditional waiver never clears (check bounced, wire reversed, payment stopped), then the condition was never met and the waiver has no effect — you retain your lien rights. If the payment did clear, the waiver applies to that payment amount and period.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What's the difference between a lien waiver and a lien release?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>A lien waiver is a prospective agreement — you agree not to file a lien before a lien has been recorded. A lien release discharges a lien that has already been filed and recorded with the county. They serve different purposes at different stages of the payment cycle. For information on releasing a filed lien, see our <a href="/mechanics-lien/release/">mechanics lien release guide</a>.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Does California require lien waivers to be notarized?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. California's statutory lien waiver forms do not require notarization. The waiver is effective as a signed written document without notarization.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What if the GC fills in the dollar amount incorrectly?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Before signing, verify the dollar amount on the waiver matches what you're actually receiving. If the amount is wrong — higher or lower — correct it before signing or ask for a corrected form. Signing a waiver for $75,000 when you're only receiving $50,000 could be construed as waiving rights to the additional $25,000.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can a subcontract require me to waive lien rights before I start work?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>In Texas, such clauses are unenforceable (§53.283). In California, pre-work lien waivers in construction contracts are also generally void under Civil Code §8122. In Florida and Michigan, the rules are more nuanced. Read the specific state law before agreeing to any contract clause that requires advance waiver of lien rights.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            My GC is using a custom form labeled "conditional" but the language doesn't include a condition. What should I do?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Refuse to sign it until the conditional language is added. In California, insist on using the statutory form. For other states, write in your own condition: cross out the offending language and add "This waiver is effective only upon actual receipt and clearance of the above-referenced payment." Initial the change.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <p class="mt-8"><em>This is not legal advice. Consult a licensed attorney in your state for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>

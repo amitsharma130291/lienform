@@ -1,0 +1,361 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+
+const title = "Mechanics Lien Release: How to Remove a Lien (and When Not To)";
+const description = "A mechanics lien release removes a filed lien from property records. Learn when to release, how to do it by state, and how to protect yourself as a contractor.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does it take to remove a mechanics lien after filing a release?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Once you record the release with the county recorder, it typically takes 1–5 business days to appear in the county's online system. Title companies and lenders generally need to see it in the official record before they'll proceed with a closing or refinance. Some counties offer expedited recording for an additional fee."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I release a lien without an attorney?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The release form itself is straightforward, and most states don't require attorney involvement. That said, if there's any dispute about the amount owed, any unusual language in the settlement agreement, or any ambiguity about what rights you're giving up, a construction attorney review is worth the cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a lien release and a lien satisfaction?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most contexts, these terms are used interchangeably. A 'satisfaction' historically referred to a mortgage being paid off, but in construction law, both terms refer to the same thing: a recorded document that cancels the lien."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if the contractor refuses to release the lien after I paid them?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each state provides a remedy. In California, you petition the court under Civil Code §8490. In Texas, the contractor faces statutory penalties up to $10,000. In Michigan, you have a damages claim. File a written demand first, document everything, and if the contractor doesn't respond within the statutory period, consult a construction attorney about a court-ordered release."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a lien release affect the underlying contract dispute?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can, depending on the language. A narrowly drafted release that releases only the specific recorded lien should not affect other claims. But a broadly worded release that says 'releases all claims' could waive contract claims, warranty claims, or bond claims. Read the language before signing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I file a new lien after releasing one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — if you're still within the original lien filing deadline and have additional unpaid amounts. But if you released the lien and the lien deadline has passed, you cannot refile. Never release a lien as part of a partial settlement unless you're certain you're within the deadline window for any remaining amount."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a notary required for a lien release?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In California, Michigan, Texas, and Florida: yes. The county recorder will not record a document that isn't notarized. Bring a valid, government-issued photo ID to the notary."
+      }
+    }
+  ]
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Mechanics Lien Release: How to Remove a Lien (and When Not To)",
+  "description": "A mechanics lien release removes a filed lien from property records. Learn when to release, how to do it by state, and how to protect yourself as a contractor.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LienForm",
+    "url": "https://mechanicslienform.com"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Release", "item": "https://mechanicslienform.com/mechanics-lien/release/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, articleSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/release/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6 max-w-4xl mx-auto px-4 pt-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Release</span>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Mechanics Lien Release: How to Remove a Lien, When to Do It, and When to Say No</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A mechanics lien release (also called a discharge of lien) is a notarized document recorded with the county recorder's office that formally cancels a filed mechanics lien. Once recorded, it removes the cloud on title and allows the owner to sell or refinance. Contractors must release a valid lien within 10–30 days of receiving full payment and a written demand, depending on state.</p>
+    </div>
+
+    <!-- SEO article body -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>Few things create more confusion on a construction job than the moment payment is finally resolved and someone says, "Great — now just sign the release." Whether you're the contractor holding a filed lien or the property owner trying to clear title before closing, a mechanics lien release is the end of the legal road. Get it right and everyone moves forward. Get it wrong and someone — usually the contractor — loses significant leverage or money.</p>
+
+      <p>This guide covers the full picture: what a release actually does legally, how it differs from a lien waiver, when you must release, when you shouldn't, and exactly how to record one in California, Michigan, Texas, and Florida.</p>
+
+      <h2>What Is a Mechanics Lien Release?</h2>
+
+      <p>A mechanics lien release (sometimes called a <strong>discharge of lien</strong> or <strong>release of lien</strong>) is a notarized document, recorded with the same county recorder's office where the original lien was filed, that formally cancels the lien claim.</p>
+
+      <p>Until a release is recorded, the lien stays on the property's title indefinitely — at least until it expires under state law (typically one to two years). Expiration doesn't automatically clean the title, though. Even an expired lien can create title problems because the expiration isn't self-executing in most states. A release does the job cleanly.</p>
+
+      <p><strong>What a release actually does:</strong></p>
+      <ul>
+        <li>Removes the encumbrance from the chain of title</li>
+        <li>Allows the owner to sell, refinance, or borrow against the property</li>
+        <li>Signals to the world (and future title searchers) that the claimant's claim has been satisfied or abandoned</li>
+        <li>Extinguishes the claimant's right to enforce that specific lien</li>
+      </ul>
+
+      <p><strong>What a release does NOT do:</strong></p>
+      <ul>
+        <li>It does not necessarily waive the underlying debt — unless the release language says so</li>
+        <li>It does not prevent you from filing a new lien if additional work is unpaid (subject to deadlines)</li>
+        <li>It does not release claims on a bond if the project was bonded</li>
+      </ul>
+
+      <h2>Lien Release vs. Lien Waiver: A Distinction That Matters</h2>
+
+      <p>These two documents get conflated constantly. They are not the same thing, and signing the wrong one at the wrong time has cost contractors real money.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Lien Waiver</th>
+            <th>Lien Release</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>What it does</strong></td>
+            <td>Waives your future right to file a lien (or waives existing lien rights)</td>
+            <td>Releases a lien that has already been filed</td>
+          </tr>
+          <tr>
+            <td><strong>When it's used</strong></td>
+            <td>Before or at the time of payment, as a condition of receiving payment</td>
+            <td>After payment is received and verified</td>
+          </tr>
+          <tr>
+            <td><strong>Recording required?</strong></td>
+            <td>No — it's a contractual document, not recorded</td>
+            <td>Yes — must be recorded in the county where the property is located</td>
+          </tr>
+          <tr>
+            <td><strong>Risk if signed wrong</strong></td>
+            <td>Lose lien rights before you're actually paid</td>
+            <td>Give up leverage before payment clears</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>If someone hands you a document at the time of payment and calls it a "lien release," read it carefully. If it's actually a lien waiver — which releases your right to file rather than discharging a filed lien — different rules apply. For a full breakdown of waiver types, see our guide to <a href="/lien-waiver/conditional/">conditional lien waivers</a>.</p>
+
+      <h2>When You Must Release a Lien</h2>
+
+      <p>Every state that gives contractors lien rights also gives property owners a mechanism to force a release. Here's how it works in the four states this site covers:</p>
+
+      <h3>California</h3>
+
+      <p>Under <strong>Civil Code §8480</strong>, once a lien claimant has been paid in full, the owner can make a written demand for a release. The claimant then has <strong>30 days</strong> to record a release and provide a copy to the owner. Failure to do so entitles the owner to recover costs, attorney fees, and any actual damages caused by the delay.</p>
+
+      <p>California release form requirements:</p>
+      <ul>
+        <li>Must be in writing</li>
+        <li>Must identify the claimant, the property owner, the property (legal description or APN)</li>
+        <li>Must reference the original lien (recording date and document number)</li>
+        <li>Must be signed and notarized</li>
+        <li>Must be recorded with the county recorder where the lien was filed</li>
+      </ul>
+
+      <h3>Michigan</h3>
+
+      <p><strong>MCL 570.1116</strong> requires a lien claimant to provide a discharge of lien within <strong>10 days</strong> after receiving full payment and a written demand from the owner. The 10-day window is tighter than most contractors realize. Missing it can result in liability for damages the owner suffers from the continuing cloud on title.</p>
+
+      <p>Michigan also allows a lien to be discharged by posting a surety bond equal to 150% of the lien amount (MCL 570.1117).</p>
+
+      <h3>Texas</h3>
+
+      <p>Under <strong>Texas Property Code §53.152</strong>, after a lien is paid or settled, the property owner may send a written demand for a release. The lienholder must file a release within <strong>10 days</strong>. If they don't, they're liable for any actual damages plus attorney fees — and the court may also award an additional penalty up to $10,000 for a willful refusal.</p>
+
+      <h3>Florida</h3>
+
+      <p>Florida's mechanics lien law (§713.21) allows a lien to be discharged by recording a satisfaction or release by the lienor, by court order, or by posting a bond (§713.24) equal to the amount of the lien plus interest and costs.</p>
+
+      <h2>When NOT to Release a Lien (Contractor Perspective)</h2>
+
+      <h3>1. The Check Hasn't Cleared</h3>
+
+      <p>You received a check. The owner or GC is saying "sign the release." Don't. Not yet. A check is a promise to pay — it's not payment. Checks bounce. Accounts get frozen. If you release the lien and the check bounces, you may have to refile, and depending on timing, your lien deadline may have passed.</p>
+
+      <p><strong>The rule:</strong> Release only after funds are verified. For large amounts, this means waiting for the check to clear your bank account or using wire transfer with same-day confirmation.</p>
+
+      <h3>2. You're Releasing More Than You Intended</h3>
+
+      <p>Read the language. A release that says "releases all claims against the property and the owner" is not the same as one that says "releases the mechanics lien recorded [date] at document number [X]." The first one might release your bond claim, contract claim, or other rights.</p>
+
+      <h3>3. You're in a Dispute About the Amount</h3>
+
+      <p>If the owner says they owe you $40,000 and you say $75,000, do not release the lien in exchange for $40,000 unless you're genuinely settling the difference. Accepting partial payment and signing a "paid in full" release leaves the remaining $35,000 on the table, potentially forever.</p>
+
+      <h3>4. You Haven't Been Paid for Retention</h3>
+
+      <p>Many contractors release their lien after receiving their final progress payment, forgetting that retention (the 5–10% held throughout the project) hasn't been paid. Your lien should cover the retention too. Don't release it before retention is received.</p>
+
+      <h2>How to Record a Mechanics Lien Release: Step by Step</h2>
+
+      <p><strong>Step 1: Confirm payment is final.</strong> Verify the payment has cleared. For checks over $5,000, wait 3–5 business days after deposit to confirm clearance. For wires, confirm receipt within 24 hours.</p>
+
+      <p><strong>Step 2: Prepare the release document.</strong> Use your state's form if one is provided. At minimum, the release must include: your name and address (the lien claimant), the property owner's name, property description (legal description and/or APN), recording information for the original lien (county, date, document/instrument number), a statement that the lien is released, and your signature.</p>
+
+      <p><strong>Step 3: Get it notarized.</strong> Nearly every state requires the release to be notarized. Take a valid ID. The notary verifies your identity and witnesses your signature.</p>
+
+      <p><strong>Step 4: Record with the county recorder.</strong> Take the notarized original to the county recorder's office in the county where the property is located (same county where you filed the original lien). Pay the recording fee (typically $10–$25 per page depending on county and state).</p>
+
+      <p><strong>Step 5: Provide a copy to the owner.</strong> California specifically requires you to deliver a copy to the owner after recording. This is good practice everywhere.</p>
+
+      <h2>State-by-State Summary Table</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Time to Release After Demand</th>
+            <th>Penalty for Non-Release</th>
+            <th>Bond Release Available?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>California</td>
+            <td>30 days</td>
+            <td>Damages + attorney fees</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Michigan</td>
+            <td>10 days</td>
+            <td>Actual damages</td>
+            <td>Yes (150% of lien)</td>
+          </tr>
+          <tr>
+            <td>Texas</td>
+            <td>10 days</td>
+            <td>Damages + fees + up to $10,000</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Florida</td>
+            <td>No fixed timeline</td>
+            <td>Court-ordered release</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Common Mistakes and How to Avoid Them</h2>
+
+      <p><strong>Mistake: Releasing the lien in the same transaction as receiving payment.</strong> Handing over a release at the same moment you receive a check is high-risk. What if the check bounces Monday morning? Wait for cleared funds.</p>
+
+      <p><strong>Mistake: Using a lien waiver form as a lien release.</strong> These are different documents. A lien waiver might be fine as a closing condition, but it doesn't remove the recorded lien from title. You need a separately recorded release.</p>
+
+      <p><strong>Mistake: Forgetting to record the release.</strong> Signing a release and giving it to the owner is not enough. It must be recorded. Until it hits the county recorder's system, the lien is still on title.</p>
+
+      <p><strong>Mistake: Releasing a lien without referencing the specific recording information.</strong> If your release doesn't reference the original lien's document number and recording date, the title company and county recorder may not be able to connect the release to the original lien.</p>
+
+      <p><strong>Mistake: Releasing the lien before receiving all retention.</strong> Final payment includes retention. Make sure your release — if it's a full release — comes only after retention is paid.</p>
+
+      <h2 id="faq">Mechanics Lien Release FAQ</h2>
+
+      <div class="not-prose space-y-4 mt-6">
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            How long does it take to remove a mechanics lien after filing a release?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Once you record the release with the county recorder, it typically takes 1–5 business days to appear in the county's online system. Title companies and lenders generally need to see it in the official record before they'll proceed with a closing or refinance. Some counties offer expedited recording for an additional fee.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can I release a lien without an attorney?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Yes. The release form itself is straightforward, and most states don't require attorney involvement. That said, if there's any dispute about the amount owed, any unusual language in the settlement agreement, or any ambiguity about what rights you're giving up, a construction attorney review is worth the cost.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What if the contractor refuses to release the lien after I paid them?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Each state provides a remedy. In California, you petition the court under Civil Code §8490. In Texas, the contractor faces statutory penalties up to $10,000. In Michigan, you have a damages claim. File a written demand first, document everything, and if the contractor doesn't respond within the statutory period, consult a construction attorney about a court-ordered release.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Does a lien release affect the underlying contract dispute?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>It can, depending on the language. A narrowly drafted release that releases only the specific recorded lien should not affect other claims. But a broadly worded release that says "releases all claims" could waive contract claims, warranty claims, or bond claims. Read the language before signing.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can I file a new lien after releasing one?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Yes — if you're still within the original lien filing deadline and have additional unpaid amounts. But if you released the lien and the lien deadline has passed, you cannot refile. Never release a lien as part of a partial settlement unless you're certain you're within the deadline window for any remaining amount.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Is a notary required for a lien release?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>In California, Michigan, Texas, and Florida: yes. The county recorder will not record a document that isn't notarized. Bring a valid, government-issued photo ID to the notary.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <p class="mt-8"><em>This is not legal advice. Consult a licensed attorney in your state for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>

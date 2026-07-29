@@ -14,6 +14,11 @@ export async function GET() {
     { url: `${DOMAIN}/contact/`, priority: '0.5', changefreq: 'monthly' },
     { url: `${DOMAIN}/privacy-policy/`, priority: '0.3', changefreq: 'yearly' },
     { url: `${DOMAIN}/terms-of-service/`, priority: '0.3', changefreq: 'yearly' },
+    { url: 'https://mechanicslienform.com/mechanics-lien/release/', priority: '0.7', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/preliminary-notice/california/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/20-day-preliminary-notice/california/', priority: '0.8', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/lien-waiver/conditional/', priority: '0.7', changefreq: 'monthly' },
+    { url: 'https://mechanicslienform.com/notice-of-intent-to-lien/', priority: '0.7', changefreq: 'monthly' },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

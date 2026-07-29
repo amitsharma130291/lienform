@@ -1,0 +1,353 @@
+---
+import StatePage from '../../layouts/StatePage.astro';
+
+const title = "Notice of Intent to Lien: What It Is, When to Send It, and Why It Often Works";
+const description = "A notice of intent to lien warns an owner or GC that you'll file a mechanics lien if not paid. It's rarely legally required but often gets payment faster than the lien itself.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is a notice of intent to lien the same as a mechanics lien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A notice of intent is an informal or semi-formal letter warning that you plan to file a lien. It is not recorded and has no legal effect on the title. A mechanics lien is a recorded encumbrance that clouds the title. The notice comes before the lien; the lien is the action that creates legal consequences."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does sending a notice of intent reset my lien deadline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your mechanics lien deadline is set by state statute and runs from specific triggering events (completion, last furnishing, project cessation, etc.). Sending a notice of intent has no effect on the deadline. If your deadline is approaching, file the lien — don't wait to see if the notice produces payment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the other party sue me for sending a notice of intent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sending a good-faith notice of intent for a legitimate debt is almost always protected. However, if you threaten a lien for an amount you know to be false, or for work you know was defective, you could face liability for slander of title or other claims. Keep the notice accurate and factual."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is a notice of intent to lien different from a demand letter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A demand letter typically threatens a lawsuit. A notice of intent to lien specifically threatens a mechanics lien filing. The mechanics lien threat is often more powerful for the recipient because it directly affects their property title in a public, searchable way."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I send a notice of intent to lien on a public project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Mechanics liens cannot be filed against public property. On public projects, your remedy is a stop payment notice (in California) or a payment bond claim. A notice of intent to lien is irrelevant to public works — instead, serve your bond claim notice on the surety and the public agency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I'm a general contractor, not a subcontractor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The notice works the same way. As a GC, you send the notice directly to the property owner (your contracting party). The owner has even more reason to respond quickly, since you likely have a direct relationship with them and they know the full scope of what you've done."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "If I send the notice and they pay, do I still need to do anything else?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you had already filed a mechanics lien, you need to record a mechanics lien release once payment clears. If you hadn't filed yet and the notice produced payment, no further lien action is needed — just execute your standard payment documentation and move on."
+      }
+    }
+  ]
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Notice of Intent to Lien: What It Is, When to Send It, and Why It Often Works",
+  "description": "A notice of intent to lien warns an owner or GC that you'll file a mechanics lien if not paid. It's rarely legally required but often gets payment faster than the lien itself.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "LienForm",
+    "url": "https://mechanicslienform.com"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Notice of Intent to Lien", "item": "https://mechanicslienform.com/notice-of-intent-to-lien/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, articleSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/notice-of-intent-to-lien/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6 max-w-4xl mx-auto px-4 pt-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <span class="text-gray-900">Notice of Intent to Lien</span>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Notice of Intent to Lien: What It Is, Which States Require It, and Why It Gets People Paid</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A notice of intent to lien is a written warning sent to a property owner or general contractor stating that a mechanics lien will be filed if payment is not received by a specific date. It is not required before filing a lien in most states, including California, Michigan, and Texas — but it frequently results in payment because property owners will act quickly to avoid a lien being recorded against their title.</p>
+    </div>
+
+    <div class="prose prose-lg max-w-none">
+
+      <p>Contractors who haven't used a notice of intent to lien often skip straight from "overdue invoice" to "file the lien." That's understandable — the lien is the legal right you've earned, and if someone isn't paying, you want the strongest tool available. But there's a step in between that many experienced contractors swear by, not because the law requires it, but because it works.</p>
+
+      <p>A well-written notice of intent to lien does something a mechanics lien can't do: it gives the owner a chance to react before the lien hits their title. And that's precisely when people pay.</p>
+
+      <h2>What Is a Notice of Intent to Lien?</h2>
+
+      <p>A notice of intent to lien (sometimes called a "demand letter," "pre-lien notice," or "10-day notice before lien") is a written document sent to the property owner and/or general contractor that says, in essence: "I'm owed money for work I performed on your project. If I'm not paid by [date], I will file a mechanics lien against the property."</p>
+
+      <p>It is not the same as:</p>
+      <ul>
+        <li>A <strong>preliminary notice</strong> (a notice served at the beginning of work to preserve lien rights — see the <a href="/preliminary-notice/california/">California preliminary notice guide</a>)</li>
+        <li>A <strong>mechanics lien</strong> (the actual recorded encumbrance against the property)</li>
+        <li>A <strong>Notice to Owner</strong> (Florida's statutory pre-lien notice required for subcontractors)</li>
+      </ul>
+
+      <p>The notice of intent to lien is almost always sent after work is complete (or nearly so), after invoices have gone unpaid for some period, and before the lien deadline requires the contractor to act.</p>
+
+      <h2>Is a Notice of Intent to Lien Required?</h2>
+
+      <h3>States Where a Formal Pre-Lien Notice IS Required</h3>
+
+      <p>A handful of states require some form of notice before a mechanics lien can be filed:</p>
+
+      <ul>
+        <li><strong>Georgia:</strong> Under O.C.G.A. §44-14-361.1, a contractor must give at least <strong>30 days' notice</strong> to the property owner before filing a lien</li>
+        <li><strong>Arkansas:</strong> Requires a <strong>10-day notice</strong> before filing a lien against a residential property owner</li>
+        <li><strong>Washington:</strong> Requires a <strong>10-day notice</strong> before a residential property owner can be held liable for a lien filed by a subcontractor (RCW 60.04.031)</li>
+        <li><strong>Louisiana:</strong> Has a "notice of non-payment" requirement with specific timing requirements</li>
+        <li><strong>Missouri:</strong> Under certain circumstances, requires a subcontractor to give the owner a statement of account before perfecting a lien</li>
+      </ul>
+
+      <h3>States Where It Is NOT Required — But Still Common</h3>
+
+      <p>In <strong>California, Michigan, and Texas</strong>, there is no statutory requirement to send a notice of intent to lien before filing. You can file a mechanics lien without warning the owner. But "not required" doesn't mean "not useful."</p>
+
+      <h2>Why Experienced Contractors Send It Even When They Don't Have To</h2>
+
+      <p>The strategic case for a notice of intent to lien is simple: it converts a payment dispute from a private argument between a contractor and a GC into a threat to the owner's most valuable asset — their property.</p>
+
+      <p>Consider how property owners experience this: without the notice, the owner may not even know there's a payment dispute. Then suddenly a mechanics lien hits the title. The owner calls their lender, the lender panics about their collateral, the owner calls their attorney, and everyone is now angry at everyone.</p>
+
+      <p>With the notice of intent, the owner gets a heads-up before the lien is filed. They now have a window to act — to pressure the GC to pay, to escrow funds, or to pay you directly. Many owners, when given that window, will make payment happen quickly to protect their title.</p>
+
+      <h3>The Psychology of the Notice</h3>
+
+      <p>When a notice of intent to lien arrives, the recipient has to make a decision under a deadline. Either pay the amount owed (or dispute it now, before the lien is filed) or watch a lien get recorded against the property.</p>
+
+      <p>A mechanics lien can: delay or kill a real estate closing, trigger an event of default under a construction loan, require the owner to bond over the lien, and create a public record that shows up in any title search. None of those outcomes cost less than paying the contractor. The notice of intent to lien makes this calculation explicit. That's why it works.</p>
+
+      <h2>When a Notice of Intent to Lien Is the Right Move</h2>
+
+      <p>Use a notice of intent to lien when:</p>
+      <ul>
+        <li><strong>Invoices are 30–60 days past due</strong> and you've already made verbal demands</li>
+        <li><strong>You have a significant amount at stake</strong> (small amounts may not justify the complexity of a lien, but the notice itself costs almost nothing)</li>
+        <li><strong>You want to preserve the relationship</strong> — a notice is less aggressive than a filed lien and gives the other party a chance to respond</li>
+        <li><strong>You're still within the lien deadline</strong> — if you're running out of time, file the lien immediately rather than waiting on the notice</li>
+        <li><strong>There's an owner who may not know about the payment dispute</strong> — the notice can bring the owner into the conversation in a way that produces payment</li>
+      </ul>
+
+      <h2>When to Skip the Notice and File Directly</h2>
+
+      <ul>
+        <li><strong>The lien deadline is within 10 days.</strong> Don't send a notice and wait — file the lien</li>
+        <li><strong>The GC has already abandoned the project.</strong> If the GC is gone, the owner already knows there are payment issues</li>
+        <li><strong>You've already sent one and it was ignored.</strong> If you sent a notice 60 days ago and nothing happened, file the lien</li>
+        <li><strong>The amount is small and litigation would cost more than the debt.</strong> Small claims court may be more appropriate</li>
+      </ul>
+
+      <h2>How to Write a Notice of Intent to Lien That Gets Results</h2>
+
+      <p>The notice doesn't need to be long. It needs to be specific, factual, and clear about what happens next. Include:</p>
+
+      <ol>
+        <li><strong>Your identifying information</strong> — your full legal name (or company name), address, phone, and email</li>
+        <li><strong>The recipient(s)</strong> — send to both the property owner and the general contractor</li>
+        <li><strong>A clear identification of the project</strong> — property address, permit number if known, and a brief description of the work you performed</li>
+        <li><strong>The specific amount owed</strong> — itemize if possible: "Invoice #1042 dated March 1 for $22,500; total outstanding: $40,500"</li>
+        <li><strong>What you did</strong> — "I furnished [labor/materials/both] to [project name/address] beginning [date] through [date]"</li>
+        <li><strong>The demand and deadline</strong> — "If payment of $40,500 is not received by [date — typically 10–14 days out], I will file a mechanics lien against the property"</li>
+        <li><strong>Your contact information for resolution</strong> — "I am available to discuss this matter and would prefer to resolve it without filing"</li>
+      </ol>
+
+      <h3>Practical Notes on the Notice</h3>
+
+      <p><strong>Send it certified mail.</strong> Certified mail, return receipt requested, to each recipient separately. Keep your receipts. This creates a documented paper trail showing you gave warning.</p>
+
+      <p><strong>Set a realistic deadline.</strong> Ten to fourteen days is standard. Short enough to convey urgency, long enough for the owner or GC to actually do something.</p>
+
+      <p><strong>Don't threaten litigation.</strong> The notice is about the lien, not a lawsuit. Keep the focus: mechanics lien against the property.</p>
+
+      <p><strong>Keep the tone professional, not hostile.</strong> The goal is payment, not a fight. "I prefer to resolve this matter without filing" is the right note to end on.</p>
+
+      <h2>What Happens After You Send the Notice</h2>
+
+      <h3>Scenario 1: They Pay</h3>
+
+      <p>This happens often. The notice — especially when it's addressed to the property owner who didn't know there was a dispute — creates urgency. If the funds arrive before your deadline, accept payment, confirm clearance, and sign a <a href="/lien-waiver/conditional/">conditional lien waiver</a> upon receipt. If you also have a filed lien, execute a <a href="/mechanics-lien/release/">mechanics lien release</a>.</p>
+
+      <h3>Scenario 2: They Call to Negotiate</h3>
+
+      <p>Good. Be open to a reasonable payment plan if the full amount isn't available immediately — but get it in writing. A signed payment agreement with a specific schedule is far better than an oral promise.</p>
+
+      <h3>Scenario 3: They Dispute the Amount</h3>
+
+      <p>If they claim the amount is wrong, ask them to put their position in writing. Evaluate it honestly. If there's a legitimate dispute, negotiate. If there isn't, hold your position and file the lien if the deadline is approaching.</p>
+
+      <h3>Scenario 4: No Response</h3>
+
+      <p>File the lien. You've given notice, you've been professional, and you've been ignored. The lien exists precisely for this situation. Don't wait past the deadline hoping for a response that won't come.</p>
+
+      <h2>Notice of Intent to Lien vs. Other Notices: Quick Reference</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>When Served</th>
+            <th>Required?</th>
+            <th>Recorded?</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Preliminary notice (CA)</strong></td>
+            <td>Within 20 days of first furnishing</td>
+            <td>Yes, for subs/suppliers in CA</td>
+            <td>No</td>
+            <td>Preserves lien rights</td>
+          </tr>
+          <tr>
+            <td><strong>Notice to Owner (FL)</strong></td>
+            <td>Within 45 days of first furnishing</td>
+            <td>Yes, for subs/suppliers in FL</td>
+            <td>No</td>
+            <td>Preserves lien rights</td>
+          </tr>
+          <tr>
+            <td><strong>Notice of Furnishing (MI)</strong></td>
+            <td>Within 20 days of first furnishing</td>
+            <td>Required for some parties in MI</td>
+            <td>No</td>
+            <td>Preserves lien rights</td>
+          </tr>
+          <tr>
+            <td><strong>Notice of intent to lien</strong></td>
+            <td>After payment becomes overdue</td>
+            <td>Rarely required (see state list)</td>
+            <td>No</td>
+            <td>Warns of pending lien, prompts payment</td>
+          </tr>
+          <tr>
+            <td><strong>Mechanics lien</strong></td>
+            <td>Before deadline (varies by state)</td>
+            <td>N/A — you choose whether to file</td>
+            <td>Yes</td>
+            <td>Creates encumbrance on property</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">Notice of Intent to Lien FAQ</h2>
+
+      <div class="not-prose space-y-4 mt-6">
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Is a notice of intent to lien the same as a mechanics lien?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. A notice of intent is an informal or semi-formal letter warning that you plan to file a lien. It is not recorded and has no legal effect on the title. A mechanics lien is a recorded encumbrance that clouds the title. The notice comes before the lien; the lien is the action that creates legal consequences.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Does sending a notice of intent reset my lien deadline?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. Your mechanics lien deadline is set by state statute and runs from specific triggering events (completion, last furnishing, project cessation, etc.). Sending a notice of intent has no effect on the deadline. If your deadline is approaching, file the lien — don't wait to see if the notice produces payment.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Can the other party sue me for sending a notice of intent?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>Sending a good-faith notice of intent for a legitimate debt is almost always protected. However, if you threaten a lien for an amount you know to be false, or for work you know was defective, you could face liability for slander of title or other claims. Keep the notice accurate and factual.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            How is this different from a demand letter?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>A demand letter typically threatens a lawsuit. A notice of intent to lien specifically threatens a mechanics lien filing. The mechanics lien threat is often more powerful for the recipient because it directly affects their property title in a public, searchable way.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            Should I send a notice of intent to lien on a public project?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>No. Mechanics liens cannot be filed against public property. On public projects, your remedy is a stop payment notice (in California) or a payment bond claim. A notice of intent to lien is irrelevant to public works.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            What if I'm a general contractor, not a subcontractor?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>The notice works the same way. As a GC, you send the notice directly to the property owner (your contracting party). The owner has even more reason to respond quickly, since you likely have a direct relationship with them and they know the full scope of what you've done.</p>
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 list-none">
+            If I send the notice and they pay, do I still need to do anything else?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
+            <p>If you had already filed a mechanics lien, you need to record a <a href="/mechanics-lien/release/">mechanics lien release</a> once payment clears. If you hadn't filed yet and the notice produced payment, no further lien action is needed — just execute your standard payment documentation and move on.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <p class="mt-8"><em>This is not legal advice. Consult a licensed attorney in your state for advice specific to your situation.</em></p>
+
+    </div>
+  </div>
+</StatePage>
