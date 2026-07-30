@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { generateLienBundle } from './PDFGenerator';
 
 export default function SuccessDownloader() {
-  const [status, setStatus] = useState<'loading' | 'sent' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'sent' | 'downloaded' | 'error'>('loading');
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
@@ -25,28 +25,34 @@ export default function SuccessDownloader() {
         reader.onloadend = async () => {
           const base64 = (reader.result as string).split(',')[1];
 
-          const res = await fetch('/api/send-pdf-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email,
-              productName,
-              pdfBase64: base64,
-              fileName: `lien-bundle-${state || 'form'}.pdf`,
-            }),
-          });
+          // ALWAYS download first — independent of email
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `lien-bundle-${state || 'form'}.pdf`;
+          a.click();
+          URL.revokeObjectURL(url);
+          localStorage.removeItem('lienform_pending_order');
 
-          if (res.ok) {
-            setStatus('sent');
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `lien-bundle-${state || 'form'}.pdf`;
-            a.click();
-            URL.revokeObjectURL(url);
-            localStorage.removeItem('lienform_pending_order');
-          } else {
-            setStatus('error');
+          // Email is best-effort — never blocks download
+          try {
+            const res = await fetch('/api/send-pdf-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email,
+                productName,
+                pdfBase64: base64,
+                fileName: `lien-bundle-${state || 'form'}.pdf`,
+              }),
+            });
+            if (res.ok && email) {
+              setStatus('sent');  // downloaded + emailed
+            } else {
+              setStatus('downloaded');  // downloaded only
+            }
+          } catch {
+            setStatus('downloaded');  // downloaded only (email network error)
           }
         };
       } catch (e) {
@@ -66,8 +72,15 @@ export default function SuccessDownloader() {
 
   if (status === 'sent') return (
     <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
-      <p className="font-medium">✓ Your documents are ready!</p>
-      <p className="text-sm mt-1">Your PDF bundle has downloaded automatically and been sent to {userEmail}. Check your inbox (and spam folder).</p>
+      <p className="font-medium">✓ Download started!</p>
+      <p className="text-sm mt-1">Your PDF has downloaded and a copy has been sent to {userEmail}. Check your inbox (and spam folder).</p>
+    </div>
+  );
+
+  if (status === 'downloaded') return (
+    <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
+      <p className="font-medium">✓ Download started!</p>
+      <p className="text-sm mt-1">Your PDF bundle is downloading now. If it didn't start automatically, <a href="/contact/" className="underline">contact us</a> and we'll send it manually.</p>
     </div>
   );
 

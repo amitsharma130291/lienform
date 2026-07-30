@@ -12,7 +12,7 @@ export async function POST({ request }: { request: Request }) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
     }
 
-    const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
     if (!RESEND_API_KEY) {
       // Log but don't expose key absence to user
       console.error('RESEND_API_KEY not set');

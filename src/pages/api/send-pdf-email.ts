@@ -38,8 +38,9 @@ export async function POST({ request }: { request: Request }) {
     });
 
     if (!customerRes.ok) {
-      console.error('Resend error:', await customerRes.text());
-      return new Response(JSON.stringify({ error: 'Failed to send email' }), { status: 500 });
+      const errBody = await customerRes.text();
+      console.error('Resend failed:', customerRes.status, errBody);
+      return new Response(JSON.stringify({ error: 'Failed to send email', detail: errBody }), { status: 500 });
     }
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
