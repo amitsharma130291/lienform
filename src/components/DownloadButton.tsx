@@ -4,9 +4,10 @@ interface DownloadButtonProps {
   state: string;
   productName: string;
   productType?: string;
+  formData?: any;
 }
 
-export default function DownloadButton({ state, productName, productType = 'mechanics-lien' }: DownloadButtonProps) {
+export default function DownloadButton({ state, productName, productType = 'mechanics-lien', formData }: DownloadButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -14,10 +15,11 @@ export default function DownloadButton({ state, productName, productType = 'mech
     setLoading(true);
     setError('');
     try {
+      const email = formData?.email || '';
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productType }),
+        body: JSON.stringify({ productType, email }),
       });
       const data = await res.json();
       if (data.url) {

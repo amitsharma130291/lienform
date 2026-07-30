@@ -164,6 +164,15 @@ export default function LienFormApp({ defaultState, documentType = 'mechanics-li
   const handleFormComplete = (data: any) => {
     setFormData(data);
     setRole(data.role || '');
+    // Save for post-payment PDF generation on success page
+    localStorage.setItem('lienform_pending_order', JSON.stringify({
+      state: defaultState,
+      role: data.role || '',
+      productName,
+      productType: documentType === 'notice-to-owner' ? 'notice-to-owner' : 'mechanics-lien',
+      formData: data,
+      savedAt: Date.now()
+    }));
   };
 
   useEffect(() => {

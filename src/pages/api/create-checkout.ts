@@ -25,9 +25,11 @@ export async function POST({ request }: { request: Request }) {
   }
 
   let productType: string;
+  let email: string = '';
   try {
     const body = await request.json();
     productType = body.productType || 'mechanics-lien';
+    email = body.email || '';
   } catch {
     return new Response(JSON.stringify({ error: 'Invalid request body' }), {
       status: 400,
@@ -41,7 +43,7 @@ export async function POST({ request }: { request: Request }) {
   // Construct the return / cancel URLs.
   // BASE_URL should be set to your deployed domain (e.g. https://mechanicslienform.com).
   const baseUrl = process.env.BASE_URL || 'https://mechanicslienform.com';
-  const returnUrl = `${baseUrl}/success/`;
+  const returnUrl = `${baseUrl}/success/?payment_id={payment_id}&status=succeeded&email=${encodeURIComponent(email || '')}`;
   const cancelUrl = `${baseUrl}/`;
 
   try {
