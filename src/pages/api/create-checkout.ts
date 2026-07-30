@@ -10,10 +10,8 @@ const priceMap: Record<string, number> = {
   'notice-of-intent': 999,   // $9.99
 };
 
-// Dodo Payments uses test.dodopayments.com in test mode
-// and live.dodopayments.com in live mode.
-// The test key provided starts with "6w9u..." which is a test key.
-const DODO_BASE_URL = 'https://test.dodopayments.com';
+// Dodo Payments live endpoint.
+const DODO_BASE_URL = 'https://live.dodopayments.com';
 
 export async function POST({ request }: { request: Request }) {
   const apiKey = import.meta.env.DODO_API_KEY;
@@ -47,7 +45,7 @@ export async function POST({ request }: { request: Request }) {
   const cancelUrl = `${baseUrl}/`;
 
   try {
-    // POST https://test.dodopayments.com/checkouts
+    // POST https://live.dodopayments.com/checkouts
     // Auth: Bearer <api_key>
     // Body: { product_cart: [{ product_id, quantity, amount }], return_url, cancel_url, metadata }
     //

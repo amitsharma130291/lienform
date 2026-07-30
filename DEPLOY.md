@@ -22,7 +22,7 @@ Set these in Vercel dashboard → Project Settings → Environment Variables:
 
 | Variable | Description | Where to get |
 |---|---|---|
-| `DODO_API_KEY` | Test key starts with `sk_test_` | Dodo Dashboard → Developers → API Keys |
+| `DODO_API_KEY` | **Live** secret key (from Dodo live mode) | Dodo Dashboard → Developers → API Keys |
 | `DODO_PRODUCT_ID` | Product ID (already configured: `pdt_0Nk4mkyzkQM33OI9ZL9La`) | Dodo Dashboard → Products |
 | `DODO_WEBHOOK_SECRET` | Signing secret for webhook verification | After registering webhook (step below) |
 | `BASE_URL` | Your deployed domain (no trailing slash) | e.g. `https://mechanicslienform.com` |
@@ -41,8 +41,9 @@ Set these in Vercel dashboard → Project Settings → Environment Variables:
 ### API Keys
 1. Log in at https://app.dodopayments.com
 2. Go to **Developers → API Keys**
-3. Copy your **Test Secret Key** (starts with `sk_test_`) for development
-4. Set it as `DODO_API_KEY` in Vercel environment variables
+3. Ensure you are in **Live mode** (toggle in the Dodo dashboard)
+4. Copy your **Live Secret Key** and set it as `DODO_API_KEY` in Vercel environment variables
+5. Similarly, update `DODO_WEBHOOK_SECRET` to your **live** webhook signing secret
 
 ### Product
 The product ID `pdt_0Nk4mkyzkQM33OI9ZL9La` is already configured in the codebase.
@@ -59,11 +60,11 @@ either:
 3. Events to listen for: select **All events** (or at minimum `payment.succeeded`)
 4. Copy the **Signing Secret** → set as `DODO_WEBHOOK_SECRET` in Vercel
 
-### Test Mode vs Live Mode
-- `create-checkout.ts` currently points at `https://test.dodopayments.com` (test mode)
-- To go live, change `DODO_BASE_URL` to `https://live.dodopayments.com` and use a live API key
-- Test cards: Dodo uses Stripe-compatible test cards in test mode.
-  Common test card: `4242 4242 4242 4242`, any future expiry, any CVC
+### Live Mode
+- `create-checkout.ts` now points at `https://live.dodopayments.com` (live mode)
+- **Operator must update Vercel env vars to live values:**
+  - `DODO_API_KEY` → your live secret key from Dodo Dashboard → Developers → API Keys (live mode)
+  - `DODO_WEBHOOK_SECRET` → your live webhook signing secret
 
 ## Post-Deploy Test Checklist
 - [ ] Homepage loads at https://mechanicslienform.com
@@ -76,11 +77,11 @@ either:
 - [ ] "Continue with free beta download" still works (generates PDF client-side)
 - [ ] Sitemap at https://mechanicslienform.com/sitemap.xml
 
-## Switching from Test to Live
-1. In Dodo dashboard, confirm your business details and get live API credentials
-2. Update Vercel env: `DODO_API_KEY` → live secret key
-3. In `src/pages/api/create-checkout.ts`, change:
-   ```ts
-   const DODO_BASE_URL = 'https://live.dodopayments.com';
-   ```
-4. Redeploy
+## Already on Live Mode
+The endpoint is already set to `https://live.dodopayments.com` in `create-checkout.ts`.
+
+**Before going live, ensure these Vercel env vars are set to live values:**
+1. `DODO_API_KEY` — live secret key from Dodo Dashboard → Developers → API Keys (live mode)
+2. `DODO_WEBHOOK_SECRET` — live webhook signing secret from Dodo Dashboard → Developers → Webhooks
+
+No code changes needed — just update the environment variables and redeploy.
