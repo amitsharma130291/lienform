@@ -11,7 +11,7 @@ const priceMap: Record<string, number> = {
 };
 
 // Dodo Payments live endpoint.
-const DODO_BASE_URL = 'https://test.dodopayments.com';
+const DODO_BASE_URL = 'https://live.dodopayments.com';
 
 export async function POST({ request }: { request: Request }) {
   const apiKey = import.meta.env.DODO_API_KEY;
