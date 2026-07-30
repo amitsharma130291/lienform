@@ -40,7 +40,7 @@ export async function POST({ request }: { request: Request }) {
 
   // Construct the return / cancel URLs.
   // BASE_URL should be set to your deployed domain (e.g. https://mechanicslienform.com).
-  const baseUrl = import.meta.env.BASE_URL || 'https://mechanicslienform.com';
+  const baseUrl = process.env.BASE_URL || 'https://mechanicslienform.com';
   const returnUrl = `${baseUrl}/success/`;
   const cancelUrl = `${baseUrl}/`;
 
