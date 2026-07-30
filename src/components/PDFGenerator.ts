@@ -10,6 +10,9 @@ export interface LienFormData {
   ownerAddress?: string;
   propertyAddress: string;
   legalDescription?: string;  // Separate legal description field
+  workDescription?: string;
+  contractDate?: string;
+  referenceNumber?: string;
   county: string;
   gcName?: string;
   hiringParty?: string;
@@ -308,7 +311,7 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addSectionHeader('Property Subject to Lien');
   addLabelValue('Property Address', data.propertyAddress);
 
-  // Legal description — shown if provided, otherwise blank field
+  // Legal description — always shown (required field now)
   if (legalDescription) {
     addLabelValue('Legal Description', legalDescription);
   } else {
@@ -342,7 +345,18 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLabelValue('First Furnishing Date', data.firstFurnishingDate);
   addLabelValue('Last Furnishing Date', data.lastFurnishingDate);
   if (data.state === 'michigan') addLabelValue('Project Type', projectType === 'commercial' ? 'Commercial (180-day deadline)' : 'Residential (90-day deadline)');
-  addLabelValue('Nature of Claim', 'Labor, materials, and/or equipment furnished to the above-described project.');
+
+  const workDesc = data.workDescription
+    ? data.workDescription
+    : 'Labor, materials, and/or equipment furnished for improvement of the above-described property';
+  addLabelValue('Nature of Work', workDesc);
+
+  if (data.contractDate) {
+    addLabelValue('Contract Date', new Date(data.contractDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }
+  if (data.referenceNumber) {
+    addLabelValue('Contract/Invoice #', data.referenceNumber);
+  }
 
   addSpacer(6);
   checkPageBreak(30);

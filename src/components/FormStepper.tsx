@@ -17,6 +17,9 @@ export interface LienFormData {
   ownerAddress: string;
   propertyAddress: string;
   legalDescription: string;
+  workDescription: string;
+  contractDate: string;
+  referenceNumber: string;
   county: string;
   gcName: string;
   hiringParty: string;
@@ -95,7 +98,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     state: defaultState, role: undefined,
     claimantName: '', claimantAddress: '', email: '',
     ownerName: '', ownerAddress: '',
-    propertyAddress: '', legalDescription: '', county: '',
+    propertyAddress: '', legalDescription: '', workDescription: '', contractDate: '', referenceNumber: '', county: '',
     gcName: '', hiringParty: '',
     projectType: 'residential',
     contractAmount: '', firstFurnishingDate: '', lastFurnishingDate: '',
@@ -262,22 +265,59 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
         </div>
 
-        {/* Legal description */}
+        {/* Legal Description */}
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
-            Legal Property Description
-            {isMichigan
-              ? <span className="text-orange-600 text-xs ml-1">⚠ Recommended for Michigan</span>
-              : <span className="text-slate-400 text-xs ml-1">(optional)</span>}
+            Legal Description of Property <span className="text-red-500">*</span>
           </label>
           <textarea
+            required
             rows={3}
-            placeholder="e.g. Lot 14, Block 3, Wayne County Plat No. 47, as recorded in Liber 212 Page 84..."
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm resize-none"
+            placeholder="Lot 14, Block 3, Sunset Subdivision — found on your deed or from county records"
+            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
             value={formData.legalDescription || ''}
             onChange={(e) => update('legalDescription', e.target.value)}
           />
-          <p className="text-xs text-slate-400 mt-1">Find this on your deed or from the county assessor / Register of Deeds.</p>
+          <p className="text-xs text-slate-400 mt-1">Required by law. Find this on your deed, title report, or county property records.</p>
+        </div>
+
+        {/* Description of Work */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Description of Work/Materials Provided <span className="text-red-500">*</span>
+          </label>
+          <textarea
+            required
+            rows={2}
+            placeholder="Roofing installation including shingles, underlayment, and labor"
+            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            value={formData.workDescription || ''}
+            onChange={(e) => update('workDescription', e.target.value)}
+          />
+          <p className="text-xs text-slate-400 mt-1">Briefly describe the work or materials you provided.</p>
+        </div>
+
+        {/* Contract Date + Invoice # */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Contract Date</label>
+            <input
+              type="date"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              value={formData.contractDate || ''}
+              onChange={(e) => update('contractDate', e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Contract/Invoice # <span className="text-slate-400">(optional)</span></label>
+            <input
+              type="text"
+              placeholder="INV-2024-001"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              value={formData.referenceNumber || ''}
+              onChange={(e) => update('referenceNumber', e.target.value)}
+            />
+          </div>
         </div>
 
         {/* GC name — full width when no hiringParty field, half when hiringParty is shown */}
