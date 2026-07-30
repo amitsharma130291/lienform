@@ -4,6 +4,7 @@ import { generateLienBundle } from './PDFGenerator';
 export default function SuccessDownloader() {
   const [status, setStatus] = useState<'loading' | 'sent' | 'downloaded' | 'payment_failed' | 'error'>('loading');
   const [userEmail, setUserEmail] = useState('');
+  const [failureReason, setFailureReason] = useState('');
 
   useEffect(() => {
     const run = async () => {
@@ -13,9 +14,31 @@ export default function SuccessDownloader() {
         setUserEmail(email);
 
         // Check Dodo's actual payment status before proceeding
+        const paymentId = params.get('payment_id') || '';
         const paymentStatus = params.get('status');
         if (paymentStatus && paymentStatus !== 'succeeded') {
+          // Extract failure reason from Dodo URL params
+          const reason = params.get('error_code') || params.get('reason') || params.get('error') || '';
+          setFailureReason(reason);
           setStatus('payment_failed');
+
+          // Notify admin — fire and forget, never block UX
+          const pendingOrderRaw = localStorage.getItem('lienform_pending_order');
+          const productName = pendingOrderRaw
+            ? (() => { try { return JSON.parse(pendingOrderRaw).productName; } catch { return 'unknown'; } })()
+            : 'unknown';
+
+          fetch('/api/notify-payment-failed', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerEmail: email,
+              paymentId,
+              failureReason: reason || `status=${paymentStatus}`,
+              productName,
+            }),
+          }).catch(err => console.error('Failed to notify admin of payment failure:', err));
+
           return;
         }
 
@@ -94,7 +117,13 @@ export default function SuccessDownloader() {
   if (status === 'payment_failed') return (
     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
       <p className="font-medium">Payment was not completed.</p>
-      <p className="text-sm mt-1">Your payment did not go through. No charge was made. Please try again or <a href="/contact/" className="underline">contact us</a> if you need help.</p>
+      <p className="text-sm mt-1">Your payment did not go through. No charge was made.</p>
+      {failureReason && (
+        <p className="text-sm mt-2 text-yellow-700">
+          <span className="font-medium">Reason:</span> {failureReason.replace(/_/g, ' ')}
+        </p>
+      )}
+      <p className="text-sm mt-2">Please try again or <a href="/contact/" className="underline font-medium">contact us</a> if you need help.</p>
       <a href="/" className="inline-block mt-3 text-navy-700 underline text-sm font-medium">← Try again</a>
     </div>
   );
