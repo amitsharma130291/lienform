@@ -2,14 +2,14 @@
 import StatePage from '../layouts/StatePage.astro';
 
 const title = "MechanicsLienForm — Free Mechanics Lien Generator | Instant PDF Bundle";
-const description = "Generate state-specific mechanics lien forms with role-aware deadlines, current law citations, and county recorder filing guides. Free during early access. No account required. Instant download.";
+const description = "Generate state-specific mechanics lien forms with role-aware deadlines, current law citations, and county recorder filing guides. No account required. Instant download after payment.";
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "MechanicsLienForm",
   "url": "https://mechanicslienform.com",
-  "description": "Free mechanics lien generator during early access. State-specific forms with role-aware deadlines and current statutory citations. Free during beta. No account required."
+  "description": "State-specific mechanics lien generator. Role-aware deadlines and current statutory citations. Instant download after payment. No account required."
 };
 
 const faqSchema = {
@@ -21,7 +21,7 @@ const faqSchema = {
       "name": "How much does MechanicsLienForm cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MechanicsLienForm is free during early access. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at no cost while we're in beta. Pricing may be introduced in the future."
+        "text": "MechanicsLienForm is $24.99 per document bundle. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at $24.99 per document bundle."
       }
     },
     {
@@ -29,7 +29,7 @@ const faqSchema = {
       "name": "Do I need to create an account to use MechanicsLienForm?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. MechanicsLienForm requires no account or login. Select your state, fill in your details, and download your PDF bundle immediately — free during early access."
+        "text": "No. MechanicsLienForm requires no account or login. Select your state, fill in your details, and download your PDF bundle immediately after payment."
       }
     },
     {
@@ -102,12 +102,11 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             class="inline-flex items-center gap-2 bg-white font-bold px-8 py-4 rounded-xl text-lg hover:bg-blue-50 transition-colors shadow-lg"
             style="color:#1e2f6e;"
           >
-            Generate Free Lien Form →
+            Generate Your Lien Form →
           </a>
           <p class="text-blue-300 text-sm self-center">Free deadline calculator — no payment required</p>
         </div>
         <p class="text-sm text-blue-200 mt-3 opacity-80">
-          Free during early access — pricing may be introduced in the future.
         </p>
       </div>
     </div>
@@ -117,7 +116,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
   <section class="bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-medium text-slate-600">
-        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Free in Beta</span>
+        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Instant Download</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> No account required</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Instant download</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Current statutory citations</span>
@@ -142,8 +141,8 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
       </div>
       <div class="text-center">
         <div class="w-14 h-14 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4" style="background-color:#1e2f6e;">3</div>
-        <h3 class="text-lg font-semibold mb-2" style="color:#1e2f6e;">Download your PDF bundle — Free During Beta</h3>
-        <p class="text-slate-600 text-sm">Review your completed documents and download your 6-page PDF bundle instantly — free during early access. Print and file with the county recorder the same day.</p>
+        <h3 class="text-lg font-semibold mb-2" style="color:#1e2f6e;">Download your PDF bundle</h3>
+        <p class="text-slate-600 text-sm">Review your completed documents and download your 6-page PDF bundle instantly — instant download after payment. Print and file with the county recorder the same day.</p>
       </div>
     </div>
   </section>
@@ -160,7 +159,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
           <p class="text-xs text-slate-500 mb-2">MCL 570.1101–570.1305 (2023)</p>
           <p class="text-sm text-slate-600 mb-4">Mechanics lien for construction projects. 90-day residential / 180-day commercial deadline.</p>
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold" style="color:#1e2f6e;">Free (Beta)</span>
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
             <a href="/mechanics-lien/michigan/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
           </div>
         </div>
@@ -171,7 +170,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
           <p class="text-xs text-slate-500 mb-2">Fla. Stat. §713.06</p>
           <p class="text-sm text-slate-600 mb-4">Notice to Owner required within 45 days of first furnishing. Prerequisite to filing a lien.</p>
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold" style="color:#1e2f6e;">Free (Beta)</span>
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
             <a href="/notice-to-owner/florida/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
           </div>
         </div>
@@ -182,7 +181,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
           <p class="text-xs text-slate-500 mb-2">Civil Code §8000–9566 (SB 189)</p>
           <p class="text-sm text-slate-600 mb-4">Current statute only — §3082 is repealed. 20-day prelim notice for subs. 90-day lien deadline.</p>
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold" style="color:#1e2f6e;">Free (Beta)</span>
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
             <a href="/mechanics-lien/california/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
           </div>
         </div>
@@ -193,7 +192,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
           <p class="text-xs text-slate-500 mb-2">Tex. Prop. Code Ch. 53 (HB 2237)</p>
           <p class="text-sm text-slate-600 mb-4">Construction real property lien. Monthly notices for residential subs. GC: 4th month 15th.</p>
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold" style="color:#1e2f6e;">Free (Beta)</span>
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
             <a href="/mechanics-lien/texas/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
           </div>
         </div>
@@ -245,7 +244,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
-            MechanicsLienForm is free during early access. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at no cost while we're in beta. Pricing may be introduced in the future.
+            MechanicsLienForm charges $24.99 per document bundle. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at $24.99 per document bundle.
           </div>
         </details>
 
@@ -255,7 +254,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
-            No. MechanicsLienForm requires no account or login. Select your state, fill in your details, and download your PDF bundle immediately — free during early access.
+            No. MechanicsLienForm requires no account or login. Select your state, fill in your details, and download your PDF bundle immediately after payment.
           </div>
         </details>
 
