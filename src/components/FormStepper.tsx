@@ -27,6 +27,9 @@ export interface LienFormData {
   contractAmount: string;
   firstFurnishingDate: string;
   lastFurnishingDate: string;
+  amountPaid: string;
+  projectCompletionDate: string;
+  internalJobNumber: string;
 }
 
 export interface FormStepperProps {
@@ -102,6 +105,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     gcName: '', hiringParty: '',
     projectType: 'residential',
     contractAmount: '', firstFurnishingDate: '', lastFurnishingDate: '',
+    amountPaid: '', projectCompletionDate: '', internalJobNumber: '',
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof LienFormData, string>>>({});
@@ -320,6 +324,33 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
         </div>
 
+        {/* Project Completion Date + Job Number */}
+        <div className="grid grid-cols-2 gap-4 items-end">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Project Completion Date <span className="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="date"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm h-[42px]"
+              value={formData.projectCompletionDate || ''}
+              onChange={(e) => update('projectCompletionDate', e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Job/Project # <span className="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="JOB-2024-042"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm h-[42px]"
+              value={formData.internalJobNumber || ''}
+              onChange={(e) => update('internalJobNumber', e.target.value)}
+            />
+          </div>
+        </div>
+
         {/* GC name — full width when no hiringParty field, half when hiringParty is shown */}
         {isSubOrSupplier ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -367,6 +398,37 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
           <FieldError field="contractAmount" />
         </div>
+
+        {/* Amount Paid to Date */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Amount Paid to Date <span className="text-slate-400 font-normal">(optional)</span>
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              className="block w-full pl-7 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              value={formData.amountPaid || ''}
+              onChange={(e) => update('amountPaid', e.target.value)}
+            />
+          </div>
+          <p className="text-xs text-slate-400 mt-1">How much the owner has paid you so far. The lien will be for the remaining balance.</p>
+        </div>
+
+        {/* Amount Remaining Due — read-only calculated */}
+        {formData.contractAmount && (
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Amount Claimed (Remaining Due)</label>
+            <div className="px-4 py-2.5 rounded-lg border border-navy-200 bg-navy-50 text-navy-900 font-semibold text-sm">
+              ${Math.max(0, parseFloat(formData.contractAmount || '0') - parseFloat(formData.amountPaid || '0')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </div>
+            <p className="text-xs text-slate-400 mt-1">This is the amount that will appear on your lien claim.</p>
+          </div>
+        )}
 
         {/* Dates */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -22,6 +22,9 @@ export interface LienFormData {
   lastFurnishingDate: string;
   deadline?: string;
   extras?: ('lien-waiver' | 'notice-of-intent' | 'lien-release' | 'preliminary-notice')[];
+  amountPaid?: string;
+  projectCompletionDate?: string;
+  internalJobNumber?: string;
 }
 
 const STATE_CITATIONS: Record<string, string> = {
@@ -341,7 +344,14 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   }
 
   addSectionHeader('Claim Details');
-  addLabelValue('Amount Claimed', formatCurrency(data.contractAmount));
+  addLabelValue('Total Contract Amount', `${parseFloat(data.contractAmount || '0').toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+
+  if (data.amountPaid && parseFloat(data.amountPaid) > 0) {
+    addLabelValue('Amount Paid to Date', `${parseFloat(data.amountPaid).toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
+  }
+
+  const remainingDue = Math.max(0, parseFloat(data.contractAmount || '0') - parseFloat(data.amountPaid || '0'));
+  addLabelValue('AMOUNT CLAIMED (Remaining Due)', `${remainingDue.toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
   addLabelValue('First Furnishing Date', data.firstFurnishingDate);
   addLabelValue('Last Furnishing Date', data.lastFurnishingDate);
   if (data.state === 'michigan') addLabelValue('Project Type', projectType === 'commercial' ? 'Commercial (180-day deadline)' : 'Residential (90-day deadline)');
@@ -356,6 +366,12 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   }
   if (data.referenceNumber) {
     addLabelValue('Contract/Invoice #', data.referenceNumber);
+  }
+  if (data.projectCompletionDate) {
+    addLabelValue('Project Completion Date', new Date(data.projectCompletionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }
+  if (data.internalJobNumber) {
+    addLabelValue('Job/Project #', data.internalJobNumber);
   }
 
   addSpacer(6);
