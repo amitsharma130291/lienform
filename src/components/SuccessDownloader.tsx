@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { generateLienBundle } from './PDFGenerator';
 
 export default function SuccessDownloader() {
-  const [status, setStatus] = useState<'loading' | 'sent' | 'downloaded' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'sent' | 'downloaded' | 'payment_failed' | 'error'>('loading');
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
@@ -11,6 +11,13 @@ export default function SuccessDownloader() {
         const params = new URLSearchParams(window.location.search);
         const email = params.get('email') || '';
         setUserEmail(email);
+
+        // Check Dodo's actual payment status before proceeding
+        const paymentStatus = params.get('status');
+        if (paymentStatus && paymentStatus !== 'succeeded') {
+          setStatus('payment_failed');
+          return;
+        }
 
         const stored = localStorage.getItem('lienform_pending_order');
         if (!stored) { setStatus('error'); return; }
@@ -81,6 +88,14 @@ export default function SuccessDownloader() {
     <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
       <p className="font-medium">✓ Download started!</p>
       <p className="text-sm mt-1">Your PDF bundle is downloading now. If it didn't start automatically, <a href="/contact/" className="underline">contact us</a> and we'll send it manually.</p>
+    </div>
+  );
+
+  if (status === 'payment_failed') return (
+    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800">
+      <p className="font-medium">Payment was not completed.</p>
+      <p className="text-sm mt-1">Your payment did not go through. No charge was made. Please try again or <a href="/contact/" className="underline">contact us</a> if you need help.</p>
+      <a href="/" className="inline-block mt-3 text-navy-700 underline text-sm font-medium">← Try again</a>
     </div>
   );
 
