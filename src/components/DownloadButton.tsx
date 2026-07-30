@@ -9,16 +9,11 @@ interface Props {
   productName?: string;
 }
 
-// ─── PAYMENT MODE TOGGLE ───────────────────────────────────────────────────
-// true  = paid checkout via Dodo Payments ($19)
-// false = free beta (direct PDF download, no payment)
-const PAID_MODE = false;
-// ──────────────────────────────────────────────────────────────────────────
-
 export default function DownloadButton({ formData, disabled }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // ── Free beta: generate the PDF client-side ────────────────────────────────
   const handleFreeDownload = async () => {
     setLoading(true);
     setError('');
@@ -43,52 +38,59 @@ export default function DownloadButton({ formData, disabled }: Props) {
     }
   };
 
-  const handleCheckout = async () => {
+  // ── Paid: redirect to Dodo Payments hosted checkout ───────────────────────
+  const handleBuyNow = async () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch('/api/checkout', {
+      const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ productType: 'mechanics-lien' }),
       });
-      const data = await response.json();
-      if (!response.ok || !data.url) {
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
         throw new Error(data.error || 'Failed to create checkout session');
       }
-      window.location.href = data.url;
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong. Please try again.');
+    } catch (e: any) {
+      setError(e.message || 'Something went wrong. Please try again.');
+      console.error(e);
+    } finally {
       setLoading(false);
     }
   };
 
-  const handleClick = PAID_MODE ? handleCheckout : handleFreeDownload;
-
   return (
     <div className="space-y-3">
+      {/* Primary CTA: paid checkout */}
       <button
-        onClick={handleClick}
+        onClick={handleBuyNow}
         disabled={disabled || loading}
-        className="w-full flex items-center justify-center gap-2 text-white font-bold py-4 px-6 rounded-xl text-lg shadow-lg transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
+        className="w-full bg-navy-700 hover:bg-navy-800 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ backgroundColor: '#1e2f6e' }}
       >
         {loading ? (
-          <>
+          <span className="flex items-center justify-center gap-2">
             <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
-            {PAID_MODE ? 'Redirecting to checkout…' : 'Generating your PDF…'}
-          </>
+            Redirecting to checkout…
+          </span>
         ) : (
-          <>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            {PAID_MODE ? 'Get My Lien Bundle — $19' : 'Download Free Lien Bundle →'}
-          </>
+          'Buy Now — $24.99'
         )}
+      </button>
+
+      {/* Secondary CTA: free beta download */}
+      <button
+        onClick={handleFreeDownload}
+        disabled={disabled || loading}
+        className="w-full text-sm text-slate-500 underline mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Continue with free beta download
       </button>
 
       {error && (
@@ -98,9 +100,7 @@ export default function DownloadButton({ formData, disabled }: Props) {
       )}
 
       <p className="text-center text-xs text-slate-500">
-        {PAID_MODE
-          ? 'Secure payment via Dodo Payments · Instant PDF download after payment'
-          : 'Free during early access — no account or payment required'}
+        Secure payment via Dodo Payments · Instant PDF bundle after payment
       </p>
     </div>
   );
