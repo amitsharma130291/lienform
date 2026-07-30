@@ -298,22 +298,22 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
         </div>
 
         {/* Contract Date + Invoice # */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 items-end">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Contract Date</label>
             <input
               type="date"
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm h-[42px]"
               value={formData.contractDate || ''}
               onChange={(e) => update('contractDate', e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Contract/Invoice # <span className="text-slate-400">(optional)</span></label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Contract/Invoice # <span className="text-slate-400 font-normal">(optional)</span></label>
             <input
               type="text"
               placeholder="INV-2024-001"
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm h-[42px]"
               value={formData.referenceNumber || ''}
               onChange={(e) => update('referenceNumber', e.target.value)}
             />
