@@ -1,0 +1,348 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+
+const title = "Mechanics Lien Form Guide: Requirements, Filing and Deadlines";
+const description = "Use a mechanics lien form correctly: identify the right state form, gather the required facts, avoid common defects, record it on time, and complete post-filing service.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the property state change the form?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each state sets its own required wording, notices, deadlines, verification, filing office, service, and enforcement period. A form designed for another state can omit a condition that controls validity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does recording accomplish if it does not guarantee payment?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recording gives public notice of an asserted security claim, subject to defenses, priority, statutory limits, and enforcement deadlines. Payment may follow through negotiation, closing, bonding, or litigation; the recorder does not adjudicate the debt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I file before the project is complete?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sometimes. Eligibility and timing vary by state and role. Some statutes allow a claimant to file after ceasing its own work; others tie the period to project completion or another event."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Must the lien be notarized?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Many states require an oath, verification, or acknowledgment, but not all requirements are identical. Follow the statute and form instructions for the property's state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after I get paid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Do not release lien rights based only on a promise or uncleared payment. Once the payment condition is satisfied, execute and record the appropriate full or partial release within the time required by state law."
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Mechanics Lien Form", "item": "https://mechanicslienform.com/mechanics-lien/form/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, breadcrumbSchema]);
+
+const statePages = [
+  { name: "Arizona", href: "/mechanics-lien/arizona/" },
+  { name: "California", href: "/mechanics-lien/california/" },
+  { name: "Georgia", href: "/mechanics-lien/georgia/" },
+  { name: "Michigan", href: "/mechanics-lien/michigan/" },
+  { name: "Ohio", href: "/mechanics-lien/ohio/" },
+  { name: "Texas", href: "/mechanics-lien/texas/" },
+  { name: "Washington", href: "/mechanics-lien/washington/" },
+];
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/form/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Mechanics Lien Form</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Mechanics Lien Form: What to Include, How to Fill It Out, and Where to File</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-6 rounded-r-lg">
+      <p class="text-navy-800 font-medium">A mechanics lien form records a state-law payment claim against improved private property. Before completing it, identify the property state and claimant role, verify preliminary notices, calculate the deadline, reconcile the lienable amount, confirm ownership and the property description, then record and serve it exactly as state law requires.</p>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-300 p-4 rounded-lg mb-8">
+      <strong>⚠️ Deadline warning:</strong> A perfectly completed form filed one day late usually does not preserve lien rights. Do not let form preparation distract from the statutory clock.
+    </div>
+
+    <!-- State routing — the tool this page's search intent actually needs -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-navy-800 mb-2">Find your state's form</h2>
+      <p class="text-slate-600 mb-4">The property location controls the governing lien statute. Select your state to generate the correct document instantly.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {statePages.map((s) => (
+          <a href={s.href} class="block bg-white border-2 border-navy-600 rounded-xl p-4 text-center hover:bg-navy-50 hover:shadow-md transition-all group">
+            <span class="font-bold text-navy-900 group-hover:text-navy-700">{s.name}</span>
+            <p class="text-navy-600 text-xs font-medium mt-1 group-hover:underline">Generate →</p>
+          </a>
+        ))}
+        <a href="/notice-to-owner/florida/" class="block bg-white border-2 border-navy-600 rounded-xl p-4 text-center hover:bg-navy-50 hover:shadow-md transition-all group">
+          <span class="font-bold text-navy-900 group-hover:text-navy-700">Florida</span>
+          <p class="text-slate-500 text-[11px] mt-0.5">Notice to Owner</p>
+          <p class="text-navy-600 text-xs font-medium mt-1 group-hover:underline">Generate →</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- SEO content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>A mechanics lien form is a state-specific document used to claim a security interest in improved real property when construction labor, services, equipment, or materials remain unpaid. Attaching a national template to an invoice does not create that interest. The controlling form, statements, deadline, execution, recording office, and service rules change by state, project type, and claimant role.</p>
+
+      <p>Start with the legal inputs: governing state, claimant eligibility, required pre-lien notices, and filing deadline. Choose the document only after those four points are known.</p>
+
+      <h2>Mechanics lien form checklist</h2>
+
+      <p>Most claims require some version of the following information, but the statute for the property's state controls:</p>
+      <ul>
+        <li>Claimant's exact legal name, address, and sometimes telephone number</li>
+        <li>Property owner or reputed owner</li>
+        <li>Person who hired the claimant</li>
+        <li>General or prime contractor, when different</li>
+        <li>First and last dates of furnishing</li>
+        <li>Description of labor, professional services, equipment, or materials</li>
+        <li>Contract price, credits, payments, and the unpaid amount claimed</li>
+        <li>Property description sufficient for the recorder and the statute</li>
+        <li>Required statutory warning or notice language</li>
+        <li>Signature, verification, oath, or notarization</li>
+        <li>Copies or attachments of preliminary notices and mailing proof, where required</li>
+      </ul>
+
+      <p>Use the business name that actually contracted and performed the work. A trade name, shortened name, or related entity may create an avoidable dispute about who owns the claim.</p>
+
+      <h2>First decide whether a mechanics lien is the right remedy</h2>
+
+      <p>A mechanics lien generally applies to unpaid work improving privately owned real estate. Different remedies usually apply to public projects because public property is not ordinarily liened. Those claims may involve a payment bond, stop notice, or statutory claim against retained funds.</p>
+
+      <p>Before completing a form, answer five questions:</p>
+      <ol>
+        <li><strong>Is the project private or public?</strong> Confirm the owner, not merely the jobsite.</li>
+        <li><strong>What state is the property in?</strong> The property location normally determines the lien statute. Use the state guide for <a href="/mechanics-lien/arizona/">Arizona</a>, <a href="/mechanics-lien/california/">California</a>, <a href="/mechanics-lien/georgia/">Georgia</a>, <a href="/mechanics-lien/michigan/">Michigan</a>, <a href="/mechanics-lien/ohio/">Ohio</a>, <a href="/mechanics-lien/texas/">Texas</a>, or <a href="/mechanics-lien/washington/">Washington</a>. Florida subcontractors and suppliers may first need the <a href="/notice-to-owner/florida/">Florida Notice to Owner</a>.</li>
+        <li><strong>Who are you in the contracting chain?</strong> Owner-contracted general contractor, subcontractor, lower-tier subcontractor, supplier, laborer, equipment lessor, designer, or another role.</li>
+        <li><strong>Did your role require an early notice?</strong> Missing a preliminary notice can eliminate or reduce the claim even when the lien form itself is correct.</li>
+        <li><strong>What event starts your filing period?</strong> Depending on the state, it may be the claimant's last furnishing, project completion, a recorded notice of completion, or another statutory event.</li>
+      </ol>
+
+      <p>If any answer is uncertain and the deadline is close, consult a construction attorney in the property's state immediately.</p>
+
+      <h3>Choose the remedy before the form</h3>
+
+      <div class="not-prose my-8">
+        <div class="flex flex-col items-center gap-2 max-w-xl mx-auto">
+          <div class="w-full bg-navy-50 border-2 border-navy-600 rounded-lg p-3 text-center text-sm font-semibold text-navy-900">Who owns the project?</div>
+          <div class="text-slate-400 text-xl">↓</div>
+          <div class="grid grid-cols-2 gap-3 w-full">
+            <div class="bg-slate-50 border border-slate-300 rounded-lg p-3 text-center text-xs">
+              <p class="font-semibold text-slate-700 mb-1">Public entity</p>
+              <p class="text-slate-500">Check bond, retainage, or stop-notice remedy</p>
+            </div>
+            <div class="bg-white border border-navy-300 rounded-lg p-3 text-center text-xs">
+              <p class="font-semibold text-navy-700 mb-1">Private owner</p>
+              <p class="text-slate-500">Continue below</p>
+            </div>
+          </div>
+          <div class="text-slate-400 text-xl">↓</div>
+          <div class="w-full bg-navy-50 border-2 border-navy-600 rounded-lg p-3 text-center text-sm font-semibold text-navy-900">Was early notice required for your tier?</div>
+          <div class="text-slate-400 text-xl">↓</div>
+          <div class="grid grid-cols-2 gap-3 w-full">
+            <div class="bg-white border border-navy-300 rounded-lg p-3 text-center text-xs">
+              <p class="font-semibold text-navy-700 mb-1">Yes, and served timely</p>
+              <p class="text-slate-500">Calculate your state filing deadline</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-300 rounded-lg p-3 text-center text-xs">
+              <p class="font-semibold text-amber-700 mb-1">Late or missing</p>
+              <p class="text-slate-500">Reduced rights likely — get legal review</p>
+            </div>
+          </div>
+          <div class="text-slate-400 text-xl">↓</div>
+          <div class="w-full bg-navy-700 rounded-lg p-3 text-center text-sm font-semibold text-white">Prepare, record, serve, and calendar enforcement</div>
+        </div>
+      </div>
+
+      <h2>Four documents that appear at different stages</h2>
+
+      <table>
+        <thead>
+          <tr><th>Document</th><th>Typical timing</th><th>Main function</th><th>Usually recorded?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Preliminary notice</td><td>Near the start of work</td><td>Preserves or expands later lien rights</td><td>Usually no</td></tr>
+          <tr><td>Notice of intent to lien</td><td>After nonpayment, before filing</td><td>Warns that a lien may be filed; required only in some jurisdictions or situations</td><td>Usually no</td></tr>
+          <tr><td>Mechanics lien claim</td><td>After payment is owed and before the lien deadline</td><td>Places the claimed debt in the property records</td><td>Yes</td></tr>
+          <tr><td>Lien release</td><td>After payment or resolution</td><td>Removes or reduces the recorded claim</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+
+      <p>Each document performs one job. A demand letter leaves a statutory preliminary-notice requirement open, while recording may trigger a separate duty to serve the owner. See the detailed guides to a <a href="/notice-of-intent-to-lien/">notice of intent to lien</a>, <a href="/lien-waiver/conditional/">conditional lien waiver</a>, and <a href="/mechanics-lien/release/">mechanics lien release</a>.</p>
+
+      <h2>How to fill out a mechanics lien form</h2>
+
+      <h3>1. Build the claim from source documents</h3>
+
+      <p>Use the signed contract, change orders, invoices, payment ledger, daily reports, delivery tickets, project correspondence, and property records. Do not rely on memory for dates or amounts.</p>
+
+      <p>Create a one-page claim worksheet with:</p>
+      <ul>
+        <li>Original contract amount</li>
+        <li>Approved additions and deductions</li>
+        <li>Total earned</li>
+        <li>Payments and credits received</li>
+        <li>Retainage, if legally claimable</li>
+        <li>Unpaid lien amount</li>
+        <li>First and last qualifying furnishing dates</li>
+      </ul>
+
+      <p>The lien amount should reflect the amount the statute permits — not anticipated profit, unrelated damages, attorney fees, or disputed extras automatically added for negotiating leverage. An exaggerated claim can create statutory penalties or defenses.</p>
+
+      <h3>2. Verify the parties and property</h3>
+
+      <p>Confirm ownership using current county land records or a reliable title source. The customer on the invoice may be a tenant, developer, property manager, or contractor rather than the owner.</p>
+
+      <p>A street address may help locate the parcel but may not satisfy the applicable statute or recorder. Obtain the parcel number and legal description when required. Compare the description against a deed or other recorded instrument, not a real-estate listing.</p>
+
+      <h3>3. Identify the last day of qualifying work</h3>
+
+      <p>The last furnishing date is often contested. Record the last date of substantive contract work or delivery. Do not assume a return visit for inspection, warranty work, punch-list correction, or a trivial delivery restarts an expired filing period. Whether later work extends time depends on the statute and facts.</p>
+
+      <h3>4. Use the exact state-required language</h3>
+
+      <p>Some statutes prescribe the form or warning substantially or verbatim. Do not "simplify" statutory text for readability. Attach required notices and mailing proof where the statute directs.</p>
+
+      <h3>5. Sign, verify, and notarize correctly</h3>
+
+      <p>If the claim is an affidavit or must be verified, sign it in the required capacity before an authorized notary. The notary addresses execution of the document. Eligibility, amount, deadline, and notice compliance remain legal questions outside that function.</p>
+
+      <h2>Where and how to file the form</h2>
+
+      <p>Mechanics liens are generally recorded in the county where the improved property is located, but the office name varies: county recorder, clerk, register of deeds, superior court clerk, or auditor.</p>
+
+      <p>Before submission, call or check the recording office for:</p>
+      <ul>
+        <li>Current filing fees and accepted payment</li>
+        <li>Page size, margins, font, return-address, and cover-sheet rules</li>
+        <li>E-recording, mail, or in-person options</li>
+        <li>Transfer-tax or indexing forms, if any</li>
+        <li>Whether the office rejects documents lacking a legal description or preparer information</li>
+      </ul>
+
+      <p>Recorder acceptance establishes that the document entered the land records. Recording staff ordinarily review formatting and indexing; a later court can still reject eligibility, notice compliance, or amount.</p>
+
+      <h2>Recording starts the next set of tasks</h2>
+
+      <p>Many states require the claimant to serve the owner — and sometimes the contractor or another party — with the recorded claim within a short period. Preserve:</p>
+      <ul>
+        <li>A conformed or certified copy showing recording data</li>
+        <li>Certified or registered mail receipts</li>
+        <li>Tracking and delivery records</li>
+        <li>Affidavit or proof of service</li>
+        <li>The original preliminary notice and proof of mailing</li>
+      </ul>
+
+      <p>Calendar the enforcement deadline separately. A recorded lien can expire unless a foreclosure action is filed and served on time.</p>
+
+      <h2>Common mistakes that make a form vulnerable</h2>
+
+      <ol>
+        <li><strong>Using a generic national form.</strong> State statutes are not interchangeable.</li>
+        <li><strong>Counting from the invoice date.</strong> The statutory trigger may be last furnishing or project completion.</li>
+        <li><strong>Missing an early notice.</strong> The later lien form cannot cure every notice failure.</li>
+        <li><strong>Naming the wrong claimant or owner.</strong> Contract and title records should control.</li>
+        <li><strong>Claiming too much.</strong> Separate lienable contract value from consequential damages and unrelated debts.</li>
+        <li><strong>Using only a street address.</strong> Some claims need a stronger legal description.</li>
+        <li><strong>Treating acceptance as validation.</strong> A recorder can accept a claim that a court later invalidates.</li>
+        <li><strong>Forgetting post-recording service.</strong> Some states impose loss of the lien or loss of fees for late service.</li>
+        <li><strong>Letting the enforcement period expire.</strong> Recording creates the claim; enforcement preserves it beyond the statutory life.</li>
+      </ol>
+
+      <h2>Form review: when self-service is reasonable and when to call counsel</h2>
+
+      <p>Self-service is lower risk when the amount, parties, dates, property, and notice history are clear and the state provides a statutory form. Attorney review becomes more valuable when ownership changed, the project spans parcels, the claimant is several tiers removed, notices were late, work was partly public, the amount includes delay or disputed extras, bankruptcy is involved, or the deadline calculation is contested.</p>
+
+      <p>The cost of review should be compared with both the claim value and the cost of recording a defective lien. Wrongful-lien exposure can exceed the filing fee saved.</p>
+
+      <h2 id="faq">Mechanics Lien Form FAQ</h2>
+      <div class="not-prose space-y-3 mt-6 mb-8">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Why does the property state change the form?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Each state sets its own required wording, notices, deadlines, verification, filing office, service, and enforcement period. A form designed for another state can omit a condition that controls validity.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What does recording accomplish if it does not guarantee payment?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Recording gives public notice of an asserted security claim, subject to defenses, priority, statutory limits, and enforcement deadlines. Payment may follow through negotiation, closing, bonding, or litigation; the recorder does not adjudicate the debt.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Can I file before the project is complete?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Sometimes. Eligibility and timing vary by state and role. Some statutes allow a claimant to file after ceasing its own work; others tie the period to project completion or another event.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Must the lien be notarized?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Many states require an oath, verification, or acknowledgment, but not all requirements are identical. Follow the statute and form instructions for the property's state.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What happens after I get paid?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Do not release lien rights based only on a promise or uncleared payment. Once the payment condition is satisfied, execute and record the appropriate full or partial release within the time required by state law.</div>
+        </details>
+      </div>
+
+      <h2>Practical next step</h2>
+
+      <p>Gather the contract, ledger, furnishing records, preliminary notices, ownership record, and legal description before opening the form. Then work backward from the earliest plausible deadline and leave time for rejection, correction, recording, and service.</p>
+
+      <p><em>This page provides general information, not legal advice. Mechanics lien rights are technical and fact-specific. Verify current law and local recording requirements or consult licensed counsel in the property's state.</em></p>
+
+      <h2>Primary and supporting sources</h2>
+      <ul>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/section-1311.06" target="_blank" rel="noopener">Ohio Revised Code § 1311.06 — statutory affidavit contents and filing periods</a></li>
+        <li><a href="https://www.azleg.gov/ars/33/00993.htm" target="_blank" rel="noopener">Arizona Revised Statutes § 33-993 — notice and claim of lien</a></li>
+        <li><a href="https://app.leg.wa.gov/rcw/default.aspx?cite=60.04.091" target="_blank" rel="noopener">Washington RCW 60.04.091 — claim contents, recording, and service</a></li>
+        <li><a href="https://www.cslb.ca.gov/consumers/legal_issues_for_consumers/mechanics_lien/" target="_blank" rel="noopener">California Contractors State License Board — Understanding Mechanics Liens</a></li>
+      </ul>
+
+    </div>
+  </div>
+</StatePage>

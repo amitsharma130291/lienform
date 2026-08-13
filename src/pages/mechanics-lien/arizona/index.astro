@@ -1,0 +1,292 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import LienFormApp from '../../../components/LienFormApp';
+
+const title = "Arizona Mechanics Lien Deadlines: 20-Day Notice, Filing & Service";
+const description = "Learn Arizona's preliminary 20-day notice, mechanics lien filing deadline, required attachments, service, completion rules, and six-month foreclosure period.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does an Arizona 20-day notice do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It preserves the right to include protected furnishing in a later lien claim. Serving it does not place a recorded debt against the property."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I serve the preliminary notice before starting work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The statutory notice can be served before furnishing begins, which avoids a rushed calculation after mobilization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When does the 60-day deadline replace the 120-day deadline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 60-day period generally applies after the owner records a Notice of Completion. Without that recorded notice, the ordinary period is 120 days after statutory completion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the lien recorded?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With the county recorder in the Arizona county where the property, or part of it, is located."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long do I have to enforce it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Arizona's general foreclosure period is six months after the lien is recorded. Filing the lien does not pause that deadline while the parties negotiate."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File an Arizona Mechanics Lien",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Confirm completion and any Notice of Completion",
+      "text": "Determine statutory completion under A.R.S. § 33-993 and search county records for a recorded Notice of Completion, which shortens the recording period from 120 to 60 days."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Audit your preliminary 20-day notice",
+      "text": "Confirm the notice was served on the owner, original contractor, and lender, and check whether a 30%-or-greater price increase requires a supplemental notice under A.R.S. § 33-992.01(H)."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Record and serve the Notice and Claim of Lien",
+      "text": "Record with the county recorder where the property is located, then serve the owner within a reasonable time and calendar the six-month foreclosure deadline under A.R.S. § 33-998."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Arizona", "item": "https://mechanicslienform.com/mechanics-lien/arizona/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/arizona/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Arizona</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Arizona Mechanics Lien: 20-Day Notice and 120/60-Day Deadlines</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">Serve Arizona's preliminary notice within 20 days after first furnishing for full protection. Record the lien within 120 days after statutory completion — or 60 days after a recorded Notice of Completion — serve the owner within a reasonable time, and sue within six months.</p>
+    </div>
+
+    <!-- Arizona-specific deadline caveat -->
+    <div class="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-4">
+      <strong>⚠️ Arizona's deadline does not run from your last furnishing date.</strong> Unlike most states, Arizona's 120-day (or 60-day, if a Notice of Completion is recorded) period runs from statutory <em>completion</em> of the improvement — not from when you last furnished labor or materials. Because of this, the tool below cannot show an automatic countdown for Arizona; verify your applicable date against county records before relying on any deadline.
+    </div>
+
+    <LienFormApp
+      client:load
+      defaultState="arizona"
+      documentType="mechanics-lien"
+      productName="Arizona Mechanics Lien Bundle"
+    />
+
+    <!-- SEO content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>An Arizona mechanics lien generally requires two timed documents: a <strong>preliminary 20-day notice</strong> near the start of furnishing and a recorded <strong>Notice and Claim of Lien</strong> after nonpayment. The lien is ordinarily recorded within <strong>120 days after completion of the improvement</strong>, but a recorded Notice of Completion shortens the period to <strong>60 days after that notice is recorded</strong>. The claimant must then serve a copy on the owner within a reasonable time and generally file a foreclosure action within <strong>six months after recording</strong>.</p>
+
+      <p>Project completion drives Arizona's lien clock. A claimant who counts 120 days from its own last invoice may use the wrong starting date.</p>
+
+      <p>For the underlying document fields and filing preparation, use the <a href="/mechanics-lien/form/">mechanics lien form guide</a>.</p>
+
+      <h2>Arizona mechanics lien timeline</h2>
+
+      <table>
+        <thead>
+          <tr><th>Step</th><th>General timing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Preliminary 20-day notice</td><td>No later than 20 days after first furnishing for full protection</td></tr>
+          <tr><td>Notice and Claim of Lien</td><td>120 days after statutory completion, or 60 days after a Notice of Completion is recorded</td></tr>
+          <tr><td>Serve recorded lien on owner</td><td>Within a reasonable time after recording</td></tr>
+          <tr><td>Foreclosure action</td><td>Within 6 months after recording</td></tr>
+        </tbody>
+      </table>
+
+      <p>Contract language, credit terms, owner-occupant rules, licensing, and project type can change the analysis.</p>
+
+      <h2>Who needs an Arizona preliminary 20-day notice?</h2>
+
+      <p>With limited exceptions, a person furnishing labor, professional services, materials, machinery, fixtures, or tools must serve the statutory preliminary notice as a prerequisite to lien rights. A person performing actual labor for wages is treated differently under the statute.</p>
+
+      <p>The notice generally goes to:</p>
+      <ul>
+        <li>Owner or reputed owner</li>
+        <li>Original contractor or reputed contractor</li>
+        <li>Construction lender or reputed construction lender, if any</li>
+        <li>Person who contracted for the claimant's work or materials</li>
+      </ul>
+
+      <p>The notice states the parties, project, general description of furnishing, estimated total price, and statutory warning. Only the prescribed content performs this job; an ordinary collection letter leaves the statutory notice requirement unmet. A separate <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> can create collection pressure, but it serves a different purpose.</p>
+
+      <h2>What if the preliminary notice is late?</h2>
+
+      <p>A late Arizona 20-day notice generally protects labor, services, materials, machinery, fixtures, or tools furnished during the <strong>20 days before service and thereafter</strong>. Earlier furnishing falls outside that lookback.</p>
+
+      <h3>Example</h3>
+
+      <p>A supplier first delivers on April 1 but serves the notice on April 30. The late notice generally reaches back 20 days from service — not to April 1 — so early deliveries may be unprotected. The claimant should calculate the protected amount from delivery-level records rather than placing the full account balance in the lien.</p>
+
+      <p>If the actual estimated total price later exceeds the amount in a prior notice by <strong>30% or more</strong>, A.R.S. § 33-992.01(H) requires a supplemental notice. Monitor approved changes and revised purchase orders against the noticed estimate.</p>
+
+      <h2>What counts as completion in Arizona?</h2>
+
+      <p>Arizona Revised Statutes § 33-993 defines completion using specific events. Depending on the project, completion can include:</p>
+      <ul>
+        <li>Thirty days after final inspection and written final acceptance by the governmental body that issued the permit</li>
+        <li>Sixty consecutive days of cessation of labor, subject to statutory exceptions</li>
+        <li>If no permit or final acceptance applies, the last date labor, materials, fixtures, or tools were furnished to the property</li>
+      </ul>
+
+      <p>An owner may record a Notice of Completion, shortening the lien-recording period from 120 days after completion to 60 days after the notice is recorded. Claimants should monitor county records because owner notification alone is an unreliable deadline system.</p>
+
+      <h2>What the Arizona Notice and Claim of Lien requires</h2>
+
+      <p>The recorded claim generally includes:</p>
+      <ul>
+        <li>Legal description of the property</li>
+        <li>Owner or reputed owner</li>
+        <li>Claimant and hiring party</li>
+        <li>Statement of the claimant's demand after deducting offsets and credits</li>
+        <li>Dates of first and last furnishing</li>
+        <li>Date of project completion</li>
+        <li>Date the preliminary 20-day notice was given</li>
+        <li>Signature and verification</li>
+      </ul>
+
+      <p>Attach a copy of the preliminary 20-day notice and the statutory proof of mailing. An otherwise polished claim can fail if required attachments are missing.</p>
+
+      <h2>How to file an Arizona mechanics lien</h2>
+
+      <ol>
+        <li><strong>Confirm eligibility and licensing.</strong> Arizona contractor licensing issues can affect recovery and lien rights.</li>
+        <li><strong>Audit the preliminary notice.</strong> Identify recipients, service date, estimated price, and any needed supplement.</li>
+        <li><strong>Determine statutory completion.</strong> Obtain permit/final inspection records and search for a recorded Notice of Completion.</li>
+        <li><strong>Calculate both possible deadlines.</strong> Track 120 days after completion and 60 days after recorded Notice of Completion; use the earlier applicable date.</li>
+        <li><strong>Verify ownership and legal description.</strong> Use current county records.</li>
+        <li><strong>Calculate the protected amount.</strong> Apply payments, credits, and any late-notice lookback limitation.</li>
+        <li><strong>Prepare and verify the claim.</strong> Include statutory contents and attachments.</li>
+        <li><strong>Record with the county recorder.</strong> File in the county where the property is located.</li>
+        <li><strong>Serve the owner within a reasonable time.</strong> Preserve proof and serve promptly. In <em>Wang Electric, Inc. v. Smoke Tree Resort, LLC</em>, an Arizona appellate court declined to rule that service roughly three months after recording was unreasonable on the record before it. The same decision explained that <em>Old Adobe Office Properties, Ltd. v. Gin</em> found service near the end of the six-month lien period unreasonable on its facts. Neither decision creates a safe waiting period.</li>
+        <li><strong>Calendar six months to foreclose.</strong> Engage counsel well before expiration.</li>
+      </ol>
+
+      <h2>Owner-occupied dwellings require special attention</h2>
+
+      <p>Arizona limits lien rights against certain owner-occupied dwellings. A party who has no direct contract with the owner-occupant may not have the same lien remedy available on a dwelling as on a commercial project or non-owner-occupied residence. Confirm the property type, occupancy, and direct contractual relationship before threatening or recording a claim.</p>
+
+      <p>Resolve this threshold issue before anyone prepares or records the document; correct margins cannot create a lien right the statute withholds.</p>
+
+      <h2>Arizona and California use different lien clocks</h2>
+
+      <p>Both states use a 20-day preliminary-notice concept, but the later filing analysis differs. Arizona generally measures from statutory <strong>project completion</strong> and may shorten the period through a recorded Notice of Completion. California deadlines depend on claimant role, project completion or cessation, and recorded completion or cessation notices. Use the <a href="/mechanics-lien/california/">California mechanics lien guide</a> for a California property rather than transferring Arizona's 120/60-day framework across the state line.</p>
+
+      <h2>Common Arizona lien mistakes</h2>
+
+      <ol>
+        <li>Using a demand letter where the statutory preliminary 20-day notice is required.</li>
+        <li>Sending the notice only to the hiring party while omitting the owner, original contractor, or lender.</li>
+        <li>Failing to send a supplemental notice after the estimated price increases by at least 30%.</li>
+        <li>Counting 120 days from the claimant's last work instead of statutory project completion.</li>
+        <li>Missing a recorded Notice of Completion that shortens the period to 60 days.</li>
+        <li>Claiming early work not protected by a late preliminary notice.</li>
+        <li>Omitting the preliminary notice or proof of mailing from the recorded claim.</li>
+        <li>Waiting until the six-month foreclosure deadline to find counsel.</li>
+      </ol>
+
+      <h2 id="faq">Arizona Mechanics Lien FAQ</h2>
+      <div class="not-prose space-y-3 mt-6 mb-8">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What does an Arizona 20-day notice do?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">It preserves the right to include protected furnishing in a later lien claim. Serving it does not place a recorded debt against the property.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Can I serve the preliminary notice before starting work?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Yes. The statutory notice can be served before furnishing begins, which avoids a rushed calculation after mobilization.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            When does the 60-day deadline replace the 120-day deadline?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">The 60-day period generally applies after the owner records a Notice of Completion. Without that recorded notice, the ordinary period is 120 days after statutory completion.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Where is the lien recorded?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">With the county recorder in the Arizona county where the property, or part of it, is located.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            How long do I have to enforce it?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Arizona's general foreclosure period is six months after the lien is recorded. Filing the lien does not pause that deadline while the parties negotiate.</div>
+        </details>
+      </div>
+
+      <h2>Build a defensible claim file</h2>
+
+      <p>Keep the contract, license information, change orders, invoices, delivery tickets, daily reports, payment ledger, preliminary notice, mailing proof, supplemental notices, owner and lender research, permit/final inspection records, Notice of Completion search, deed, legal description, and recorded lien copy together.</p>
+
+      <p>After cleared payment, use the correct <a href="/mechanics-lien/release/">mechanics lien release</a>. If payment is being exchanged for a waiver, confirm whether a <a href="/lien-waiver/conditional/">conditional lien waiver</a> is safer until funds clear.</p>
+
+      <p><em>This article provides general information, not legal advice. Arizona's notice, licensing, dwelling, completion, and enforcement rules are fact-sensitive. Verify current statutes or consult an Arizona construction attorney.</em></p>
+
+      <h2>Primary sources</h2>
+      <ul>
+        <li><a href="https://www.azleg.gov/ars/33/00992-01.htm" target="_blank" rel="noopener">A.R.S. § 33-992.01 — Preliminary twenty-day notice</a></li>
+        <li><a href="https://www.azleg.gov/ars/33/00993.htm" target="_blank" rel="noopener">A.R.S. § 33-993 — Notice and claim of lien; completion</a></li>
+        <li><a href="https://www.azleg.gov/ars/33/00998.htm" target="_blank" rel="noopener">A.R.S. § 33-998 — Duration and foreclosure</a></li>
+        <li><a href="https://roc.az.gov/" target="_blank" rel="noopener">Arizona Registrar of Contractors</a></li>
+        <li><a href="https://caselaw.findlaw.com/az-court-of-appeals/1607936.html" target="_blank" rel="noopener"><em>Wang Electric, Inc. v. Smoke Tree Resort, LLC</em>, 230 Ariz. 314 (Ct. App. 2012)</a></li>
+      </ul>
+
+    </div>
+  </div>
+</StatePage>

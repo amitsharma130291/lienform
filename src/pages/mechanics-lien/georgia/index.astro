@@ -1,0 +1,293 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import LienFormApp from '../../../components/LienFormApp';
+
+const title = "Georgia Mechanics Lien: 90-Day Filing and 2-Day Service Rules";
+const description = "Learn who can file a Georgia mechanics lien, the 90-day recording deadline, required claim language, service rules, and the 365-day enforcement period.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Georgia lien deadline 90 days or three months?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The statute uses 90 days. Count calendar days rather than substituting three calendar months, which can produce a different result."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is a Georgia mechanics lien filed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With the clerk of superior court in the county where the improved property is located. A multi-county or multi-parcel project may require additional analysis and filings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to the deadline during payment negotiations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The statutory recording period ordinarily continues to run. Negotiations, invoices, payment promises, and a notice of intent to lien do not supply a new last-furnishing date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a Georgia mechanics lien last?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The ordinary enforcement period is 365 days from recording, but a properly served Notice of Contest of Lien can shorten the action deadline to 60 days after receipt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I release the lien when payment is promised?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use a conditional exchange or wait for collected funds. An unconditional release can surrender security even if a check is later reversed or dishonored."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File and Serve a Georgia Mechanics Lien",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Audit notice compliance and calculate the amount",
+      "text": "Review the Notice of Commencement and any Notice to Contractor, then reconstruct both the claimant's ledger and the owner-to-contractor ledger before stating the amount."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Record with the superior court clerk",
+      "text": "File the statutory claim in the county where the property is located within 90 days after last furnishing labor, services, or materials."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Send the recorded claim and calendar enforcement",
+      "text": "Send the recorded claim to required recipients within two business days, then calendar the 365-day enforcement deadline and 30-day notice of commencement of lien action."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Georgia", "item": "https://mechanicslienform.com/mechanics-lien/georgia/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/georgia/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Georgia</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Georgia Mechanics Lien: 90-Day Deadline, Filing Steps, and Notice Rules</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">Record a Georgia claim of lien within 90 days after the claimant's last furnishing, then send the recorded claim to required recipients no later than two business days after filing. Start the lien action within 365 days after recording and record notice of that action within 30 days.</p>
+    </div>
+
+    <LienFormApp
+      client:load
+      defaultState="georgia"
+      documentType="mechanics-lien"
+      productName="Georgia Mechanics Lien Bundle"
+    />
+
+    <!-- SEO content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>A Georgia mechanics lien — often called a mechanic's or materialman's lien — generally must be recorded within <strong>90 days after the claimant completes its work or last furnishes labor, services, or materials</strong>. Record the claim with the clerk of superior court in the county where the property is located, then send the recorded claim to required recipients within <strong>two business days</strong>. To keep the lien alive, the claimant generally must commence an action for the debt within <strong>365 days after recording</strong> and file a notice of that action in the lien records within 30 days after commencement.</p>
+
+      <p>Each clock runs independently. A day-90 recording still leaves the two-business-day delivery task, and preservation beyond the ordinary period requires a timely lien action.</p>
+
+      <p>For the document-preparation workflow and required records, start with the <a href="/mechanics-lien/form/">mechanics lien form guide</a>.</p>
+
+      <h2>Georgia mechanics lien deadlines at a glance</h2>
+
+      <table>
+        <thead>
+          <tr><th>Action</th><th>General deadline</th><th>Why it matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Record claim of lien</td><td>Within 90 days after claimant's completion/last furnishing</td><td>Late recording defeats the statutory lien</td></tr>
+          <tr><td>Send recorded claim</td><td>Within 2 business days after filing</td><td>Required notice to owner and, when applicable, contractor</td></tr>
+          <tr><td>Start action to recover the debt</td><td>Within 365 days after recording</td><td>Otherwise the lien expires by law</td></tr>
+          <tr><td>File notice of commencement of lien action</td><td>Within 30 days after starting the action</td><td>Preserves notice of enforcement in the county lien records</td></tr>
+        </tbody>
+      </table>
+
+      <p>An owner or contractor may record a <strong>Notice of Contest of Lien</strong>, which can shorten the ordinary enforcement period to 60 days after receipt. Treat any contest notice as urgent.</p>
+
+      <h2>Who may claim a lien in Georgia?</h2>
+
+      <p>Georgia law extends lien rights to qualifying parties who furnish labor, services, or materials improving real estate, including contractors, subcontractors, material suppliers, laborers, certain professionals, and registered interior designers. Eligibility still depends on the contracting chain, the nature of the improvement, payment status, and compliance with statutory conditions.</p>
+
+      <p>Public projects use bond and public-works remedies rather than a lien against public land. Projects involving tenants can also raise leasehold and owner-consent questions; do not assume work ordered by a tenant automatically reaches the owner's full interest.</p>
+
+      <h2>Preliminary notices and the Notice of Commencement</h2>
+
+      <p>Georgia's notice rules cannot be reduced to "no preliminary notice required." The project's <strong>Notice of Commencement</strong> and the claimant's tier affect the analysis.</p>
+
+      <p>For many subcontractors and suppliers, a preliminary <strong>Notice to Contractor</strong> may be required when a valid Notice of Commencement was timely filed and posted. The deadline is generally the later of 30 days after the Notice of Commencement is filed or 30 days after the claimant first furnishes labor, services, or materials. The notice identifies the claimant, hiring party, project, and expected contract value.</p>
+
+      <p>Before filing a lien, obtain and review:</p>
+      <ul>
+        <li>The recorded Notice of Commencement, if any</li>
+        <li>Proof of when and where it was posted</li>
+        <li>Your contract and tier in the project</li>
+        <li>Any Notice to Contractor and proof of delivery</li>
+        <li>Payment affidavits, waivers, and contractor statements</li>
+      </ul>
+
+      <p>A missing, late, or defective project notice can change which obligations apply. This is a high-value attorney-review issue because the effect depends on the statute and the facts.</p>
+
+      <h2>How to calculate Georgia's 90-day deadline</h2>
+
+      <p>Start with the claimant's last date of substantive contract performance — not the invoice date, payment due date, or project's grand opening.</p>
+
+      <h3>Example</h3>
+
+      <p>A supplier makes its final contracted delivery on March 4. It emails an invoice on March 20 and sends a collection letter on April 15. The 90-day clock ordinarily runs from the March 4 furnishing date, not either communication.</p>
+
+      <p>Do not rely on minor warranty work, corrective work, or a token delivery performed merely to extend time. If the last-furnishing date is disputed, calculate from the earliest defensible date and file sooner.</p>
+
+      <h2>What the Georgia claim of lien should contain</h2>
+
+      <p>Georgia requires more than an amount and street address. A claim generally needs:</p>
+      <ul>
+        <li>Correct legal name of the claimant</li>
+        <li>Name of the owner</li>
+        <li>Name of the person or entity indebted to the claimant</li>
+        <li>Amount claimed to be due</li>
+        <li>Description of the labor, services, or materials furnished</li>
+        <li>Property description sufficient to identify the real estate</li>
+        <li>Dates relevant to the claimant's work</li>
+        <li>Required statutory notice language on the face of the claim</li>
+        <li>Proper signature and execution</li>
+      </ul>
+
+      <p>Use the legal description from a recorded deed or reliable title record. Do not assume the mailing address alone is sufficient. Compare the claim amount against the contract, approved changes, payments, credits, and lienable value.</p>
+
+      <p>Georgia courts require strict compliance with the statutory filing procedure even though the claim need only follow the statutory form "in substance." In <em>Robertson v. Ridge Environmental, LLC</em>, the Court of Appeals emphasized that O.C.G.A. § 44-14-361.1 is strictly construed and examined whether the recorded claim and later debt action matched the contracting relationship. Names, the party to whom materials were furnished, the due date, property description, amount, and later defendant are functional facts, not decorative form fields.</p>
+
+      <h2>Owner payments can cap what a lower-tier claimant recovers</h2>
+
+      <p>A subcontractor's open ledger establishes only the debt side of the calculation. Georgia's lien framework limits aggregate liens to the contract price between the owner and contractor, and O.C.G.A. § 44-14-361.1 allows an owner to prove payments of the agreed price that were properly applied under the statute. Depending on the payment history and statutory affidavits, a paid owner may have a defense even though the general contractor failed to pass funds downstream.</p>
+
+      <p>Before stating the lien amount, reconstruct two ledgers:</p>
+      <ol>
+        <li><strong>Claimant ledger:</strong> earned amount, approved changes, payments, credits, and balance owed by the hiring party.</li>
+        <li><strong>Owner-to-contractor ledger:</strong> prime contract price, owner payments, remaining balance, and the affidavits or waivers supporting those payments.</li>
+      </ol>
+
+      <p>The first ledger establishes the claimant's debt. The second can limit the property exposure. When owner-payment information is unavailable, avoid assuming that the claimant's full open balance will be collectible through foreclosure.</p>
+
+      <h2>How to file and serve a Georgia mechanics lien</h2>
+
+      <ol>
+        <li><strong>Confirm ownership and county.</strong> Search current land records and identify every parcel improved.</li>
+        <li><strong>Audit notice compliance.</strong> Review the Notice of Commencement and any Notice to Contractor.</li>
+        <li><strong>Calculate the amount.</strong> Exclude unrelated damages and unsupported charges.</li>
+        <li><strong>Prepare the statutory claim.</strong> Preserve required warning language.</li>
+        <li><strong>Record with the superior court clerk.</strong> File in the county where the property is located before the 90-day limit.</li>
+        <li><strong>Obtain the recorded copy.</strong> It should show book/page or instrument information.</li>
+        <li><strong>Send the recorded claim within two business days.</strong> Send to the property owner and, if a Notice of Commencement was filed, the contractor at the addresses required by law. Use a method that produces reliable proof.</li>
+        <li><strong>Calendar enforcement immediately.</strong> Use both the ordinary 365-day date and a workflow for any later Notice of Contest.</li>
+      </ol>
+
+      <p>Recorder acceptance confirms entry into the public record; validity still depends on eligibility, contents, timing, delivery, and enforcement.</p>
+
+      <h2>Use the enforcement period to prepare the case</h2>
+
+      <p>The ordinary 365-day period is the outside limit to commence an action on the underlying claim, not permission to wait until the last week. The claimant must then file a notice of commencement of that lien action in the county lien records within 30 days.</p>
+
+      <p>A lawsuit can involve contract defenses, licensing, payment affidavits, waivers, priority, and the accuracy of the claim. Engage Georgia construction counsel early enough to investigate and draft rather than handing over the file on day 364.</p>
+
+      <h2>Five failure modes worth checking before recording</h2>
+
+      <ol>
+        <li><strong>Wrong last-work date:</strong> The file uses invoice or collection activity as though it were furnishing.</li>
+        <li><strong>Weak property description:</strong> Only a jobsite address is used where a legal description is needed.</li>
+        <li><strong>Overstatement:</strong> The claim includes unearned contract value or unrelated damages.</li>
+        <li><strong>Two-business-day service missed:</strong> The claimant records and assumes the clerk notifies everyone.</li>
+        <li><strong>Contest notice overlooked:</strong> A 60-day shortened enforcement period expires unnoticed.</li>
+      </ol>
+
+      <h2 id="faq">Georgia Mechanics Lien FAQ</h2>
+      <div class="not-prose space-y-3 mt-6 mb-8">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Is the Georgia lien deadline 90 days or three months?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">The statute uses 90 days. Count calendar days rather than substituting three calendar months, which can produce a different result.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Where is a Georgia mechanics lien filed?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">With the clerk of superior court in the county where the improved property is located. A multi-county or multi-parcel project may require additional analysis and filings.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What happens to the deadline during payment negotiations?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">The statutory recording period ordinarily continues to run. Negotiations, invoices, payment promises, and a <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> do not supply a new last-furnishing date.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            How long does a Georgia mechanics lien last?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">The ordinary enforcement period is 365 days from recording, but a properly served Notice of Contest of Lien can shorten the action deadline to 60 days after receipt.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Should I release the lien when payment is promised?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Use a conditional exchange or wait for collected funds. An unconditional release can surrender security even if a check is later reversed or dishonored.</div>
+        </details>
+      </div>
+
+      <h2>Before you file</h2>
+
+      <p>Assemble a claim packet containing the contract, change orders, claimant ledger, known owner-payment records, delivery tickets or daily reports, deed/legal description, Notice of Commencement, preliminary notices, mailing proof, and deadline calculation. That packet supports both accurate preparation and a fast response to a contest.</p>
+
+      <p>Use a <a href="/lien-waiver/conditional/">conditional lien waiver</a> when payment has been promised but has not cleared. Once the secured debt is satisfied, record the appropriate <a href="/mechanics-lien/release/">mechanics lien release</a>.</p>
+
+      <p><em>This page is general information, not legal advice. Georgia lien statutes are technical, deadlines may be shortened, and project facts matter. Verify current law and consult a Georgia construction attorney when rights or substantial sums are at risk.</em></p>
+
+      <h2>Primary and supporting sources</h2>
+      <ul>
+        <li><a href="https://consumered.georgia.gov/your-home/home-improvement/liens-against-your-home" target="_blank" rel="noopener">Georgia Consumer Protection Division — Liens Against Your Home</a></li>
+        <li><a href="https://www.legis.ga.gov/api/legislation/document/20212022/197748" target="_blank" rel="noopener">Georgia General Assembly — legislation concerning O.C.G.A. § 44-14-361.1</a></li>
+        <li><a href="https://law.justia.com/codes/georgia/title-44/chapter-14/article-8/part-3/section-44-14-368/" target="_blank" rel="noopener">Georgia Code § 44-14-368 — Notice of Contest of Lien</a></li>
+        <li><a href="https://law.justia.com/codes/georgia/title-44/chapter-14/article-8/part-3/section-44-14-361-1/" target="_blank" rel="noopener">O.C.G.A. § 44-14-361.1 — recording, two-business-day delivery, owner-payment defense, and enforcement</a></li>
+        <li><a href="https://law.justia.com/cases/georgia/court-of-appeals/2013/a12a2278.html" target="_blank" rel="noopener"><em>Robertson v. Ridge Environmental, LLC</em>, Ga. Ct. App. Nos. A12A2277–A12A2279 (Jan. 18, 2013)</a></li>
+      </ul>
+
+    </div>
+  </div>
+</StatePage>

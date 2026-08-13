@@ -1,0 +1,277 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import LienFormApp from '../../../components/LienFormApp';
+
+const title = "Washington Mechanics Lien: 90-Day Filing and Notice Deadlines";
+const description = "Understand Washington construction lien notices, the 90-day recording deadline, 14-day owner service, required claim contents, and eight-month enforcement period.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What event starts Washington's 90-day period?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RCW 60.04.091 generally starts the period when that claimant ceases furnishing labor, professional services, materials, or equipment. Completion of the entire project may occur on a different date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What legal effect does a Notice to Owner have?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The notice identifies parties furnishing to the improvement and preserves or defines later lien coverage. The Claim of Lien is the instrument recorded against the property records."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is the Claim of Lien recorded?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the county where the subject property is located, usually through the county auditor or recording office."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Must I send the owner the recorded claim?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. RCW 60.04.091 calls for certified or registered mail or personal service within 14 days after recording. Late service can forfeit attorney-fee and cost recovery against the owner."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does the lien last?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generally eight calendar months after recording unless timely enforced. When the recorded claim states credit terms, RCW 60.04.141 measures the period from expiration of that credit. The lawsuit must then be served on the owner within 90 days after filing."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File a Washington Construction Lien",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Audit Notice to Owner compliance",
+      "text": "Classify the property and claimant type, and confirm the applicable preclaim Notice to Owner lookback window before calculating the claim."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Record the Claim of Lien within 90 days",
+      "text": "Prepare and acknowledge the statutory claim, then record it in the county where the property is located within 90 days after you ceased furnishing."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Serve the owner and calendar enforcement",
+      "text": "Serve the owner within 14 days after recording, then calendar the eight-month foreclosure deadline and the 90-day deadline to serve the owner after filing suit."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Washington", "item": "https://mechanicslienform.com/mechanics-lien/washington/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/washington/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Washington</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Washington Mechanics Lien: Notices, 90-Day Filing, and Foreclosure</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">Record a Washington Claim of Lien within 90 days after the claimant stops furnishing. Give the owner a copy within 14 days. File foreclosure within eight calendar months after recording and serve the owner within 90 days after filing, subject to the statute's stated-credit exception.</p>
+    </div>
+
+    <LienFormApp
+      client:load
+      defaultState="washington"
+      documentType="mechanics-lien"
+      productName="Washington Mechanics Lien Bundle"
+    />
+
+    <!-- SEO content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>Washington calls this remedy a <strong>construction lien</strong>. A claimant generally records a Claim of Lien no later than <strong>90 days after the claimant ceases furnishing labor, professional services, materials, or equipment</strong>. The claimant must give the owner or reputed owner a copy by certified or registered mail or personal service within <strong>14 days after recording</strong>. To keep the lien effective, a foreclosure action generally must be filed within <strong>eight calendar months after recording</strong>, followed by service on the owner within 90 days after filing the action.</p>
+
+      <p>Notice prerequisites can limit the protected work of suppliers, equipment providers, and professional-services firms. The <a href="/mechanics-lien/form/">mechanics lien form guide</a> covers the records and document fields needed for the claim itself.</p>
+
+      <h2>Washington construction lien deadlines</h2>
+
+      <table>
+        <thead>
+          <tr><th>Action</th><th>General timing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Notice to Owner</td><td>Timing and lookback depend on project/property type and claimant role</td></tr>
+          <tr><td>Record Claim of Lien</td><td>Within 90 days after claimant ceases furnishing</td></tr>
+          <tr><td>Give owner a copy of recorded claim</td><td>Within 14 days after recording</td></tr>
+          <tr><td>File foreclosure lawsuit</td><td>Within 8 calendar months after recording</td></tr>
+          <tr><td>Serve owner in foreclosure</td><td>Within 90 days after filing action</td></tr>
+        </tbody>
+      </table>
+
+      <p>Failure to give the owner the recorded claim within 14 days can forfeit the claimant's right to recover attorney fees and costs from the owner even when the lien itself remains. That economic consequence can materially change settlement value.</p>
+
+      <h2>Who may claim a Washington construction lien?</h2>
+
+      <p>Chapter 60.04 RCW covers qualifying parties furnishing labor, professional services, materials, or equipment for improving real property at the instance of the owner or the owner's agent. Potential claimants include contractors, subcontractors, suppliers, equipment lessors, laborers, architects, engineers, and other professionals, subject to statutory definitions and conditions.</p>
+
+      <p>Public works call for bond and retainage claims against project security rather than a Chapter 60.04 claim against public land. Ownership research therefore comes before remedy selection.</p>
+
+      <h2>Match the Notice to Owner rule to the property</h2>
+
+      <p>The pre-claim notice rules vary with claimant type and property type. RCW 60.04.031 contains the statutory Notice to Owner and explains different protection windows.</p>
+
+      <p>For commercial and new residential property, a notice may protect furnishing dating back <strong>60 days before notice</strong>, except that new single-family residence work generally has a <strong>10-day</strong> lookback. Existing owner-occupied residential property has additional limitations tied to unpaid contract funds and the timing of notice. Laborers may have rights without sending the notice.</p>
+
+      <p>The commercial 60-day lookback cannot be used as a universal deadline. Ask:</p>
+      <ol>
+        <li>Is the property commercial, new residential, or an existing owner-occupied principal residence?</li>
+        <li>Is the project a new single-family residence?</li>
+        <li>Is the claimant supplying labor, professional services, materials, or equipment?</li>
+        <li>Did the claimant contract directly with the owner or through another party?</li>
+        <li>Which furnishing dates and amounts fall inside the applicable lookback?</li>
+      </ol>
+
+      <p>Use the statutory notice text and required delivery method. Purchase-order acknowledgments and ordinary invoices lack the warning and delivery record the statute calls for. A separate <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> may support collection, but it does not perform the preclaim notice's statutory function.</p>
+
+      <p>The Washington Supreme Court sharpened this distinction in <em>Velazquez Framing, LLC v. Cascadia Homes, Inc.</em> (2024): RCW 60.04.031 requires preclaim notice for professional services, materials, and equipment, while a lien based solely on labor does not carry that requirement. Mixed labor-and-material claims still require careful allocation and analysis.</p>
+
+      <h2>How to calculate the 90-day recording period</h2>
+
+      <p>RCW 60.04.091 measures 90 days after the claimant <strong>ceased to furnish</strong>. Track the claimant's actual last substantive furnishing date with daily reports, signed delivery tickets, equipment off-rent records, or professional-service logs.</p>
+
+      <p>Punch-list correction, warranty service, or a nominal return visit does not automatically restart the period. In <em>Brashear Electric, Inc. v. Norcal Properties, LLC</em>, the Court of Appeals held that a contractor's work correcting its own nonconforming work was not lienable "repairing" that extended the 90-day period. The decision distinguished qualifying contract work from work used to revive or prolong the filing period under <em>Kirk v. Rohan</em>. When dates are debatable, calculate from the earliest plausible date.</p>
+
+      <h2>What a Washington Claim of Lien must contain</h2>
+
+      <p>The statutory claim states in substance:</p>
+      <ul>
+        <li>Claimant's name, telephone number, and address</li>
+        <li>First and last furnishing dates</li>
+        <li>Person indebted to the claimant</li>
+        <li>Street address or description of the property sufficient for identification</li>
+        <li>Owner or reputed owner</li>
+        <li>Principal amount claimed</li>
+        <li>Statutory signature and acknowledgment language</li>
+      </ul>
+
+      <p>The claim must be signed by the claimant or someone authorized to act for the claimant and acknowledged as required. False or frivolous claims can expose the filer to expedited challenge and damages.</p>
+
+      <h2>Filing and service workflow</h2>
+
+      <ol>
+        <li><strong>Verify the property is private.</strong> For public work, analyze bond and retainage remedies.</li>
+        <li><strong>Classify the property and claimant.</strong> This controls pre-claim notice and lookback issues.</li>
+        <li><strong>Audit Notice to Owner compliance.</strong> Keep the exact notice and delivery proof.</li>
+        <li><strong>Choose the last-furnishing date.</strong> Use source records and calculate the 90th day.</li>
+        <li><strong>Verify owner, hiring party, and property description.</strong> Search current county records.</li>
+        <li><strong>Reconcile the amount.</strong> Deduct payments and credits and limit the claim to protected furnishing.</li>
+        <li><strong>Prepare and acknowledge the statutory claim.</strong> Do not substitute generic language.</li>
+        <li><strong>Record in the county where the property is located.</strong> Leave correction time.</li>
+        <li><strong>Serve the owner within 14 days.</strong> Use certified or registered mail or personal service and retain proof.</li>
+        <li><strong>Calendar eight months to sue and 90 days to serve.</strong> Foreclosure requires a civil action in superior court.</li>
+      </ol>
+
+      <h2>Enforcement: two clocks after the claim is recorded</h2>
+
+      <p>Under RCW 60.04.141, the lien generally lasts eight calendar months after recording unless the claimant files an enforcement action in superior court in the county where the property is located. <strong>If credit was given and its terms are stated in the recorded Claim of Lien, the statute instead measures eight months from expiration of that credit.</strong> After filing, the claimant must serve the owner within 90 days.</p>
+
+      <p>Calendar both dates. Filing a complaint on time but serving late can still defeat enforcement. The owner must be joined, and other lienholders or parties with property interests may affect priority and procedure.</p>
+
+      <h2>Common Washington construction lien errors</h2>
+      <ul>
+        <li>Applying the commercial 60-day notice lookback to a new single-family residence</li>
+        <li>Ignoring the special existing owner-occupied residence rules</li>
+        <li>Using invoice date instead of the last furnishing date</li>
+        <li>Including work outside the notice-protected period</li>
+        <li>Recording in the contractor's home county rather than the property county</li>
+        <li>Serving the recorded claim by ordinary email</li>
+        <li>Missing the 14-day service period and losing fee recovery</li>
+        <li>Filing foreclosure within eight months but failing to serve the owner within 90 days</li>
+      </ul>
+
+      <h2 id="faq">Washington Mechanics Lien FAQ</h2>
+      <div class="not-prose space-y-3 mt-6 mb-8">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What event starts Washington's 90-day period?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">RCW 60.04.091 generally starts the period when that claimant ceases furnishing labor, professional services, materials, or equipment. Completion of the entire project may occur on a different date.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            What legal effect does a Notice to Owner have?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">The notice identifies parties furnishing to the improvement and preserves or defines later lien coverage. The Claim of Lien is the instrument recorded against the property records.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Where is the Claim of Lien recorded?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">In the county where the subject property is located, usually through the county auditor or recording office.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Must I send the owner the recorded claim?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Yes. RCW 60.04.091 calls for certified or registered mail or personal service within 14 days after recording. Late service can forfeit attorney-fee and cost recovery against the owner.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            How long does the lien last?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Generally eight calendar months after recording unless timely enforced. When the recorded claim states credit terms, RCW 60.04.141 measures the period from expiration of that credit. The lawsuit must then be served on the owner within 90 days after filing.</div>
+        </details>
+      </div>
+
+      <h2>Claim-file checklist</h2>
+
+      <p>Keep the contract, change orders, invoices, ledger, furnishing records, equipment logs, Notice to Owner and delivery evidence, deed/property data, lien calculation, acknowledged claim, recording receipt, owner-service proof, and enforcement calendar in one file.</p>
+
+      <p>Use a <a href="/lien-waiver/conditional/">conditional lien waiver</a> when exchanging rights for payment that has not cleared, and record a <a href="/mechanics-lien/release/">mechanics lien release</a> after the secured obligation is satisfied.</p>
+
+      <p><em>This page is general information, not legal advice. Washington construction lien notice and enforcement rules vary by claimant and property type. Verify current Chapter 60.04 RCW or consult a Washington construction attorney.</em></p>
+
+      <h2>Primary sources</h2>
+      <ul>
+        <li><a href="https://app.leg.wa.gov/rcw/default.aspx?cite=60.04&full=true" target="_blank" rel="noopener">Chapter 60.04 RCW — Mechanics' and materialmen's liens</a></li>
+        <li><a href="https://app.leg.wa.gov/RCW/default.aspx?cite=60.04.031" target="_blank" rel="noopener">RCW 60.04.031 — Notices</a></li>
+        <li><a href="https://app.leg.wa.gov/rcw/default.aspx?cite=60.04.091" target="_blank" rel="noopener">RCW 60.04.091 — Claim contents, 90-day recording, and 14-day service</a></li>
+        <li><a href="https://app.leg.wa.gov/rcw/default.aspx?cite=60.04.141" target="_blank" rel="noopener">RCW 60.04.141 — Eight-month duration and enforcement</a></li>
+        <li><a href="https://law.justia.com/cases/washington/supreme-court/2024/101-591-7.html" target="_blank" rel="noopener"><em>Velazquez Framing, LLC v. Cascadia Homes, Inc.</em>, 200 Wn.2d 356 (2024)</a></li>
+        <li><a href="https://law.justia.com/cases/washington/court-of-appeals-division-iii/2021/37379-7.html" target="_blank" rel="noopener"><em>Brashear Electric, Inc. v. Norcal Properties, LLC</em>, 16 Wn. App. 2d 741, 482 P.3d 955 (2021)</a></li>
+      </ul>
+
+    </div>
+  </div>
+</StatePage>
