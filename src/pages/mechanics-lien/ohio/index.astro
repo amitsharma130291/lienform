@@ -1,0 +1,299 @@
+---
+import StatePage from '../../../layouts/StatePage.astro';
+import LienFormApp from '../../../components/LienFormApp';
+
+const title = "Ohio Mechanics Lien Deadlines: 60, 75 or 120 Days?";
+const description = "Understand Ohio mechanics lien deadlines, Notice of Commencement and Notice of Furnishing rules, affidavit contents, recording, service, and enforcement.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which Ohio claims use a deadline other than 75 days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Residential one- or two-family dwelling and residential condominium claims generally have a 60-day period. Claims arising under § 1311.021 for qualifying oil-and-gas work use 120 days. Other covered improvements generally use 75 days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the deadline counted from project completion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ohio Revised Code § 1311.06 measures the listed filing periods from the last labor or work performed or material furnished by the claimant."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do I file?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Record the affidavit with the county recorder in the county where the improved property is located."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the affidavit need notarization?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is a sworn affidavit and should be executed before a notary in accordance with the statutory form and recording requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Must I send the owner a copy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generally yes, within 30 days after filing. Preserve evidence of service and follow the statutory alternative if ordinary service cannot be completed."
+      }
+    }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to File and Serve an Ohio Mechanics Lien",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Classify the project and choose the last-furnishing date",
+      "text": "Decide whether the 60-, 75-, or 120-day period applies, then choose the earliest credible last-furnishing date rather than relying on a later callback or warranty visit."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Complete and record the sworn affidavit",
+      "text": "Complete the statutory Affidavit for Mechanic's Lien with required parties, dates, amount, and property description, execute it before a notary, and record it with the county recorder."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Serve the owner within 30 days",
+      "text": "Serve a copy on the owner within 30 days after filing using a permitted method, and calendar release and enforcement obligations."
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mechanicslienform.com" },
+    { "@type": "ListItem", "position": 2, "name": "Mechanics Lien", "item": "https://mechanicslienform.com/mechanics-lien/" },
+    { "@type": "ListItem", "position": 3, "name": "Ohio", "item": "https://mechanicslienform.com/mechanics-lien/ohio/" }
+  ]
+};
+
+const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+---
+
+<StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/ohio/" schema={schema}>
+  <!-- Breadcrumb nav -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-navy-700">Home</a> ›
+    <a href="/mechanics-lien/" class="hover:text-navy-700">Mechanics Lien</a> ›
+    <span class="text-gray-900">Ohio</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-navy-900 mb-4">Ohio Mechanics Lien: 60-, 75-, and 120-Day Filing Deadlines</h1>
+
+    <!-- Featured snippet answer -->
+    <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
+      <p class="text-navy-800 font-medium">Ohio mechanics lien affidavits are generally due 60 days after last furnishing for one- or two-family dwellings and residential condominium units, 120 days for claims arising under the oil-and-gas lien statute, and 75 days for other covered private improvements. Serve the owner within 30 days after filing.</p>
+    </div>
+
+    <!-- Ohio project-type proxy note -->
+    <div class="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-4">
+      <strong>⚠️ Project type below is a proxy, not a legal test.</strong> Ohio's 60-day period applies specifically to a one- or two-family dwelling or residential condominium unit — not a generic "residential" label. The tool uses your Residential/Commercial selection as an approximation. If your project is multi-family, mixed-use, or otherwise unclear, confirm the correct deadline with an attorney rather than relying on the toggle alone. Ohio's separate 120-day oil-and-gas carve-out (ORC § 1311.021) is not detected automatically.
+    </div>
+
+    <LienFormApp
+      client:load
+      defaultState="ohio"
+      documentType="mechanics-lien"
+      productName="Ohio Mechanics Lien Bundle"
+    />
+
+    <!-- SEO content -->
+    <div class="prose prose-lg max-w-none">
+
+      <p>An Ohio mechanics lien is created by recording a sworn <strong>Affidavit for Mechanic's Lien</strong> with the county recorder where the property is located. The filing period is generally <strong>60 days</strong> for a one- or two-family dwelling or residential condominium unit, <strong>120 days</strong> for qualifying oil-and-gas claims under Ohio Revised Code § 1311.021, and <strong>75 days</strong> for other covered improvements. Each period runs from the claimant's last labor, work, or material furnished.</p>
+
+      <p>After recording, the claimant generally must serve a copy on the owner within <strong>30 days</strong>. The filing deadline, owner service, and any earlier Notice of Furnishing are separate requirements.</p>
+
+      <p>The <a href="/mechanics-lien/form/">mechanics lien form guide</a> covers the supporting records and field-by-field preparation that follow this deadline analysis.</p>
+
+      <h2>Ohio deadline table</h2>
+
+      <table>
+        <thead>
+          <tr><th>Project or claim type</th><th>Record affidavit within</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>One- or two-family dwelling or residential condominium unit</td><td>60 days after claimant's last furnishing</td></tr>
+          <tr><td>Certain oil or gas well/facility claims under § 1311.021</td><td>120 days after claimant's last furnishing</td></tr>
+          <tr><td>Other private improvements</td><td>75 days after claimant's last furnishing</td></tr>
+        </tbody>
+      </table>
+
+      <p>Do not classify a project based only on its informal name. A mixed-use building, apartment project, condominium development, or residential common-area job may require a closer statutory analysis.</p>
+
+      <h2>Who can file an Ohio mechanics lien?</h2>
+
+      <p>Ohio's Chapter 1311 protects qualifying parties furnishing labor, work, or materials in furtherance of an improvement. Contractors, subcontractors, laborers, and material suppliers may qualify, but rights depend on the improvement, claimant's tier, notices, and contract relationship.</p>
+
+      <p>Public construction follows different statutory payment and bond procedures. Verify the legal owner before assuming a school, hospital, utility, or development authority project is private.</p>
+
+      <h2>Notice of Commencement and Notice of Furnishing</h2>
+
+      <p>Ohio's notice system is central to lien rights.</p>
+
+      <p>The owner generally records a <strong>Notice of Commencement</strong> before work starts and provides or posts project information. A subcontractor or supplier who does not contract directly with the owner generally protects its rights by serving a <strong>Notice of Furnishing</strong> on the owner or part owner and the original contractor within <strong>21 days after first furnishing</strong>.</p>
+
+      <p>Late service may protect only a limited lookback period rather than all earlier work. The exact consequences and exceptions depend on Chapter 1311, so obtain the recorded Notice of Commencement and document the first furnishing date immediately.</p>
+
+      <h3>A practical notice workflow</h3>
+      <ol>
+        <li>Search the county recorder for the Notice of Commencement.</li>
+        <li>Compare its owner, original contractor, property description, and expiration information with the job.</li>
+        <li>Serve the Notice of Furnishing on all required recipients using a statute-compliant method.</li>
+        <li>Retain the notice, certificate or proof of service, tracking, and delivery evidence.</li>
+        <li>Monitor amended or additional Notices of Commencement on phased projects.</li>
+      </ol>
+
+      <p>Demand emails and invoices do not contain or deliver the statutory Notice of Furnishing. A separate <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> can support collection without replacing the Chapter 1311 notice.</p>
+
+      <h2>What the Affidavit for Mechanic's Lien must state</h2>
+
+      <p>Ohio Revised Code § 1311.06 supplies a statutory form. The affidavit includes, among other items:</p>
+      <ul>
+        <li>Affiant and lien claimant information</li>
+        <li>Claimant's address</li>
+        <li>Description of labor or materials furnished</li>
+        <li>Person with whom the claimant contracted and that party's address</li>
+        <li>First and last furnishing dates</li>
+        <li>Amount due over and above legal setoffs</li>
+        <li>Legal description of the property</li>
+        <li>Owner, part owner, or lessee information</li>
+        <li>Verification under oath before a notary</li>
+      </ul>
+
+      <p>Build from the statutory form. Converting a collection letter into an affidavit risks omitting the sworn facts the recorder and later court need.</p>
+
+      <h2>How to calculate the lien amount</h2>
+
+      <p>Start with the earned contract balance:</p>
+      <p><code>original contract + approved changes − payments − credits = unpaid contract balance</code></p>
+
+      <p>Then determine which portions are lienable under Ohio law. Do not automatically add consequential damages, disputed delay costs, lost profit on unperformed work, or attorney fees. The affidavit states the amount due over and above setoffs, so known credits and payments matter.</p>
+
+      <p>If the claimant's amount is disputed, preserve the underlying schedule of values, signed changes, time records, delivery tickets, pay applications, and payment ledger. The recorded affidavit should be defensible line by line.</p>
+
+      <h2>Filing and service steps</h2>
+
+      <ol>
+        <li><strong>Classify the project.</strong> Decide whether the 60-, 75-, or 120-day period applies. Section 1311.021 reaches qualifying original contractors, subcontractors, laborers, and material suppliers furnishing for an oil or gas well, leasehold, or specified facilities such as certain pipelines, tanks, derricks, and waste-disposal operations; it is narrower than any job connected generally to an energy company.</li>
+        <li><strong>Choose the earliest credible last-furnishing date.</strong> Do not rely on a later callback or warranty visit to extend time.</li>
+        <li><strong>Audit notices.</strong> Obtain the Notice of Commencement and proof of every Notice of Furnishing.</li>
+        <li><strong>Verify ownership and the legal description.</strong> Use current county land records.</li>
+        <li><strong>Complete the statutory affidavit.</strong> Include required parties, dates, amount, and property description.</li>
+        <li><strong>Sign under oath.</strong> Execute before a notary as required.</li>
+        <li><strong>Record with the county recorder.</strong> Leave time for rejection and correction.</li>
+        <li><strong>Serve the owner within 30 days after filing.</strong> Use a permitted method and preserve proof.</li>
+        <li><strong>Calendar release and enforcement obligations.</strong> Assign the post-recording tasks as soon as the instrument number arrives.</li>
+      </ol>
+
+      <p>If service on the owner cannot be completed as provided by statute, Ohio law includes an alternative involving posting on the improvement. Because the details matter, do not improvise the posting process.</p>
+
+      <h2>How long does an Ohio mechanics lien last?</h2>
+
+      <p>Under Ohio Revised Code § 1311.13, a lien under the relevant sections generally continues for six years after the affidavit is filed unless released or otherwise terminated. That long outside period should not encourage delay. An owner or other interested party may use statutory procedures that force action sooner, and evidence becomes harder to preserve over time.</p>
+
+      <p>Foreclosure is a lawsuit, not an administrative recorder filing. Counsel should evaluate parties, priority, service, defenses, and whether another collection remedy is more economical.</p>
+
+      <h2>Where does the lien rank against a mortgage?</h2>
+
+      <p>Ohio priority cannot be answered from recording dates alone. Under § 1311.13, mechanics liens generally attach from the date work began or materials were first furnished under the original contract, subject to the statute's detailed priority rules. Section 1311.14 gives qualifying construction mortgages priority when their proceeds are used and distributed for the statutory purposes; laborers and material suppliers can also serve the mortgagee with the notice described there.</p>
+
+      <p>The practical question is therefore not simply "Which document was recorded first?" Review the Notice of Commencement, mortgage instrument, first visible work, fund disbursements, claimant class, and statutory notices. A title report plus construction-counsel analysis is appropriate before estimating foreclosure recovery.</p>
+
+      <h2>Problems experienced claimants check early</h2>
+      <ul>
+        <li><strong>Residential classification:</strong> The 60-day clock is shorter than the commercial period.</li>
+        <li><strong>Multiple improvements or parcels:</strong> A single contract may not always equal a single lien filing.</li>
+        <li><strong>Notice mismatch:</strong> The legal owner or original contractor differs from the party named in project paperwork.</li>
+        <li><strong>Last-work manipulation:</strong> The file treats small corrective work as a deadline reset without legal support.</li>
+        <li><strong>Unapproved extras:</strong> The claim includes disputed work with weak authorization records.</li>
+        <li><strong>Owner service:</strong> The affidavit was timely recorded but the 30-day service task was never assigned.</li>
+      </ul>
+
+      <h2 id="faq">Ohio Mechanics Lien FAQ</h2>
+      <div class="not-prose space-y-3 mt-6 mb-8">
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Which Ohio claims use a deadline other than 75 days?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Residential one- or two-family dwelling and residential condominium claims generally have a 60-day period. Claims arising under § 1311.021 for qualifying oil-and-gas work use 120 days. Other covered improvements generally use 75 days.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Is the deadline counted from project completion?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Ohio Revised Code § 1311.06 measures the listed filing periods from the last labor or work performed or material furnished by the claimant.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Where do I file?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Record the affidavit with the county recorder in the county where the improved property is located.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Does the affidavit need notarization?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Yes. It is a sworn affidavit and should be executed before a notary in accordance with the statutory form and recording requirements.</div>
+        </details>
+        <details class="bg-white border border-slate-200 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer text-navy-800 font-medium hover:bg-slate-50 list-none">
+            Must I send the owner a copy?
+            <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">Generally yes, within 30 days after filing. Preserve evidence of service and follow the statutory alternative if ordinary service cannot be completed.</div>
+        </details>
+      </div>
+
+      <h2>Documents to assemble before drafting</h2>
+      <ul>
+        <li>Contract and all approved changes</li>
+        <li>Pay applications, invoices, payment ledger, and credits</li>
+        <li>Daily reports, time records, and delivery tickets</li>
+        <li>Recorded Notice of Commencement</li>
+        <li>Notice of Furnishing and service proof</li>
+        <li>Current deed and legal description</li>
+        <li>Owner and original contractor addresses</li>
+        <li>A written calculation of the filing and service dates</li>
+      </ul>
+
+      <p>When payment is exchanged for rights, review whether a <a href="/lien-waiver/conditional/">conditional lien waiver</a> fits the transaction. After satisfaction of a recorded claim, complete the appropriate <a href="/mechanics-lien/release/">mechanics lien release</a>.</p>
+
+      <p><em>This article is general information, not legal advice. Ohio mechanics lien rights depend on strict statutory compliance and project facts. Confirm current Chapter 1311 requirements or consult an Ohio construction attorney.</em></p>
+
+      <h2>Primary sources</h2>
+      <ul>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/chapter-1311" target="_blank" rel="noopener">Ohio Revised Code Chapter 1311 — Mechanics' Lien Law</a></li>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/section-1311.06" target="_blank" rel="noopener">Ohio Revised Code § 1311.06 — Affidavit and filing deadlines</a></li>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/section-1311.13" target="_blank" rel="noopener">Ohio Revised Code § 1311.13 — duration and priority</a></li>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/section-1311.14" target="_blank" rel="noopener">Ohio Revised Code § 1311.14 — construction mortgage priority and claimant notice</a></li>
+        <li><a href="https://codes.ohio.gov/ohio-revised-code/section-1311.021" target="_blank" rel="noopener">Ohio Revised Code § 1311.021 — oil and gas well and facility lien scope</a></li>
+      </ul>
+
+    </div>
+  </div>
+</StatePage>

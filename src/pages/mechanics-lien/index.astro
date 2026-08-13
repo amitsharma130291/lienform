@@ -90,22 +90,27 @@ const activeStates = [
   { name: "Michigan", slug: "michigan", stat: "MCL 570.1101–570.1305", deadline: "90/180 days" },
   { name: "California", slug: "california", stat: "Civil Code §8000–9566", deadline: "90 days" },
   { name: "Texas", slug: "texas", stat: "Tex. Prop. Code Ch. 53", deadline: "4th month 15th" },
+  { name: "Arizona", slug: "arizona", stat: "A.R.S. § 33-993", deadline: "120/60 days" },
+  { name: "Georgia", slug: "georgia", stat: "O.C.G.A. § 44-14-361.1", deadline: "90 days" },
+  { name: "Ohio", slug: "ohio", stat: "ORC § 1311.06", deadline: "60/75 days" },
+  { name: "Washington", slug: "washington", stat: "RCW 60.04.091", deadline: "90 days" },
 ];
 
 const comingSoonStates = [
-  "Alabama", "Alaska", "Arizona", "Arkansas", "Colorado", "Connecticut",
-  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois",
+  "Alabama", "Alaska", "Arkansas", "Colorado", "Connecticut",
+  "Delaware", "Florida", "Hawaii", "Idaho", "Illinois",
   "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
   "Maryland", "Massachusetts", "Minnesota", "Mississippi", "Missouri",
   "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
-  "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+  "New Mexico", "New York", "North Carolina", "North Dakota",
   "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
   "South Dakota", "Tennessee", "Utah", "Vermont", "Virginia",
-  "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  "West Virginia", "Wisconsin", "Wyoming"
 ];
 
 const docTypes = [
   { name: "Mechanics Lien Claim", href: "/mechanics-lien/", active: true, desc: "Record a lien against real property to secure payment" },
+  { name: "Mechanics Lien Form Guide", href: "/mechanics-lien/form/", active: true, desc: "How to fill out and file a mechanics lien form correctly, state by state" },
   { name: "Notice to Owner", href: "/notice-to-owner/florida/", active: true, desc: "Florida NTO required within 45 days of first furnishing" },
   { name: "Preliminary Notice", href: "/preliminary-notice/california/", active: true, desc: "Pre-lien notice required in California before filing" },
   { name: "20-Day Preliminary Notice (CA)", href: "/20-day-preliminary-notice/california/", active: true, desc: "California subcontractor pre-lien notice — serve within 20 days of first furnishing" },
@@ -322,7 +327,7 @@ const roles = [
       <p>Generating your lien documents takes less than 5 minutes:</p>
 
       <ol>
-        <li><strong>Select your state.</strong> Choose from Michigan, California, or Texas. LienForm automatically loads the correct statute and form for your state.</li>
+        <li><strong>Select your state.</strong> Choose from Michigan, California, Texas, Arizona, Georgia, Ohio, or Washington. LienForm automatically loads the correct statute and form for your state.</li>
         <li><strong>Enter your role and project details.</strong> Tell us whether you are a general contractor, subcontractor, or supplier. Enter the property address, owner information, your company details, the amount owed, and your last furnishing date. The system calculates your deadline automatically.</li>
         <li><strong>Download your bundle.</strong> Download your complete PDF bundle instantly — available now. No account required. Your bundle includes the lien form, deadline confirmation, county recorder/clerk filing guide, proof of service affidavit, and lien release form.</li>
       </ol>
@@ -438,6 +443,30 @@ const roles = [
           class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
         >
           Texas →
+        </a>
+        <a
+          href="/mechanics-lien/arizona/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Arizona →
+        </a>
+        <a
+          href="/mechanics-lien/georgia/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Georgia →
+        </a>
+        <a
+          href="/mechanics-lien/ohio/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Ohio →
+        </a>
+        <a
+          href="/mechanics-lien/washington/"
+          class="inline-flex items-center gap-2 bg-white text-navy-800 font-semibold px-6 py-3 rounded-lg hover:bg-navy-50 transition-colors"
+        >
+          Washington →
         </a>
       </div>
     </section>
