@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { STATE_LIEN_RULES } from '../data/stateLienRules';
 
 export type UserRole =
   | 'general-contractor'
@@ -140,6 +141,8 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
   const isMichigan = formData.state === 'michigan';
   const isGC = formData.role === 'general-contractor';
   const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role || '');
+  const projectTypeRule = STATE_LIEN_RULES[formData.state || '']?.deadlineRule;
+  const showsProjectTypeToggle = projectTypeRule?.kind === 'projectTypeDaysFromLastFurnishing';
 
   const fieldClass = (field: keyof LienFormData) =>
     `block w-full px-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${errors[field] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-navy-600'}`;
@@ -211,8 +214,8 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
       )}
 
       <div className="space-y-4">
-        {/* Michigan project type */}
-        {isMichigan && (
+        {/* Project type — only shown for states whose deadline splits by residential/commercial */}
+        {showsProjectTypeToggle && (
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">Project Type <span className="text-red-500">*</span></label>
             <div className="grid grid-cols-2 gap-3">
@@ -220,7 +223,11 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
                 <label key={type} className={`flex items-center justify-between p-3 rounded-lg border-2 cursor-pointer transition-all ${formData.projectType === type ? 'border-navy-600 bg-navy-50' : 'border-slate-200 hover:border-slate-300'}`}>
                   <input type="radio" name="projectType" value={type} checked={formData.projectType === type} onChange={() => update('projectType', type)} className="sr-only" />
                   <span className="font-semibold text-slate-800 text-sm capitalize">{type}</span>
-                  <span className="text-xs text-slate-500">{type === 'residential' ? '90-day' : '180-day'}</span>
+                  <span className="text-xs text-slate-500">
+                    {type === 'residential'
+                      ? `${(projectTypeRule as { residentialDays: number }).residentialDays}-day`
+                      : `${(projectTypeRule as { commercialDays: number }).commercialDays}-day`}
+                  </span>
                 </label>
               ))}
             </div>

@@ -1,4 +1,6 @@
-// PDFGenerator.ts — Michigan-compliant lien bundle generator
+// PDFGenerator.ts — multi-state lien bundle generator
+
+import { STATE_LIEN_RULES, computeLienDeadline } from '../data/stateLienRules';
 
 export interface LienFormData {
   state: string;
@@ -27,47 +29,6 @@ export interface LienFormData {
   internalJobNumber?: string;
 }
 
-const STATE_CITATIONS: Record<string, string> = {
-  michigan: 'Pursuant to MCL 570.1101–570.1305 (Michigan Construction Lien Act, as amended 2023)',
-  california: 'Pursuant to California Civil Code §8000–9566 (SB 189, effective July 1, 2012)',
-  texas: 'Pursuant to Texas Property Code Chapter 53 (as amended by HB 2237, eff. Jan. 1, 2022)',
-  florida: 'Pursuant to Florida Statute §713.06',
-};
-
-const FILING_INSTRUCTIONS: Record<string, string> = {
-  michigan: `Michigan Construction Lien Filing Instructions
-
-1. NOTARIZATION REQUIRED: Michigan law (MCL 570.1107) requires the Claim of Lien to be verified under oath. Sign before a notary public before filing.
-2. LEGAL DESCRIPTION: A street address alone may not be sufficient. Include the full legal property description from county deed or assessor records.
-3. NOTICE OF FURNISHING: Subcontractors and suppliers must serve a Notice of Furnishing within 20 days of first furnishing (MCL 570.1109). See last page of this bundle.
-4. SWORN STATEMENT (GCs): General contractors may be required to provide a sworn statement listing all subcontractors and suppliers before receiving payment (MCL 570.1110).
-5. FILE WITH: Register of Deeds in the county where the property is located.
-6. DEADLINE: 90 days from last furnishing (residential) or 180 days (commercial).
-7. After recording, serve a copy on the property owner by certified mail or personal delivery.
-8. File an Affidavit of Service with the Register of Deeds after serving the owner.
-9. LAWSUIT DEADLINE: File suit to enforce the lien within 1 year of recording.`,
-
-  california: `California Mechanics Lien Filing Instructions
-
-1. A Preliminary Notice (20-Day Notice) must have been served within 20 days of first furnishing.
-2. Record the Claim of Mechanics Lien with the County Recorder's Office.
-3. After recording, serve the property owner within 20 days via certified mail.
-4. A mechanics lien expires 90 days from recording unless a lawsuit is filed to enforce it.`,
-
-  texas: `Texas Mechanic's Lien Filing Instructions
-
-1. File the Affidavit Claiming Mechanic's Lien with the County Clerk.
-2. Serve a copy on the property owner by certified mail within 5 days of filing.
-3. Monthly notices are required for subcontractors — see Texas Property Code Ch. 53.
-4. Liens expire 2 years from filing unless a lawsuit is brought.`,
-
-  florida: `Florida Construction Lien / Notice to Owner Filing Instructions
-
-1. A Notice to Owner (NTO) must be served on the property owner within 45 days of first furnishing.
-2. File the lien with the Clerk of the Circuit Court.
-3. After filing a lien, a lawsuit to enforce must be filed within 1 year.`,
-};
-
 const DEFAULT_FILING_INSTRUCTIONS = `General Mechanics Lien Filing Instructions
 
 1. File the completed Claim of Lien with the County Recorder, Register of Deeds, or Clerk of Court.
@@ -77,15 +38,16 @@ const DEFAULT_FILING_INSTRUCTIONS = `General Mechanics Lien Filing Instructions
 5. Consult a licensed construction attorney in your state for guidance.`;
 
 function getFilingInstructions(state: string): string {
-  return FILING_INSTRUCTIONS[state] || DEFAULT_FILING_INSTRUCTIONS;
+  return STATE_LIEN_RULES[state]?.filingInstructions || DEFAULT_FILING_INSTRUCTIONS;
 }
 
 function getStateCitation(state: string): string {
-  return STATE_CITATIONS[state] || 'Pursuant to applicable state construction lien statutes';
+  return STATE_LIEN_RULES[state]?.citation || 'Pursuant to applicable state construction lien statutes';
 }
 
 function getDocumentTitle(state: string, role: string): string {
-  if (state === 'florida' && role !== 'general-contractor') return 'NOTICE TO OWNER';
+  const rule = STATE_LIEN_RULES[state];
+  if (rule?.documentTitleForNonGC && role !== 'general-contractor') return rule.documentTitleForNonGC.toUpperCase();
   return 'CLAIM OF MECHANICS LIEN';
 }
 
@@ -123,22 +85,14 @@ function normaliseCounty(county: string): string {
 }
 
 function calculateDeadline(lastFurnishingDate: string, state: string, role: string, projectType?: string): string {
-  if (!lastFurnishingDate) return '';
-  const last = new Date(lastFurnishingDate);
-  if (isNaN(last.getTime())) return '';
-
-  if (state === 'texas') {
-    const d = new Date(last);
-    d.setMonth(d.getMonth() + (role === 'general-contractor' ? 4 : 3), 15);
-    return d.toISOString().split('T')[0];
-  }
-
-  let days = state === 'michigan' && projectType === 'commercial' ? 180 : 90;
-  if (state === 'florida') days = 45;
-
-  const deadline = new Date(last);
-  deadline.setDate(deadline.getDate() + days);
-  return deadline.toISOString().split('T')[0];
+  const rule = STATE_LIEN_RULES[state]?.deadlineRule;
+  if (!rule || !lastFurnishingDate) return '';
+  const deadline = computeLienDeadline(rule, {
+    lastFurnishingDate,
+    role,
+    projectType: projectType === 'commercial' ? 'commercial' : 'residential',
+  });
+  return deadline ? deadline.toISOString().split('T')[0] : '';
 }
 
 export async function generateLienBundle(data: LienFormData): Promise<Blob> {
@@ -155,13 +109,17 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const countyBase = normaliseCounty(data.county);
   const countyDisplay = `${countyBase} County`;
 
+  const stateRule = STATE_LIEN_RULES[data.state];
+
   const needsMichiganNoticeOfFurnishing =
     data.state === 'michigan' &&
-    ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(data.role);
+    !!stateRule?.needsPreliminaryNoticeBundleItem &&
+    (stateRule.pdfPreliminaryNoticeRoles ?? []).includes(data.role);
 
   const needsPreliminaryNotice =
     (data.state === 'california' || data.state === 'florida') &&
-    (data.role === 'subcontractor' || data.role === 'material-supplier');
+    !!stateRule?.needsPreliminaryNoticeBundleItem &&
+    (stateRule.pdfPreliminaryNoticeRoles ?? []).includes(data.role);
 
   const hasExtraPage = needsMichiganNoticeOfFurnishing || needsPreliminaryNotice || extras.includes('preliminary-notice');
   const totalPages = hasExtraPage ? 6 : 5;
@@ -354,7 +312,10 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addLabelValue('AMOUNT CLAIMED (Remaining Due)', `${remainingDue.toLocaleString('en-US', { minimumFractionDigits: 2 })}`);
   addLabelValue('First Furnishing Date', data.firstFurnishingDate);
   addLabelValue('Last Furnishing Date', data.lastFurnishingDate);
-  if (data.state === 'michigan') addLabelValue('Project Type', projectType === 'commercial' ? 'Commercial (180-day deadline)' : 'Residential (90-day deadline)');
+  if (stateRule?.deadlineRule.kind === 'projectTypeDaysFromLastFurnishing') {
+    const { residentialDays, commercialDays } = stateRule.deadlineRule;
+    addLabelValue('Project Type', projectType === 'commercial' ? `Commercial (${commercialDays}-day deadline)` : `Residential (${residentialDays}-day deadline)`);
+  }
 
   const workDesc = data.workDescription
     ? data.workDescription
@@ -431,7 +392,9 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   const deadlineDate = new Date(computedDeadline);
   const deadlineFmt = !isNaN(deadlineDate.getTime())
     ? deadlineDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    : 'Unable to calculate — verify your last furnishing date';
+    : stateRule?.deadlineCaveat
+      ? 'Cannot be auto-calculated for this state — see note below'
+      : 'Unable to calculate — verify your last furnishing date';
   addLine(deadlineFmt, 16, true, [30, 47, 110]);
 
   addSpacer(6);
@@ -440,18 +403,38 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...daysColor);
-  if (daysLeft < 0) doc.text(`WARNING: DEADLINE PASSED ${Math.abs(daysLeft)} DAYS AGO`, PAGE_WIDTH / 2, y, { align: 'center' });
-  else if (daysLeft === 0) doc.text('WARNING: YOUR DEADLINE IS TODAY', PAGE_WIDTH / 2, y, { align: 'center' });
-  else doc.text(`As of today, you have ${daysLeft} days remaining to file.`, PAGE_WIDTH / 2, y, { align: 'center' });
+  if (stateRule?.deadlineCaveat) {
+    doc.setTextColor(150, 80, 0);
+    doc.text('See note below — this deadline requires manual verification.', PAGE_WIDTH / 2, y, { align: 'center' });
+  } else if (daysLeft < 0) {
+    doc.text(`WARNING: DEADLINE PASSED ${Math.abs(daysLeft)} DAYS AGO`, PAGE_WIDTH / 2, y, { align: 'center' });
+  } else if (daysLeft === 0) {
+    doc.text('WARNING: YOUR DEADLINE IS TODAY', PAGE_WIDTH / 2, y, { align: 'center' });
+  } else {
+    doc.text(`As of today, you have ${daysLeft} days remaining to file.`, PAGE_WIDTH / 2, y, { align: 'center' });
+  }
   y += 10;
 
-  if (data.state === 'michigan') {
+  if (stateRule?.deadlineRule.kind === 'projectTypeDaysFromLastFurnishing') {
+    const { residentialDays, commercialDays } = stateRule.deadlineRule;
+    const days = projectType === 'commercial' ? commercialDays : residentialDays;
     addSpacer(4);
     doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(30, 47, 110);
-    doc.text(`Michigan ${toTitleCase(projectType)} project: ${projectType === 'commercial' ? '180' : '90'}-day statutory deadline from last furnishing.`, PAGE_WIDTH / 2, y, { align: 'center' });
+    doc.text(`${stateRule.label} ${toTitleCase(projectType)} project: ${days}-day statutory deadline from last furnishing.`, PAGE_WIDTH / 2, y, { align: 'center' });
     y += 8;
+    doc.setTextColor(30, 30, 30);
+  }
+
+  if (stateRule?.deadlineCaveat) {
+    addSpacer(4);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(120, 90, 0);
+    const caveatLines = doc.splitTextToSize(stateRule.deadlineCaveat, CONTENT_WIDTH);
+    doc.text(caveatLines, PAGE_WIDTH / 2, y, { align: 'center', maxWidth: CONTENT_WIDTH });
+    y += caveatLines.length * 5 + 6;
     doc.setTextColor(30, 30, 30);
   }
 
@@ -516,11 +499,11 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   addSpacer(3);
   [
     data.state === 'michigan' ? '[ ]  Notarized Claim of Lien (sign before a notary BEFORE filing)' : '[ ]  Original signed Claim of Lien (this document)',
-    '[ ]  Notice of Furnishing (subcontractors/suppliers — see last page)',
+    hasExtraPage ? `[ ]  ${stateRule?.preliminaryNoticeLabel ?? 'Preliminary notice'} (see last page)` : null,
     '[ ]  Photo ID (in some counties)',
     '[ ]  Recording fee',
     '[ ]  Self-addressed stamped envelope (for return of recorded document)',
-  ].forEach((d) => { addLine(d, 9, false, [50, 50, 50]); addSpacer(3); });
+  ].filter((d): d is string => !!d).forEach((d) => { addLine(d, 9, false, [50, 50, 50]); addSpacer(3); });
 
   addPageNumber(3, totalPages);
 

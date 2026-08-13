@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import FormStepper from './FormStepper';
 import DownloadButton from './DownloadButton';
+import { STATE_LIEN_RULES, computeLienDeadline } from '../data/stateLienRules';
 
 interface LienFormAppProps {
   defaultState: string;
@@ -35,29 +36,21 @@ function PreviewPanel({ formData }: { formData: any }) {
 
   const countyDisplay = `${normaliseCounty(formData.county)} County`;
 
-  const STATE_LABELS: Record<string, string> = { michigan: 'Michigan', california: 'California', texas: 'Texas', florida: 'Florida' };
   const ROLE_LABELS: Record<string, string> = {
     'general-contractor': 'General Contractor', 'subcontractor': 'Subcontractor',
     'sub-subcontractor': 'Sub-Subcontractor', 'material-supplier': 'Material Supplier',
     'equipment-rental': 'Equipment Rental',
   };
 
+  const stateRule = STATE_LIEN_RULES[formData.state];
   const projectType = formData.projectType ?? 'residential';
-  const computeDeadline = () => {
-    const last = new Date(formData.lastFurnishingDate);
-    if (isNaN(last.getTime())) return null;
-    if (formData.state === 'texas') {
-      const d = new Date(last);
-      d.setMonth(d.getMonth() + (formData.role === 'general-contractor' ? 4 : 3), 15);
-      return d;
-    }
-    let days = formData.state === 'michigan' && projectType === 'commercial' ? 180 : 90;
-    if (formData.state === 'florida') days = 45;
-    const d = new Date(last);
-    d.setDate(d.getDate() + days);
-    return d;
-  };
-  const deadline = computeDeadline();
+  const deadline = stateRule
+    ? computeLienDeadline(stateRule.deadlineRule, {
+        lastFurnishingDate: formData.lastFurnishingDate,
+        role: formData.role,
+        projectType,
+      })
+    : null;
   const daysLeft = deadline
     ? Math.ceil((deadline.getTime() - new Date().setHours(0, 0, 0, 0)) / 86400000)
     : null;
@@ -66,16 +59,17 @@ function PreviewPanel({ formData }: { formData: any }) {
   const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role);
   const hasLegalDesc = !!formData.legalDescription?.trim();
 
+  const showsPreliminaryNoticeBundleItem =
+    !!stateRule?.needsPreliminaryNoticeBundleItem &&
+    (stateRule.previewPreliminaryNoticeRoles ?? []).includes(formData.role);
+
   const bundleItems = [
     'Mechanics Lien Claim + Notarization',
     'Deadline Confirmation',
     'County Filing Instructions',
     'Proof of Service Affidavit',
     'Lien Release Form',
-    isMichigan && isSubOrSupplier ? 'Notice of Furnishing (MCL 570.1109)' : null,
-    !isMichigan && (formData.state === 'california' || formData.state === 'florida') && isSubOrSupplier
-      ? (formData.state === 'california' ? '20-Day Preliminary Notice' : 'Notice to Owner')
-      : null,
+    showsPreliminaryNoticeBundleItem ? stateRule!.preliminaryNoticeLabel ?? null : null,
   ].filter(Boolean);
 
   // Readiness checklist
@@ -84,7 +78,9 @@ function PreviewPanel({ formData }: { formData: any }) {
     { label: 'Owner info', ok: !!formData.ownerName },
     { label: 'Property address', ok: !!formData.propertyAddress },
     { label: 'Legal description', ok: hasLegalDesc, warn: !hasLegalDesc && isMichigan },
-    { label: 'Deadline calculated', ok: !!deadline },
+    stateRule?.deadlineCaveat
+      ? { label: 'Last furnishing date entered', ok: !isNaN(new Date(formData.lastFurnishingDate).getTime()) }
+      : { label: 'Deadline calculated', ok: !!deadline },
     { label: 'Amount entered', ok: !!formData.contractAmount },
   ];
 
@@ -93,10 +89,10 @@ function PreviewPanel({ formData }: { formData: any }) {
       <div className="rounded-t-xl p-4 text-white text-center" style={{ backgroundColor: '#1e2f6e' }}>
         <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Document Preview</p>
         <h3 className="text-lg font-bold">
-          {formData.state === 'florida' && formData.role !== 'general-contractor' ? 'Notice to Owner' : 'Claim of Mechanics Lien'}
+          {stateRule?.documentTitleForNonGC && formData.role !== 'general-contractor' ? stateRule.documentTitleForNonGC : 'Claim of Mechanics Lien'}
         </h3>
-        <p className="text-sm opacity-80">{STATE_LABELS[formData.state] || toTitleCase(formData.state)} — {countyDisplay}</p>
-        <p className="text-xs opacity-60 mt-1">MCL 570.1101–570.1305</p>
+        <p className="text-sm opacity-80">{stateRule?.label || toTitleCase(formData.state)} — {countyDisplay}</p>
+        <p className="text-xs opacity-60 mt-1">{stateRule?.citation ?? ''}</p>
       </div>
 
       <div className="flex-1 bg-white border border-t-0 border-slate-200 rounded-b-xl overflow-y-auto p-5 space-y-4">
@@ -110,6 +106,13 @@ function PreviewPanel({ formData }: { formData: any }) {
           </div>
         )}
 
+        {/* Deadline caveat (states where the countdown can't be safely computed, e.g. Arizona) */}
+        {!deadline && stateRule?.deadlineCaveat && (
+          <div className="rounded-lg px-4 py-3 text-center text-xs sm:text-sm bg-slate-100 text-slate-600 border border-slate-200">
+            ℹ️ {stateRule.deadlineCaveat}
+          </div>
+        )}
+
         {/* Fields */}
         <div className="space-y-1">
           <Row label="Claimant" value={formData.claimantName} />
@@ -120,7 +123,14 @@ function PreviewPanel({ formData }: { formData: any }) {
           <Row label="Property" value={formData.propertyAddress} />
           <Row label="Legal Description" value={hasLegalDesc ? '✓ Provided' : isMichigan ? '⚠ Not entered' : 'Not entered'} warn={!hasLegalDesc && isMichigan} />
           <Row label="County" value={countyDisplay} />
-          {isMichigan && <Row label="Project Type" value={`${toTitleCase(projectType)} (${projectType === 'commercial' ? '180' : '90'}-day deadline)`} />}
+          {stateRule?.deadlineRule.kind === 'projectTypeDaysFromLastFurnishing' && (
+            <Row
+              label="Project Type"
+              value={`${toTitleCase(projectType)} (${
+                projectType === 'commercial' ? stateRule.deadlineRule.commercialDays : stateRule.deadlineRule.residentialDays
+              }-day deadline)`}
+            />
+          )}
           <Row label="Amount Claimed" value={formatCurrency(formData.contractAmount)} highlight />
           <Row label="Last Furnishing" value={formData.lastFurnishingDate} />
         </div>
