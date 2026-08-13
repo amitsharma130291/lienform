@@ -21,7 +21,7 @@ const faqSchema = {
       "name": "How much does MechanicsLienForm cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MechanicsLienForm is $24.99 per document bundle. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at $24.99 per document bundle."
+        "text": "MechanicsLienForm is $24.99 per document bundle, which includes the lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form."
       }
     },
     {
@@ -37,7 +37,7 @@ const faqSchema = {
       "name": "Is MechanicsLienForm accurate for my state's current law?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. MechanicsLienForm uses current statutory citations: California Civil Code §8000–9566 (SB 189, 2019), Texas Property Code Ch. 53 (HB 2237, 2022), Michigan MCL 570.1101 (2023 amendments), and Florida Statute §713. We do not use outdated templates."
+        "text": "Yes. MechanicsLienForm uses current statutory citations for each supported state, including California Civil Code §8000–9566 (SB 189, 2019), Texas Property Code Ch. 53 (HB 2237, 2022), Michigan MCL 570.1101 (2023 amendments), Florida Statute §713, Arizona A.R.S. §33-993, Georgia O.C.G.A. §44-14-361.1, Ohio Rev. Code §1311.06, and Washington RCW 60.04.091. We do not use outdated templates."
       }
     },
     {
@@ -53,7 +53,7 @@ const faqSchema = {
       "name": "What states does MechanicsLienForm cover?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MechanicsLienForm currently generates forms for Michigan, California, Texas, and Florida (Notice to Owner). Additional states are being added weekly."
+        "text": "MechanicsLienForm currently generates forms for Michigan, California, Texas, Arizona, Georgia, Ohio, Washington, and Florida (Notice to Owner). Additional states are being added on an ongoing basis."
       }
     }
   ]
@@ -83,7 +83,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
         <ul class="space-y-3 mb-8">
           <li class="flex items-start gap-3">
             <span class="text-green-400 mt-0.5 text-lg font-bold shrink-0">✓</span>
-            <span class="text-blue-100"><strong class="text-white">Role-aware deadlines.</strong> The system knows whether your deadline is 30, 45, 90, or 180 days based on your role and state.</span>
+            <span class="text-blue-100"><strong class="text-white">Role-aware deadlines.</strong> Deadlines range from 30 to 180 days depending on your state, role, and project type — the calculator applies the right one automatically.</span>
           </li>
           <li class="flex items-start gap-3">
             <span class="text-green-400 mt-0.5 text-lg font-bold shrink-0">✓</span>
@@ -116,9 +116,9 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
   <section class="bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-medium text-slate-600">
-        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Instant Download</span>
-        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> No account required</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Instant download</span>
+        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> No account required</span>
+        <span class="flex items-center gap-2"><span class="text-green-500">✓</span> 8 states supported</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Current statutory citations</span>
         <span class="flex items-center gap-2"><span class="text-green-500">✓</span> Role-aware deadlines</span>
       </div>
@@ -132,7 +132,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
       <div class="text-center">
         <div class="w-14 h-14 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4" style="background-color:#1e2f6e;">1</div>
         <h3 class="text-lg font-semibold mb-2" style="color:#1e2f6e;">Pick your state and role</h3>
-        <p class="text-slate-600 text-sm">Choose your state from Michigan, California, Texas, or Florida. Select your role: GC, subcontractor, or supplier. LienForm loads the correct statutory framework automatically.</p>
+        <p class="text-slate-600 text-sm">Choose your state — Michigan, California, Texas, Arizona, Georgia, Ohio, Washington, or Florida — and your role: GC, subcontractor, or supplier. Each state's statute, deadline rule, and filing instructions are built in.</p>
       </div>
       <div class="text-center">
         <div class="w-14 h-14 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4" style="background-color:#1e2f6e;">2</div>
@@ -142,7 +142,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
       <div class="text-center">
         <div class="w-14 h-14 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4" style="background-color:#1e2f6e;">3</div>
         <h3 class="text-lg font-semibold mb-2" style="color:#1e2f6e;">Download your PDF bundle</h3>
-        <p class="text-slate-600 text-sm">Review your completed documents and download your 6-page PDF bundle instantly — instant download after payment. Print and file with the county recorder the same day.</p>
+        <p class="text-slate-600 text-sm">Review your completed documents, then download your PDF bundle immediately after payment. Print and file with the county recorder the same day.</p>
       </div>
     </div>
   </section>
@@ -196,6 +196,50 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <a href="/mechanics-lien/texas/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
           </div>
         </div>
+
+        <!-- Arizona -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg mb-1" style="color:#1e2f6e;">Arizona</h3>
+          <p class="text-xs text-slate-500 mb-2">A.R.S. § 33-993</p>
+          <p class="text-sm text-slate-600 mb-4">20-day preliminary notice, then 120 days after completion (or 60 days after a Notice of Completion).</p>
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
+            <a href="/mechanics-lien/arizona/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
+          </div>
+        </div>
+
+        <!-- Georgia -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg mb-1" style="color:#1e2f6e;">Georgia</h3>
+          <p class="text-xs text-slate-500 mb-2">O.C.G.A. § 44-14-361.1</p>
+          <p class="text-sm text-slate-600 mb-4">90-day recording deadline, with required delivery to the owner within 2 business days.</p>
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
+            <a href="/mechanics-lien/georgia/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
+          </div>
+        </div>
+
+        <!-- Ohio -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg mb-1" style="color:#1e2f6e;">Ohio</h3>
+          <p class="text-xs text-slate-500 mb-2">Ohio Rev. Code § 1311.06</p>
+          <p class="text-sm text-slate-600 mb-4">60-day deadline for qualifying residential property, 75 days for other private improvements.</p>
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
+            <a href="/mechanics-lien/ohio/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
+          </div>
+        </div>
+
+        <!-- Washington -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg mb-1" style="color:#1e2f6e;">Washington</h3>
+          <p class="text-xs text-slate-500 mb-2">RCW 60.04.091</p>
+          <p class="text-sm text-slate-600 mb-4">90-day recording deadline, then 14 days to give the owner a copy of the recorded claim.</p>
+          <div class="flex items-center justify-between">
+            <span class="text-lg font-bold" style="color:#1e2f6e;">$24.99</span>
+            <a href="/mechanics-lien/washington/" class="text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors" style="background-color:#1e4bc2;">Generate →</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -226,6 +270,10 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
         <h3 class="font-semibold text-navy-800 mb-1 group-hover:text-navy-600">Notice of Intent to Lien</h3>
         <p class="text-sm text-slate-500">Often gets you paid without filing a lien</p>
       </a>
+      <a href="/mechanics-lien/form/" class="block bg-white border border-slate-200 rounded-xl p-4 hover:border-navy-400 hover:shadow-sm transition-all group">
+        <h3 class="font-semibold text-navy-800 mb-1 group-hover:text-navy-600">Mechanics Lien Form Guide</h3>
+        <p class="text-sm text-slate-500">How to fill out and file the form correctly</p>
+      </a>
       <a href="/mechanics-lien/" class="block bg-white border border-slate-200 rounded-xl p-4 hover:border-navy-400 hover:shadow-sm transition-all group">
         <h3 class="font-semibold text-navy-800 mb-1 group-hover:text-navy-600">All States →</h3>
         <p class="text-sm text-slate-500">Mechanics lien forms for all 50 states</p>
@@ -244,7 +292,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
-            MechanicsLienForm charges $24.99 per document bundle. Download your complete lien bundle — lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form — at $24.99 per document bundle.
+            MechanicsLienForm charges $24.99 per document bundle. That includes the lien claim, deadline confirmation, county recorder filing guide, proof of service affidavit, and lien release form.
           </div>
         </details>
 
@@ -264,7 +312,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
-            Yes. MechanicsLienForm uses current statutory citations: California Civil Code §8000–9566 (SB 189, 2019), Texas Property Code Ch. 53 (HB 2237, 2022), Michigan MCL 570.1101 (2023 amendments), and Florida Statute §713. We do not use outdated templates.
+            Yes. MechanicsLienForm uses current statutory citations for each supported state, including California Civil Code §8000–9566 (SB 189, 2019), Texas Property Code Ch. 53 (HB 2237, 2022), Michigan MCL 570.1101 (2023 amendments), Florida Statute §713, Arizona A.R.S. §33-993, Georgia O.C.G.A. §44-14-361.1, Ohio Rev. Code §1311.06, and Washington RCW 60.04.091. We do not use outdated templates.
           </div>
         </details>
 
@@ -284,7 +332,7 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <span class="text-slate-400 ml-4 shrink-0 group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div class="px-5 pb-5 text-slate-700 text-sm leading-relaxed">
-            MechanicsLienForm currently generates forms for Michigan, California, Texas, and Florida (Notice to Owner). Additional states are being added weekly.
+            MechanicsLienForm currently generates forms for Michigan, California, Texas, Arizona, Georgia, Ohio, Washington, and Florida (Notice to Owner). Additional states are being added on an ongoing basis.
           </div>
         </details>
       </div>
@@ -301,6 +349,10 @@ const schema = JSON.stringify([websiteSchema, faqSchema]);
             <li><a href="/mechanics-lien/michigan/" class="text-blue-200 hover:text-white transition-colors">Michigan Mechanics Lien</a></li>
             <li><a href="/mechanics-lien/california/" class="text-blue-200 hover:text-white transition-colors">California Mechanics Lien</a></li>
             <li><a href="/mechanics-lien/texas/" class="text-blue-200 hover:text-white transition-colors">Texas Mechanics Lien</a></li>
+            <li><a href="/mechanics-lien/arizona/" class="text-blue-200 hover:text-white transition-colors">Arizona Mechanics Lien</a></li>
+            <li><a href="/mechanics-lien/georgia/" class="text-blue-200 hover:text-white transition-colors">Georgia Mechanics Lien</a></li>
+            <li><a href="/mechanics-lien/ohio/" class="text-blue-200 hover:text-white transition-colors">Ohio Mechanics Lien</a></li>
+            <li><a href="/mechanics-lien/washington/" class="text-blue-200 hover:text-white transition-colors">Washington Mechanics Lien</a></li>
             <li><a href="/notice-to-owner/florida/" class="text-blue-200 hover:text-white transition-colors">Florida Notice to Owner</a></li>
           </ul>
         </div>
