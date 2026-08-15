@@ -922,10 +922,13 @@ export async function generateLienBundle(data: LienFormData): Promise<Blob> {
   beforeSubmission.forEach(([title, desc], i) => addNumberedStep(i + 1, title, desc));
 
   if (stateRule?.recordingFormat) {
+    // Only list checks that depend on what the customer actually entered. The 2.5"
+    // top margin, 10-point recordable text, and printed-name-beneath-signature layout
+    // are all guaranteed unconditionally by this generator (RECORDING_TOP_MARGIN_MM,
+    // fz(), and addSignatureLine) — asking the customer to "verify" something they
+    // have no control over and can't get wrong is just noise, not a real check.
     addSectionBand('Format Check');
     [
-      `First recording page retains at least ${stateRule.recordingFormat.topMarginInches} inches of blank top margin.`,
-      'Recordable text is at least 10-point; names are printed beneath signatures.',
       "Actual drafter's name and business address appear on the instrument.",
       'Complete legal description is included; a street address or tax/parcel summary alone is not enough.',
     ].forEach((item) => addCheckboxOption(item));
