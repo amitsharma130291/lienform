@@ -30,7 +30,7 @@ const faqSchema = {
       "name": "What is the deadline to file a California mechanics lien?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "90 days after the completion of the work of improvement, or 90 days after cessation of labor if the project was not completed. For direct contractors, the 90-day period begins when the owner records a Notice of Completion or 60 days after completion if no notice is recorded."
+        "text": "It depends on your role and whether the owner recorded a Notice of Completion or Cessation — it does not run from your own last day of work. Direct contractors get the earlier of 90 days after completion of the whole project, or 60 days after a properly served Notice of Completion. Subcontractors and suppliers get 90 days after completion by default, shortened to 30 days after a properly served Notice of Completion. Because this depends on project-level completion and Notice of Completion status rather than your own furnishing date, verify the exact date against county records or with an attorney."
       }
     },
     {
@@ -46,7 +46,7 @@ const faqSchema = {
       "name": "Do I need to serve the owner after recording a California mechanics lien?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Under Civ. Code §8416, you must serve a copy of the recorded lien on the owner within 15 days of recording. Failure to serve can invalidate the lien."
+        "text": "Yes. Under Civ. Code §8416, you must serve a copy of the claim of mechanics lien on the owner (or, if the owner cannot be served, the construction lender or original contractor) no later than the time you record it — not a fixed number of days afterward. Service may be personal, or by registered, certified, or first-class mail with a certificate of mailing. Failure to serve as required makes the lien unenforceable."
       }
     },
     {
@@ -73,7 +73,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Calculate your deadline",
-      "text": "Use the role-aware deadline calculator. For subcontractors: 30 days from Notice of Completion, or 90 days from actual completion if none was recorded."
+      "text": "California's deadline runs from project completion or a recorded Notice of Completion, not your last-furnishing date — the tool flags this and walks you through the direct-contractor and subcontractor/supplier rules instead of showing an automatic countdown."
     },
     {
       "@type": "HowToStep",
@@ -193,7 +193,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
           <tr><td>§8300–8320</td><td>Completion of work of improvement</td></tr>
           <tr><td>§8400–8424</td><td>Mechanics lien claims</td></tr>
           <tr><td>§8410–8414</td><td>Claim of lien form requirements</td></tr>
-          <tr><td>§8416</td><td>Service of lien on owner (15-day post-recording requirement)</td></tr>
+          <tr><td>§8416</td><td>Claim of lien form and service on owner (no later than the time of recording — not a fixed post-recording window)</td></tr>
           <tr><td>§8460–8470</td><td>Enforcement (foreclosure)</td></tr>
           <tr><td>§8480–8494</td><td>Release, expiration, and discharge</td></tr>
         </tbody>
@@ -264,7 +264,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <li>Recording of a Notice of Cessation after a 30-day labor cessation</li>
       </ol>
 
-      <p><strong>LienForm's deadline calculator</strong> accounts for whether a Notice of Completion was recorded and whether you are a direct contractor or subcontractor.</p>
+      <p><strong>This deadline can't be safely auto-calculated from a last-furnishing date alone</strong> — it depends on project completion and Notice of Completion status, which LienForm doesn't ask you for. Instead of a countdown, your California bundle shows the applicable rules above and a place to enter the verified deadline yourself once you've confirmed it against county records.</p>
 
       <h2>How to Record in California</h2>
 
@@ -285,11 +285,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p><strong>The "Notice of Mechanic's Lien" warning:</strong> California law requires that every recorded lien include a statutory warning block at the top of the document advising the owner of the lien and the 90-day foreclosure deadline. Civ. Code §8416 specifies the exact language. LienForm generates this warning automatically.</p>
 
-      <p><strong>After recording — the 15-day service requirement (Civ. Code §8416):</strong></p>
+      <p><strong>Serving the owner — no later than the time of recording (Civ. Code §8416):</strong></p>
 
-      <p>This is one of the most commonly missed steps. After you record the lien with the county recorder, you must <strong>serve a copy of the recorded lien on the owner within 15 days of recording</strong>. Service may be made by certified mail, registered mail, or personal delivery.</p>
+      <p>This is one of the most commonly missed steps, and it is easy to get backwards: California does not give you a window of days <em>after</em> recording to serve the owner. You must serve a copy of the claim of mechanics lien on the owner — or, if the owner cannot be served, the construction lender or original contractor — <strong>no later than the time you record it</strong>. Service may be personal, or by registered mail, certified mail, or first-class mail accompanied by a certificate of mailing.</p>
 
-      <p>If you fail to serve the recorded lien on the owner within 15 days, the lien may be unenforceable. Keep a record of when and how you served it.</p>
+      <p>If you fail to serve as required, the claim of mechanics lien is unenforceable as a matter of law. Keep a record of when and how you served it, and don't wait until after recording to do it.</p>
 
       <h2>LienForm California Bundle — What's Included</h2>
 
@@ -298,9 +298,9 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <ul>
         <li><strong>Claim of Lien</strong> (Civ. Code §8410 compliant, with required statutory warning)</li>
         <li><strong>20-day Preliminary Notice</strong> (§8200) — auto-included for non-owner-contract claimants</li>
-        <li><strong>Deadline confirmation</strong> with days remaining</li>
+        <li><strong>Deadline confirmation</strong> covering the direct-contractor and subcontractor/supplier rules (California's deadline depends on project completion and Notice of Completion status, so this isn't an automatic countdown)</li>
         <li><strong>County recorder filing instructions</strong> for your specific county</li>
-        <li><strong>Proof of service affidavit</strong> for the post-recording owner service (§8416)</li>
+        <li><strong>Proof of service affidavit</strong> for serving the owner no later than recording (§8416)</li>
         <li><strong>Lien release form</strong></li>
       </ul>
 

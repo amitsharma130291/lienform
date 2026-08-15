@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { STATE_LIEN_RULES } from '../data/stateLienRules';
+import { STATE_LIEN_RULES, parseLocalDate, computeLienDeadline, daysBetween } from '../data/stateLienRules';
+
+/** Parse a currency-ish string ("$1,200.50") to a number; non-numeric input reads as 0. */
+function toNumber(value: string | undefined): number {
+  const n = parseFloat(String(value ?? '').replace(/[,$\s]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
 
 export type UserRole =
   | 'general-contractor'
@@ -22,6 +28,7 @@ export interface LienFormData {
   contractDate: string;
   referenceNumber: string;
   county: string;
+  parcelNumber: string;
   gcName: string;
   hiringParty: string;
   projectType: 'residential' | 'commercial';
@@ -31,6 +38,8 @@ export interface LienFormData {
   amountPaid: string;
   projectCompletionDate: string;
   internalJobNumber: string;
+  preparedByName: string;
+  preparedByAddress: string;
 }
 
 export interface FormStepperProps {
@@ -39,33 +48,16 @@ export interface FormStepperProps {
   onFormComplete: (data: LienFormData) => void;
 }
 
-const US_STATES = [
-  { value: 'alabama', label: 'Alabama' }, { value: 'alaska', label: 'Alaska' },
-  { value: 'arizona', label: 'Arizona' }, { value: 'arkansas', label: 'Arkansas' },
-  { value: 'california', label: 'California' }, { value: 'colorado', label: 'Colorado' },
-  { value: 'connecticut', label: 'Connecticut' }, { value: 'delaware', label: 'Delaware' },
-  { value: 'florida', label: 'Florida' }, { value: 'georgia', label: 'Georgia' },
-  { value: 'hawaii', label: 'Hawaii' }, { value: 'idaho', label: 'Idaho' },
-  { value: 'illinois', label: 'Illinois' }, { value: 'indiana', label: 'Indiana' },
-  { value: 'iowa', label: 'Iowa' }, { value: 'kansas', label: 'Kansas' },
-  { value: 'kentucky', label: 'Kentucky' }, { value: 'louisiana', label: 'Louisiana' },
-  { value: 'maine', label: 'Maine' }, { value: 'maryland', label: 'Maryland' },
-  { value: 'massachusetts', label: 'Massachusetts' }, { value: 'michigan', label: 'Michigan' },
-  { value: 'minnesota', label: 'Minnesota' }, { value: 'mississippi', label: 'Mississippi' },
-  { value: 'missouri', label: 'Missouri' }, { value: 'montana', label: 'Montana' },
-  { value: 'nebraska', label: 'Nebraska' }, { value: 'nevada', label: 'Nevada' },
-  { value: 'new-hampshire', label: 'New Hampshire' }, { value: 'new-jersey', label: 'New Jersey' },
-  { value: 'new-mexico', label: 'New Mexico' }, { value: 'new-york', label: 'New York' },
-  { value: 'north-carolina', label: 'North Carolina' }, { value: 'north-dakota', label: 'North Dakota' },
-  { value: 'ohio', label: 'Ohio' }, { value: 'oklahoma', label: 'Oklahoma' },
-  { value: 'oregon', label: 'Oregon' }, { value: 'pennsylvania', label: 'Pennsylvania' },
-  { value: 'rhode-island', label: 'Rhode Island' }, { value: 'south-carolina', label: 'South Carolina' },
-  { value: 'south-dakota', label: 'South Dakota' }, { value: 'tennessee', label: 'Tennessee' },
-  { value: 'texas', label: 'Texas' }, { value: 'utah', label: 'Utah' },
-  { value: 'vermont', label: 'Vermont' }, { value: 'virginia', label: 'Virginia' },
-  { value: 'washington', label: 'Washington' }, { value: 'west-virginia', label: 'West Virginia' },
-  { value: 'wisconsin', label: 'Wisconsin' }, { value: 'wyoming', label: 'Wyoming' },
-];
+/**
+ * Only states with a real STATE_LIEN_RULES entry are offered. Selecting a state with
+ * no rule silently defaulted to nothing (blank deadline, generic instructions, no
+ * legal citations) while looking identical to a supported state in the UI — this
+ * list is derived from the rules data itself so it can never drift ahead of what the
+ * deadline math and PDF generator actually support.
+ */
+const US_STATES = Object.entries(STATE_LIEN_RULES)
+  .map(([value, rule]) => ({ value, label: rule.label }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 
 const ROLES: { value: UserRole; label: string; icon: string; description: string }[] = [
   { value: 'general-contractor', label: 'General Contractor', icon: '🏗️', description: 'You have a direct contract with the property owner.' },
@@ -103,10 +95,12 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     claimantName: '', claimantAddress: '', email: '',
     ownerName: '', ownerAddress: '',
     propertyAddress: '', legalDescription: '', workDescription: '', contractDate: '', referenceNumber: '', county: '',
+    parcelNumber: '',
     gcName: '', hiringParty: '',
     projectType: 'residential',
     contractAmount: '', firstFurnishingDate: '', lastFurnishingDate: '',
     amountPaid: '', projectCompletionDate: '', internalJobNumber: '',
+    preparedByName: '', preparedByAddress: '',
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof LienFormData, string>>>({});
@@ -128,6 +122,48 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     if (!formData.lastFurnishingDate?.trim()) e.lastFurnishingDate = 'Required.';
     if (!formData.email?.trim()) e.email = 'Required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Invalid email.';
+
+    // These two are labelled required and carry a `required` attribute, but the markup
+    // has no <form> wrapper and submits via a type="button" handler, so native
+    // validation never fired and both could reach the PDF blank. A claim of lien with
+    // no legal description or no statement of what was furnished is not recordable.
+    if (!formData.legalDescription?.trim()) e.legalDescription = 'Required — a street address alone is not sufficient to record a lien.';
+    if (!formData.workDescription?.trim()) e.workDescription = 'Required — describe the labor, materials, or equipment you furnished.';
+
+    // A claim of lien must name the party the claimant contracted with. A general
+    // contractor contracts with the owner, so only ask everyone else.
+    if (isSubOrSupplier && !formData.hiringParty?.trim()) {
+      e.hiringParty = 'Required — your lien must name the party you contracted with.';
+    }
+
+    // Date ordering. Wrong-way dates silently produce a wrong filing deadline, which
+    // is the single most expensive error this tool can make.
+    const first = parseLocalDate(formData.firstFurnishingDate || '');
+    const last = parseLocalDate(formData.lastFurnishingDate || '');
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    if (first && last && first.getTime() > last.getTime()) {
+      e.lastFurnishingDate = 'Last furnishing cannot be before first furnishing.';
+    }
+    if (first && first.getTime() > todayEnd.getTime()) {
+      e.firstFurnishingDate = 'First furnishing date cannot be in the future.';
+    }
+    if (last && last.getTime() > todayEnd.getTime()) {
+      e.lastFurnishingDate = 'Last furnishing date cannot be in the future.';
+    }
+    if (formData.firstFurnishingDate?.trim() && !first) e.firstFurnishingDate = 'Enter a valid date.';
+    if (formData.lastFurnishingDate?.trim() && !last) e.lastFurnishingDate = 'Enter a valid date.';
+
+    const contract = parseLocalDate(formData.contractDate || '');
+    if (contract && first && contract.getTime() > first.getTime()) {
+      e.contractDate = 'Contract date is after your first furnishing date — check both.';
+    }
+
+    if (toNumber(formData.amountPaid) > toNumber(formData.contractAmount)) {
+      e.amountPaid = 'Amount paid cannot exceed the contract amount.';
+    }
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -138,11 +174,60 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     onFormComplete(formData as LienFormData);
   };
 
-  const isMichigan = formData.state === 'michigan';
+  const stateRule = STATE_LIEN_RULES[formData.state || ''];
+  const stateLabel = stateRule?.label ?? formData.state ?? '';
   const isGC = formData.role === 'general-contractor';
   const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role || '');
-  const projectTypeRule = STATE_LIEN_RULES[formData.state || '']?.deadlineRule;
-  const showsProjectTypeToggle = projectTypeRule?.kind === 'projectTypeDaysFromLastFurnishing';
+  const projectTypeRule = stateRule?.deadlineRule;
+  // Texas's "15th day of the Nth month" rule is also keyed by project type (Prop. Code
+  // §53.052: 3 months residential, 4 months commercial) for both GCs and subs — not
+  // shown before this fix, which meant Texas customers were never asked and got the
+  // wrong month count for their actual project type roughly half the time.
+  const showsProjectTypeToggle =
+    projectTypeRule?.kind === 'projectTypeDaysFromLastFurnishing' || projectTypeRule?.kind === 'texasMonthDay15';
+
+  /**
+   * Non-blocking warnings. These describe situations that are legitimate but that an
+   * owner contesting the lien will probe, so the claimant should see them before
+   * paying rather than discovering them in the finished PDF. Declared after the
+   * role/state flags above because this runs during render and would otherwise hit
+   * their temporal dead zone.
+   */
+  const advisories: string[] = (() => {
+    const out: string[] = [];
+    const completion = parseLocalDate(formData.projectCompletionDate || '');
+    const last = parseLocalDate(formData.lastFurnishingDate || '');
+    if (completion && last && completion.getTime() < last.getTime()) {
+      out.push(
+        `You listed project completion (${completion.toLocaleDateString('en-US')}) as earlier than last furnishing (${last.toLocaleDateString('en-US')}). Your deadline runs from LAST FURNISHING — be ready to document what was furnished on the later date. Routine warranty or repair work generally does not restart the deadline.`
+      );
+    }
+    if (stateRule?.residentialWrittenContractWarning && isGC && formData.projectType === 'residential') {
+      out.push(stateRule.residentialWrittenContractWarning.text);
+    }
+    // Catch an about-to-lapse or already-lapsed deadline here, before the customer pays
+    // and downloads — the PDF itself flags a passed deadline, but by then it's too late
+    // to act on the warning.
+    const deadlineRule = stateRule?.deadlineRule;
+    const deadline = deadlineRule ? computeLienDeadline(deadlineRule, {
+      lastFurnishingDate: formData.lastFurnishingDate || '',
+      role: formData.role || '',
+      projectType: formData.projectType === 'commercial' ? 'commercial' : 'residential',
+    }) : null;
+    if (deadline) {
+      const daysLeft = daysBetween(new Date(), deadline);
+      if (daysLeft < 0) {
+        out.push(
+          `Your calculated recording deadline (${deadline.toLocaleDateString('en-US')}) has already passed. Recording after the statutory deadline generally cannot create a valid lien — get legal advice before filing.`
+        );
+      } else if (daysLeft <= 7) {
+        out.push(
+          `Your calculated recording deadline (${deadline.toLocaleDateString('en-US')}) is only ${daysLeft} day${daysLeft === 1 ? '' : 's'} away. Record as soon as possible — mail delays or office closures could cost you the lien with no time left to correct it.`
+        );
+      }
+    }
+    return out;
+  })();
 
   const fieldClass = (field: keyof LienFormData) =>
     `block w-full px-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${errors[field] ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-navy-600'}`;
@@ -199,17 +284,20 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
       <h2 className="text-xl font-semibold text-slate-900 mb-2">Project details</h2>
       <p className="text-slate-500 text-sm mb-5">This information will be filled into your lien document.</p>
 
-      {isMichigan && isSubOrSupplier && (
+      {!!stateRule?.needsPreliminaryNoticeBundleItem && (stateRule.pdfPreliminaryNoticeRoles ?? []).includes(formData.role || '') && (
         <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-          <p className="text-xs font-semibold text-orange-800 mb-1">⚠ Michigan Notice of Furnishing Required</p>
-          <p className="text-xs text-orange-700">Serve a <strong>Notice of Furnishing within 20 days</strong> of first furnishing (MCL 570.1109). Your bundle includes this form on the last page.</p>
+          <p className="text-xs font-semibold text-orange-800 mb-1">⚠ {stateRule.preliminaryNoticeLabel ?? 'Preliminary Notice'} Required</p>
+          <p className="text-xs text-orange-700">
+            Serve a <strong>{stateRule.preliminaryNoticeLabel ?? 'Preliminary Notice'}</strong>
+            {stateRule.preliminaryNoticeDeadlineText ? ` ${stateRule.preliminaryNoticeDeadlineText}` : ''}. Your bundle includes this form on the last page.
+          </p>
         </div>
       )}
 
-      {isMichigan && isGC && (
+      {!!stateRule?.swornStatementRequirement && stateRule.swornStatementRequirement.roles.includes(formData.role || '') && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-xs font-semibold text-blue-800 mb-1">ℹ Michigan GC — Sworn Statement Requirement</p>
-          <p className="text-xs text-blue-700">Michigan law (MCL 570.1110) may require a <strong>sworn statement</strong> listing subcontractors before payment is due. Consult an attorney.</p>
+          <p className="text-xs font-semibold text-blue-800 mb-1">ℹ {stateLabel} — Sworn Statement Requirement</p>
+          <p className="text-xs text-blue-700">{stateLabel} law ({stateRule.swornStatementRequirement.statute}) {stateRule.swornStatementRequirement.note}</p>
         </div>
       )}
 
@@ -224,9 +312,11 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
                   <input type="radio" name="projectType" value={type} checked={formData.projectType === type} onChange={() => update('projectType', type)} className="sr-only" />
                   <span className="font-semibold text-slate-800 text-sm capitalize">{type}</span>
                   <span className="text-xs text-slate-500">
-                    {type === 'residential'
-                      ? `${(projectTypeRule as { residentialDays: number }).residentialDays}-day`
-                      : `${(projectTypeRule as { commercialDays: number }).commercialDays}-day`}
+                    {projectTypeRule?.kind === 'texasMonthDay15'
+                      ? `${type === 'residential' ? projectTypeRule.residentialMonths : projectTypeRule.commercialMonths}-month`
+                      : type === 'residential'
+                        ? `${(projectTypeRule as { residentialDays: number }).residentialDays}-day`
+                        : `${(projectTypeRule as { commercialDays: number }).commercialDays}-day`}
                   </span>
                 </label>
               ))}
@@ -274,6 +364,13 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             <input type="text" placeholder="Wayne" className={fieldClass('county')} value={formData.county || ''} onChange={(e) => update('county', e.target.value)} />
             <FieldError field="county" />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Parcel / Tax ID Number <span className="text-slate-400 text-xs">(optional)</span>
+            </label>
+            <input type="text" placeholder="51-44-601-610" className={fieldClass('parcelNumber')} value={formData.parcelNumber || ''} onChange={(e) => update('parcelNumber', e.target.value)} />
+            <p className="text-xs text-slate-400 mt-1">From your deed, tax bill, or the county assessor's site.</p>
+          </div>
         </div>
 
         {/* Legal Description */}
@@ -282,14 +379,15 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             Legal Description of Property <span className="text-red-500">*</span>
           </label>
           <textarea
-            required
             rows={3}
             placeholder="Lot 14, Block 3, Sunset Subdivision — found on your deed or from county records"
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            className={fieldClass('legalDescription')}
             value={formData.legalDescription || ''}
             onChange={(e) => update('legalDescription', e.target.value)}
           />
-          <p className="text-xs text-slate-400 mt-1">Required by law. Find this on your deed, title report, or county property records.</p>
+          {errors.legalDescription
+            ? <p className="text-xs text-red-500 mt-1">{errors.legalDescription}</p>
+            : <p className="text-xs text-slate-400 mt-1">Required by law. Find this on your deed, title report, or county property records.</p>}
         </div>
 
         {/* Description of Work */}
@@ -298,14 +396,15 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             Description of Work/Materials Provided <span className="text-red-500">*</span>
           </label>
           <textarea
-            required
             rows={2}
             placeholder="Roofing installation including shingles, underlayment, and labor"
-            className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+            className={fieldClass('workDescription')}
             value={formData.workDescription || ''}
             onChange={(e) => update('workDescription', e.target.value)}
           />
-          <p className="text-xs text-slate-400 mt-1">Briefly describe the work or materials you provided.</p>
+          {errors.workDescription
+            ? <p className="text-xs text-red-500 mt-1">{errors.workDescription}</p>
+            : <p className="text-xs text-slate-400 mt-1">Briefly describe the work or materials you provided.</p>}
         </div>
 
         {/* Contract Date + Invoice # */}
@@ -314,10 +413,11 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             <label className="block text-sm font-medium text-slate-700 mb-1">Contract Date</label>
             <input
               type="date"
-              className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm h-[42px]"
+              className={`${fieldClass('contractDate')} h-[42px]`}
               value={formData.contractDate || ''}
               onChange={(e) => update('contractDate', e.target.value)}
             />
+            {errors.contractDate && <p className="text-xs text-red-500 mt-1">{errors.contractDate}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Contract/Invoice # <span className="text-slate-400 font-normal">(optional)</span></label>
@@ -372,9 +472,13 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Who Contracted You?</label>
-              <input type="text" placeholder="XYZ Framing LLC" className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm" value={formData.hiringParty || ''} onChange={(e) => update('hiringParty', e.target.value)} />
-              <p className="text-xs text-slate-400 mt-1">The party who hired you (may differ from GC).</p>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                Who Contracted You? <span className="text-red-500">*</span>
+              </label>
+              <input type="text" placeholder="XYZ Framing LLC" className={fieldClass('hiringParty')} value={formData.hiringParty || ''} onChange={(e) => update('hiringParty', e.target.value)} />
+              {errors.hiringParty
+                ? <p className="text-xs text-red-500 mt-1">{errors.hiringParty}</p>
+                : <p className="text-xs text-slate-400 mt-1">The party who hired you (may differ from GC). Your lien must name this party.</p>}
             </div>
           </div>
         ) : (
@@ -418,12 +522,14 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
               min="0"
               step="0.01"
               placeholder="0.00"
-              className="block w-full pl-7 pr-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm"
+              className={`block w-full pl-7 pr-4 py-2.5 rounded-lg border text-slate-900 focus:outline-none focus:ring-2 text-sm ${errors.amountPaid ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-navy-600'}`}
               value={formData.amountPaid || ''}
               onChange={(e) => update('amountPaid', e.target.value)}
             />
           </div>
-          <p className="text-xs text-slate-400 mt-1">How much the owner has paid you so far. The lien will be for the remaining balance.</p>
+          {errors.amountPaid
+            ? <p className="text-xs text-red-500 mt-1">{errors.amountPaid}</p>
+            : <p className="text-xs text-slate-400 mt-1">How much the owner has paid you so far. The lien will be for the remaining balance.</p>}
         </div>
 
         {/* Amount Remaining Due — read-only calculated */}
@@ -451,6 +557,35 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
           </div>
         </div>
 
+        {/* Prepared By — only needed when someone other than the claimant drafted this document */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Prepared By — Name <span className="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Leave blank if you're drafting this yourself"
+              className={fieldClass('preparedByName')}
+              value={formData.preparedByName || ''}
+              onChange={(e) => update('preparedByName', e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Prepared By — Business Address <span className="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Leave blank if you're drafting this yourself"
+              className={fieldClass('preparedByAddress')}
+              value={formData.preparedByAddress || ''}
+              onChange={(e) => update('preparedByAddress', e.target.value)}
+            />
+          </div>
+          <p className="text-xs text-slate-400 -mt-2 sm:col-span-2">Only fill this in if someone other than you — an attorney, assistant, or filing service — actually prepared this document. Otherwise we'll use your name and address above.</p>
+        </div>
+
         {/* Email */}
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Email Address <span className="text-red-500">*</span></label>
@@ -472,6 +607,26 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
       </div>
+
+      {/* Non-blocking advisories: legitimate situations an owner contesting the lien
+          will probe. Shown before payment, not discovered in the finished PDF. */}
+      {step === TOTAL_STEPS && advisories.length > 0 && (
+        <div className="mt-6 space-y-2">
+          {advisories.map((note, i) => (
+            <div key={i} className="flex gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5 text-xs text-amber-900">
+              <span aria-hidden="true">⚠️</span>
+              <p>{note}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {step === TOTAL_STEPS && Object.values(errors).some(Boolean) && (
+        <p className="mt-4 text-sm text-red-600 font-medium">
+          Please fix the highlighted fields above before generating your document.
+        </p>
+      )}
+
       <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
         <button type="button" onClick={() => step > 1 && setStep((s) => s - 1)} disabled={step === 1} className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-600 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>

@@ -110,7 +110,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
     <!-- Featured snippet answer -->
     <div class="bg-navy-50 border-l-4 border-navy-600 p-4 mb-8 rounded-r-lg">
-      <p class="text-navy-800 font-medium">This is a <strong>construction real property lien</strong> under Tex. Prop. Code Ch. 53 (HB 2237, 2022) — NOT a vehicle title lien (VTR-265-M, TxDMV). Original contractors must file by the <strong>15th day of the 4th month</strong> after last work; subcontractors on residential projects by the <strong>15th of the 3rd month</strong>.</p>
+      <p class="text-navy-800 font-medium">This is a <strong>construction real property lien</strong> under Tex. Prop. Code Ch. 53 (HB 2237, 2022) — NOT a vehicle title lien (VTR-265-M, TxDMV). File by the <strong>15th day of the 3rd month</strong> after last work on a residential project, or the <strong>15th day of the 4th month</strong> on a commercial project — the same rule applies whether you're the original contractor or a subcontractor.</p>
     </div>
 
     <!-- Monthly notice warning for residential projects -->
@@ -171,7 +171,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
           <tr><td>§53.056</td><td>Notice of lien claim to owner/GC</td></tr>
           <tr><td>§53.057</td><td>Monthly notices for subcontractors and suppliers</td></tr>
           <tr><td>§53.058</td><td>Retainage notice requirements</td></tr>
-          <tr><td>§53.154</td><td>Deadline to sue on a lien (1 year after lien filed)</td></tr>
+          <tr><td>§53.158</td><td>Deadline to sue to foreclose the lien — generally 1 year after the last day the affidavit could have been timely filed under §53.052, not necessarily 1 year from your actual filing date (for contracts entered on or after Jan. 1, 2022)</td></tr>
         </tbody>
       </table>
 
@@ -191,7 +191,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
           <tr>
             <td>Original Contractor (GC)</td>
             <td>Residential</td>
-            <td>15th day of the 4th month after the month work was last furnished</td>
+            <td>15th day of the 3rd month after the month work was last furnished</td>
           </tr>
           <tr>
             <td>Original Contractor (GC)</td>
@@ -221,10 +221,11 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p>If you last furnished labor or materials in <strong>October</strong>, count forward to determine your deadline month:</p>
 
       <ul>
-        <li>GC (residential or commercial): October is month 0 → 4th month forward = February → <strong>February 15</strong></li>
-        <li>Subcontractor (residential): October is month 0 → 3rd month forward = January → <strong>January 15</strong></li>
-        <li>Subcontractor (commercial): October is month 0 → 4th month forward = February → <strong>February 15</strong></li>
+        <li>GC or subcontractor (residential): October is month 0 → 3rd month forward = January → <strong>January 15</strong></li>
+        <li>GC or subcontractor (commercial): October is month 0 → 4th month forward = February → <strong>February 15</strong></li>
       </ul>
+
+      <p>The month count depends on <strong>project type</strong>, not role — a general contractor and a subcontractor on the same residential project share the same deadline.</p>
 
       <p><strong>What is "last furnishing"?</strong> The last calendar month in which you performed work or delivered materials. Warranty calls and minor touch-up work may or may not count — consult an attorney for borderline situations.</p>
 

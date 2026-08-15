@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import FormStepper from './FormStepper';
 import DownloadButton from './DownloadButton';
+import FreeDownloadButton from './FreeDownloadButton';
 import { STATE_LIEN_RULES, computeLienDeadline } from '../data/stateLienRules';
+import { PAYMENTS_ENABLED } from '../config/features';
 
 interface LienFormAppProps {
   defaultState: string;
@@ -55,9 +57,14 @@ function PreviewPanel({ formData }: { formData: any }) {
     ? Math.ceil((deadline.getTime() - new Date().setHours(0, 0, 0, 0)) / 86400000)
     : null;
 
-  const isMichigan = formData.state === 'michigan';
   const isSubOrSupplier = ['subcontractor', 'sub-subcontractor', 'material-supplier', 'equipment-rental'].includes(formData.role);
   const hasLegalDesc = !!formData.legalDescription?.trim();
+  // The lien is claimed for the unpaid balance, not the full contract amount — must
+  // match what PDFGenerator.ts actually puts on the Claim of Lien, or the preview
+  // shows the customer a bigger number than the document they're about to pay for.
+  const contractAmountNum = parseFloat(String(formData.contractAmount ?? '').replace(/,/g, '')) || 0;
+  const amountPaidNum = parseFloat(String(formData.amountPaid ?? '').replace(/,/g, '')) || 0;
+  const amountClaimed = Math.max(0, contractAmountNum - amountPaidNum);
 
   const showsPreliminaryNoticeBundleItem =
     !!stateRule?.needsPreliminaryNoticeBundleItem &&
@@ -77,7 +84,7 @@ function PreviewPanel({ formData }: { formData: any }) {
     { label: 'Claimant info', ok: !!formData.claimantName && !!formData.claimantAddress },
     { label: 'Owner info', ok: !!formData.ownerName },
     { label: 'Property address', ok: !!formData.propertyAddress },
-    { label: 'Legal description', ok: hasLegalDesc, warn: !hasLegalDesc && isMichigan },
+    { label: 'Legal description', ok: hasLegalDesc, warn: !hasLegalDesc },
     stateRule?.deadlineCaveat
       ? { label: 'Last furnishing date entered', ok: !isNaN(new Date(formData.lastFurnishingDate).getTime()) }
       : { label: 'Deadline calculated', ok: !!deadline },
@@ -121,7 +128,7 @@ function PreviewPanel({ formData }: { formData: any }) {
           <Row label="Property Owner" value={formData.ownerName} />
           {formData.ownerAddress && <Row label="Owner Address" value={formData.ownerAddress} />}
           <Row label="Property" value={formData.propertyAddress} />
-          <Row label="Legal Description" value={hasLegalDesc ? '✓ Provided' : isMichigan ? '⚠ Not entered' : 'Not entered'} warn={!hasLegalDesc && isMichigan} />
+          <Row label="Legal Description" value={hasLegalDesc ? '✓ Provided' : '⚠ Not entered'} warn={!hasLegalDesc} />
           <Row label="County" value={countyDisplay} />
           {stateRule?.deadlineRule.kind === 'projectTypeDaysFromLastFurnishing' && (
             <Row
@@ -131,7 +138,15 @@ function PreviewPanel({ formData }: { formData: any }) {
               }-day deadline)`}
             />
           )}
-          <Row label="Amount Claimed" value={formatCurrency(formData.contractAmount)} highlight />
+          {stateRule?.deadlineRule.kind === 'texasMonthDay15' && (
+            <Row
+              label="Project Type"
+              value={`${toTitleCase(projectType)} (${
+                projectType === 'commercial' ? stateRule.deadlineRule.commercialMonths : stateRule.deadlineRule.residentialMonths
+              }-month deadline)`}
+            />
+          )}
+          <Row label="Amount Claimed" value={formatCurrency(String(amountClaimed))} highlight />
           <Row label="Last Furnishing" value={formData.lastFurnishingDate} />
         </div>
 
@@ -174,9 +189,14 @@ export default function LienFormApp({ defaultState, documentType = 'mechanics-li
   const handleFormComplete = (data: any) => {
     setFormData(data);
     setRole(data.role || '');
-    // Save for post-payment PDF generation on success page
+    // Save for post-payment PDF generation on success page.
+    // Use the state the user actually selected in step 1, falling back to the page's
+    // default. SuccessDownloader spreads this `state` OVER formData.state, so hardcoding
+    // defaultState here silently generated the wrong state's lien whenever a visitor
+    // changed the dropdown — e.g. picking Texas on the Michigan page produced a
+    // Michigan document with Michigan deadlines while the preview showed Texas.
     localStorage.setItem('lienform_pending_order', JSON.stringify({
-      state: defaultState,
+      state: data.state || defaultState,
       role: data.role || '',
       productName,
       productType: documentType === 'notice-to-owner' ? 'notice-to-owner' : 'mechanics-lien',
@@ -201,7 +221,11 @@ export default function LienFormApp({ defaultState, documentType = 'mechanics-li
           {formData ? (
             <div className="space-y-4">
               <PreviewPanel formData={formData} />
-              <DownloadButton state={defaultState} role={role} formData={formData} productName={productName} />
+              {PAYMENTS_ENABLED ? (
+                <DownloadButton state={formData.state || defaultState} formData={formData} productName={productName} />
+              ) : (
+                <FreeDownloadButton state={formData.state || defaultState} formData={formData} productName={productName} />
+              )}
             </div>
           ) : (
             <div className="border-2 border-dashed border-slate-200 rounded-xl p-10 text-center text-slate-400 bg-slate-50">
