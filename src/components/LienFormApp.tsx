@@ -46,9 +46,14 @@ function PreviewPanel({ formData }: { formData: any }) {
 
   const stateRule = STATE_LIEN_RULES[formData.state];
   const projectType = formData.projectType ?? 'residential';
+  if (formData.state === 'florida') {
+    const limit = computeLienDeadline(stateRule.deadlineRule, { lastFurnishingDate: '', firstFurnishingDate: formData.firstFurnishingDate, role: formData.role });
+    return <div className="rounded-xl border border-slate-200 bg-white p-6"><h2 className="text-xl font-bold text-navy-900">Florida Notice to Owner preview</h2><p className="my-3 text-sm text-slate-600">This is an early served notice, not a recorded claim of lien. Review statutory recipients and service before use.</p><Row label="Lienor" value={formData.claimantName} /><Row label="Owner" value={formData.ownerName} /><Row label="Property" value={formData.propertyAddress} /><Row label="First furnishing" value={formData.firstFurnishingDate} /><Row label="45-day planning limit" value={limit ? limit.toLocaleDateString('en-US') : 'Verify date'} /><p className="mt-4 text-sm text-orange-700">Notice must also precede the applicable final owner disbursement. Purchase does not serve the notice or restore missed rights.</p><p className="mt-4 text-sm text-slate-600">Download includes the notice draft and a separate service-planning checklist.</p></div>;
+  }
   const deadline = stateRule
     ? computeLienDeadline(stateRule.deadlineRule, {
         lastFurnishingDate: formData.lastFurnishingDate,
+        firstFurnishingDate: formData.firstFurnishingDate,
         role: formData.role,
         projectType,
       })
@@ -222,7 +227,7 @@ export default function LienFormApp({ defaultState, documentType = 'mechanics-li
             <div className="space-y-4">
               <PreviewPanel formData={formData} />
               {PAYMENTS_ENABLED ? (
-                <DownloadButton state={formData.state || defaultState} formData={formData} productName={productName} />
+                <DownloadButton state={formData.state || defaultState} formData={formData} productName={productName} productType={documentType} />
               ) : (
                 <FreeDownloadButton state={formData.state || defaultState} formData={formData} productName={productName} />
               )}

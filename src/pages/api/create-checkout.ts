@@ -5,7 +5,7 @@ const priceMap: Record<string, number> = {
   'mechanics-lien': 2499,    // $24.99
   'lien-release': 1499,      // $14.99
   'lien-waiver': 999,        // $9.99
-  'notice-to-owner': 1499,   // $14.99
+  'notice-to-owner': 2499,   // $24.99, matching the advertised product price
   'preliminary-notice': 1499, // $14.99
   'notice-of-intent': 999,   // $9.99
 };

@@ -1,0 +1,42 @@
+---
+import StateGuide from '../../../layouts/StateGuide.astro';
+const faqs = [
+ { question: 'Is a Florida Notice to Owner the same as a claim of lien?', answer: 'No. A Notice to Owner is an early served notice for qualifying claimants without direct owner contracts. A claim of lien is a separate sworn document recorded against the property after nonpayment.' },
+ { question: 'Does the 45-day Notice to Owner period start after the last delivery?', answer: 'No. The general period starts at first furnishing, and the notice must also precede the applicable final owner disbursement. Do not use the last-furnishing date used for recording a claim.' },
+ { question: 'How long do I have to enforce a Florida construction lien?', answer: 'Ordinarily one year after recording under section 713.22. A served notice of contest can shorten the period to 60 days; other court procedures can shorten it further. Send any contest or court notice to counsel immediately.' },
+];
+const sources = [
+ { title: 'Florida Statutes 713.06 — Notice to Owner and payment requirements', url: 'https://www.flsenate.gov/Laws/Statutes/2026/713.06' },
+ { title: 'Florida Statutes 713.08 — claim contents, recording, and service', url: 'https://www.flsenate.gov/Laws/Statutes/2026/713.08' },
+ { title: 'Florida Statutes 713.18 — methods of serving notices', url: 'https://www.flsenate.gov/Laws/Statutes/2026/713.18' },
+ { title: 'Florida Statutes 713.22 — duration and contest of lien', url: 'https://www.flsenate.gov/Laws/Statutes/2026/713.22' },
+ { title: 'Florida Statutes 713.20 — waivers and releases', url: 'https://www.flsenate.gov/Laws/Statutes/2026/713.20' },
+];
+---
+<StateGuide name="Florida" slug="florida" title="Florida Mechanics Lien: 90-Day Filing & Owner Notices" description="Understand Florida's first-furnishing Notice to Owner, 90-day claim recording, owner service, and enforcement deadlines. Explore the paid NTO tool." heading="Florida mechanics lien: preserve rights before recording a claim" summary="Track first furnishing for the Notice to Owner and last furnishing for the claim of lien. The usual 45-day notice and 90-day recording periods are separate obligations, and an owner contest can shorten enforcement time." faqs={faqs} sources={sources}>
+ <nav aria-label="On this page"><a href="#notice">Notice to Owner</a> · <a href="#recording">Recording</a> · <a href="#service">Service</a> · <a href="#payment">Payment and release</a> · <a href="#faq">Questions</a></nav>
+ <p>Florida calls its private-project remedy a construction lien. The process depends on whether you contracted directly with the property owner, your place in the contracting chain, and the project's payment arrangements. A recorded document alone cannot repair an omitted prerequisite. Establish your role before working through the filing checklist.</p>
+ <h2 id="notice">Start with the first-furnishing Notice to Owner</h2>
+ <p>Section 713.06 generally requires qualifying lienors without direct owner contracts, except laborers, to serve a Notice to Owner before or within 45 days after first furnishing and before the applicable final owner disbursement. Additional recipients depend on the contracting chain. Missing this prerequisite can defeat the lien; a late notice does not automatically preserve later deliveries.</p>
+ <p>Use the <a href="/notice-to-owner/florida/">Florida Notice to Owner page</a> for the paid preparation tool and a focused notice checklist. Keep your first delivery ticket, initial time sheet, contract, recipient addresses, and delivery evidence in the same folder. Check the Notice of Commencement for project information rather than relying on the address printed on an invoice.</p>
+ <p>Consider a supplier who starts deliveries in March and makes a final delivery in May. March is relevant to the early notice; May may be relevant to lien recording. One date cannot serve both purposes. Calendar the two obligations separately as soon as work begins.</p>
+ <h2 id="recording">Prepare and record the sworn claim within the proper period</h2>
+ <p>Section 713.08 ordinarily allows recording no later than 90 days after the lienor's final furnishing; a recorded termination can create an earlier limit. The claim identifies the lienor, owner, contracting party, property, work, amounts, dates, and applicable Notice to Owner information. It requires an oath and statutory warning. Record with the clerk in each county containing the affected property.</p>
+ <p>The <a href="/mechanics-lien/form/">claim preparation checklist</a> helps organize records, but Florida-specific content and prerequisites still need review. Obtain the legal description from reliable property records. Reconcile the claimed balance with cleared payments, credits, approved changes, and the actual work covered by the claim.</p>
+ <ol>
+  <li>Identify the property and relevant county before selecting a recording office.</li>
+  <li>Review notice eligibility and service evidence with the contract chain.</li>
+  <li>Support the selected final-furnishing date with contemporaneous records.</li>
+  <li>Check the clerk's current format, notarization, fees, and submission process.</li>
+  <li>Retain a legible recorded copy and its instrument information.</li>
+ </ol>
+ <h2 id="service">Owner service and enforcement need their own calendar entries</h2>
+ <p>Serve the owner with the claim before recording or within 15 days afterward. Section 713.18 controls available service methods. Recording receipts and mailing receipts establish different events: keep both, along with the document actually delivered and evidence identifying the recipient.</p>
+ <p>Section 713.22 generally gives one year after recording to begin enforcement. A notice of contest can reduce this to 60 days after service. Do not interpret a contest as an ordinary payment dispute email. Arrange legal review immediately, including any lis pendens requirement and other accelerated court procedures.</p>
+ <p>Build a tracking sheet with separate columns for furnishing, notice service, recording, claim service, and litigation. Assign someone to monitor returned mail and incoming legal documents. A deadline calculator based only on the final work date cannot capture an owner-triggered contest.</p>
+ <h2 id="payment">Match the settlement document to the payment event</h2>
+ <p>Florida section 713.20 supplies progress and final waiver forms and addresses conditional payment. Compare the <a href="/lien-waiver/conditional/">conditional waiver guide</a> with the <a href="/mechanics-lien/release/">recorded-lien release checklist</a>. Review the amount, through-date, retained claims, and cleared payment before signing.</p>
+ <p>A <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> used to request payment is different from the statutory Notice to Owner. It should not consume the remaining notice or recording period. Keep negotiation moving while preserving the independent legal deadlines.</p>
+ <h2>Use the rules for the property state</h2>
+ <p><a href="/mechanics-lien/north-carolina/">North Carolina</a> uses a court clerk and lien-agent framework rather than Florida's recording workflow. <a href="/mechanics-lien/new-york/">New York</a> adds proof-of-service filing with a separate clock. Use the <a href="/mechanics-lien/">state directory</a> when a project crosses state lines.</p>
+</StateGuide>

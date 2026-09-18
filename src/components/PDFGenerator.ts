@@ -166,6 +166,8 @@ function explainDeadlineBasis(stateRule: StateLienRule | undefined, stateLabel: 
   const rule = stateRule?.deadlineRule;
   if (!rule) return 'Confirm your state\'s recording deadline with a licensed attorney before relying on any date shown here.';
   switch (rule.kind) {
+    case 'daysFromFirstFurnishing':
+      return `${stateLabel}'s ${rule.days}-day notice period starts at first furnishing. Verify any earlier final-payment limit and statutory service timing.`;
     case 'daysFromLastFurnishing':
       return `${stateLabel}'s ${rule.days}-day period is measured from the claimant's last furnishing of labor or material for the improvement. The confirmed date above should match the last-furnishing date stated on Claim page 2.`;
     case 'projectTypeDaysFromLastFurnishing':
@@ -178,6 +180,10 @@ function explainDeadlineBasis(stateRule: StateLienRule | undefined, stateLabel: 
 }
 
 export async function generateLienBundle(data: LienFormData): Promise<Blob> {
+  if (data.state === 'florida') {
+    const { generateFloridaNotice } = await import('./FloridaNoticePDF');
+    return generateFloridaNotice(data);
+  }
   const extras = data.extras ?? [];
   const claimantName = (data.claimantName ?? '').trim();
   const claimantAddress = (data.claimantAddress ?? '').trim();

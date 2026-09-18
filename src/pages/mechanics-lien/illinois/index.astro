@@ -1,0 +1,45 @@
+---
+import StateGuide from '../../../layouts/StateGuide.astro';
+const faqs = [
+  { question: 'Is the Illinois recording deadline four months or 120 days?', answer: 'Section 7 uses four months for protection against third parties. Four calendar months and 120 days are not interchangeable. Subcontractors also need to analyze the separate 90-day claim-notice requirement.' },
+  { question: 'Does a subcontractor need to notify an Illinois homeowner?', answer: 'Section 24 generally requires a claim notice within 90 days after completion of the subcontract or qualifying additional work. Existing owner-occupied single-family residences also have a 60-day first-furnishing notice under section 21(c), with payment-prejudice consequences for late notice.' },
+  { question: 'Does recording an Illinois lien start a new two-year lawsuit period?', answer: 'No. Section 9 ordinarily measures two years from contract completion or qualifying additional work or material, rather than from recording. A section 34 demand can require suit or an answer within 30 days after service.' },
+];
+const sources = [
+  { title: '770 ILCS 60/7 — recording and third-party protection', url: 'https://www.ilga.gov/documents/legislation/ilcs/documents/077000600K7.htm' },
+  { title: '770 ILCS 60/21 — subcontractors and residential notice', url: 'https://www.ilga.gov/Documents/legislation/ilcs/documents/077000600K21.htm' },
+  { title: '770 ILCS 60/24 — written subcontractor claim notice', url: 'https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2254&ChapterID=63' },
+  { title: 'Illinois Mechanics Lien Act — sections 5, 9, and 34', url: 'https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2254&ChapterID=63' },
+];
+---
+<StateGuide name="Illinois" slug="illinois" title="Illinois Mechanics Lien: Notices & Four-Month Filing" description="Check Illinois lien notices, the four-month third-party deadline, verified claim contents, residential protections, and the separate enforcement period." heading="Illinois mechanics lien: the notice and recording deadlines to track" summary="Illinois lien claims involve different clocks: subcontractor notices, four-month recording or suit for third-party protection, and a separate enforcement period. Start with your contract relationship and property type, then calendar each applicable requirement." faqs={faqs} sources={sources}>
+  <nav aria-label="On this page"><a href="#deadlines">Deadline table</a> · <a href="#notices">Subcontractor notices</a> · <a href="#claim">Claim preparation</a> · <a href="#filing">Recording workflow</a> · <a href="#faq">Questions</a></nav>
+  <p>The Illinois Mechanics Lien Act, 770 ILCS 60, protects qualifying construction claims against improved private property. A direct contractor and a subcontractor do not follow the same notice path. A remodeling job in an occupied house also raises different notice questions from a commercial build. Identify those facts before choosing a form.</p>
+  <h2 id="deadlines">Illinois has several deadlines, not one filing clock</h2>
+  <div class="overflow-x-auto"><table><thead><tr><th>Task</th><th>General timing</th><th>Starting event</th></tr></thead><tbody>
+    <tr><td>Residential subcontractor notice, where applicable</td><td>60 days</td><td>First furnishing on an existing owner-occupied single-family residence</td></tr>
+    <tr><td>Subcontractor claim notice</td><td>90 days</td><td>Completion of the subcontract or qualifying additional furnishing</td></tr>
+    <tr><td>Record claim or bring suit for third-party protection</td><td>4 months</td><td>Completion or qualifying additional work under section 7</td></tr>
+    <tr><td>Enforcement action</td><td>Ordinarily 2 years</td><td>Contract completion or qualifying additional work under section 9</td></tr>
+  </tbody></table></div>
+  <p>Under section 7, timely recording or suit protects against other creditors, encumbrancers, and purchasers. The longer owner-facing period is not a practical reason to postpone recording: a sale or mortgage can change recovery. Verify completion from contract records and leave time to correct a rejected submission.</p>
+  <h2 id="notices">Separate the 60-day residential notice from the 90-day claim notice</h2>
+  <p>Section 21(c) addresses subcontractors furnishing to an existing owner-occupied single-family residence. Notice informs the occupant that the subcontractor is supplying the project. Late notice can leave the claim limited by prejudice from earlier owner payments. Keep the occupancy information and the notice delivery record together.</p>
+  <p>Section 24 generally requires a subcontractor's written claim notice within 90 days after completion of its contract or qualifying extra work or material. Required recipients include the owner-side recipient and the lending agency, if known. The statute provides service methods and exceptions; determine which apply to your claim rather than sending an ordinary overdue-invoice email.</p>
+  <p>A <a href="/notice-of-intent-to-lien/">collection notice of intent to lien</a> should be distinguished from either statutory notice. A letter that asks for payment does not automatically preserve rights unless its content, recipients, and service meet the relevant statute.</p>
+  <h2 id="claim">Build the verified claim from the contract and ledger</h2>
+  <p>Section 7 calls for a verified claim containing a brief contract statement, the balance after credits, and a property description sufficient to identify the land. Bring the signed agreement, approved changes, payment history, deed description, and furnishing records into one preparation file. The <a href="/mechanics-lien/form/">mechanics lien form checklist</a> helps organize those inputs.</p>
+  <p>Create a reconciliation sheet that names each unpaid invoice and the work it covers. Compare the total with payments, credits, and any disputed items. Keep a separate note describing why the selected completion date is supported. This makes later review faster than trying to reconstruct the file from a large email thread.</p>
+  <h2 id="filing">Record in the property county and plan enforcement</h2>
+  <ol>
+    <li>Confirm that the owner, claimant, and contracting party match current records.</li>
+    <li>Audit notices before recording; identify any missing delivery evidence.</li>
+    <li>Ask the county recording office for its current fee, format, and submission method.</li>
+    <li>Submit the verified claim in the county containing the improvement and retain the recorded copy.</li>
+    <li>For a direct contractor on an owner-occupied single-family residence, check section 7(d)'s ten-day owner-notice duty after recording.</li>
+  </ol>
+  <p>Section 9 ordinarily requires enforcement within two years after the relevant completion event. Section 34 permits a written demand that can force the lienholder to file suit or answer within 30 days of service. Route a demand to counsel promptly; your original calendar alone will not reflect that accelerated date.</p>
+  <h2>Illinois comparison and payment follow-through</h2>
+  <p>Do not borrow <a href="/mechanics-lien/michigan/">Michigan's flat 90-day recording rule</a> for an Illinois property. Likewise, <a href="/mechanics-lien/new-york/">New York's four/eight-month system</a> distinguishes dwelling type for a different reason. The <a href="/mechanics-lien/">state directory</a> identifies the guide for each property location.</p>
+  <p>At settlement, compare a <a href="/lien-waiver/conditional/">conditional payment waiver</a> with a <a href="/mechanics-lien/release/">release of an already recorded lien</a>. Document the amount, cleared payment, reserved claims, and specific recording being discharged before signing.</p>
+</StateGuide>

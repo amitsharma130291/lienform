@@ -6,6 +6,7 @@ export interface Props {
   ogTitle?: string;
   ogDescription?: string;
   schema?: string; // JSON-LD string
+  noindex?: boolean;
 }
 
 const {
@@ -15,9 +16,10 @@ const {
   ogTitle,
   ogDescription,
   schema,
+  noindex = false,
 } = Astro.props;
 
-const canonicalUrl = canonical || Astro.url.href;
+const canonicalUrl = canonical || `https://mechanicslienform.com${Astro.url.pathname}`;
 const resolvedOgTitle = ogTitle || title;
 const resolvedOgDescription = ogDescription || description;
 
@@ -30,6 +32,7 @@ const GA_ID = 'G-H68Z9GWZ12';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
 
     <title>{title}</title>
 
@@ -44,7 +47,7 @@ const GA_ID = 'G-H68Z9GWZ12';
     <meta property="og:site_name" content="MechanicsLienForm" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={resolvedOgTitle} />
     <meta name="twitter:description" content={resolvedOgDescription} />
 
@@ -85,7 +88,7 @@ const GA_ID = 'G-H68Z9GWZ12';
         <a href="/" class="flex items-center hover:opacity-90 transition-opacity">
           <img
             src="/logo.svg"
-            alt="MechanicsLienForm — Free Mechanics Lien Generator"
+            alt="MechanicsLienForm"
             style="height:60px; width:auto; display:block;"
           />
         </a>
@@ -94,7 +97,7 @@ const GA_ID = 'G-H68Z9GWZ12';
         <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
           <a href="/mechanics-lien/" class="hover:text-[#1e2f6e] transition-colors">Mechanics Lien</a>
           <a href="/notice-to-owner/florida/" class="hover:text-[#1e2f6e] transition-colors">Notice to Owner</a>
-          <a href="/mechanics-lien/" class="hover:text-[#1e2f6e] transition-colors">All States</a>
+          <a href="/mechanics-lien/form/" class="hover:text-[#1e2f6e] transition-colors">Form Checklist</a>
           <a href="/contact/" class="hover:text-[#1e2f6e] transition-colors">Contact</a>
         </div>
 
@@ -114,7 +117,7 @@ const GA_ID = 'G-H68Z9GWZ12';
       <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 py-3 space-y-2">
         <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Mechanics Lien</a>
         <a href="/notice-to-owner/florida/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Notice to Owner</a>
-        <a href="/mechanics-lien/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">All States</a>
+        <a href="/mechanics-lien/form/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Form Checklist</a>
         <a href="/contact/" class="block py-2 text-sm font-medium text-slate-700 hover:text-[#1e2f6e]">Contact</a>
       </div>
     </header>
@@ -135,7 +138,7 @@ const GA_ID = 'G-H68Z9GWZ12';
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <p class="text-sm text-slate-500 text-center md:text-left">
-            &copy; 2024 MechanicsLienForm.com &mdash; This form is provided for informational purposes only.
+            &copy; {new Date().getFullYear()} MechanicsLienForm.com &mdash; This form is provided for informational purposes only.
             Not legal advice. Consult a licensed attorney in your state.
           </p>
           <div class="flex items-center gap-4 text-xs text-slate-400">

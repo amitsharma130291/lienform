@@ -1,0 +1,13 @@
+---
+interface Props { stateName?: string; florida?: boolean; }
+const { stateName, florida = false } = Astro.props;
+---
+<aside id="paid-tools" data-seo-boilerplate class="not-prose my-10 scroll-mt-28 rounded-2xl border border-navy-200 bg-navy-50 p-6 sm:p-8" aria-label="Paid document tools">
+  <p class="text-sm font-semibold uppercase tracking-wide text-navy-700">Paid PDF document tools</p>
+  <h2 class="mt-2 text-2xl font-bold text-navy-900">{florida ? 'Prepare your Florida Notice to Owner — $24.99' : 'Turn project details into a PDF bundle — $24.99'}</h2>
+  <p class="mt-3 text-slate-700">{florida ? 'Use the dedicated Notice to Owner tool to enter your parties, property, work description, and first furnishing date. Review the document, pay once, and download the PDF to serve yourself.' : 'For supported states, MechanicsLienForm brings your project details, lien draft, deadline reference, filing instructions, service affidavit, and release draft into one download.'}</p>
+  <p class="mt-3 text-sm text-slate-600">No account required. One payment per bundle. Recording fees, notarization, mailing, legal review, and filing services are separate.</p>
+  {!florida && stateName && <p class="mt-3 text-sm text-slate-700"><strong>{stateName} availability:</strong> this page is a filing guide. A lien PDF generator for {stateName} is not currently offered. Choose a paid bundle only for a supported property state; another state's document cannot be used for this property.</p>}
+  <a class="mt-5 inline-flex items-center gap-3 rounded-lg bg-navy-700 px-5 py-3 font-semibold text-white hover:bg-navy-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" href={florida ? '/notice-to-owner/florida/#generator' : '/mechanics-lien/#paid-tools'}><span>{florida ? 'Start Florida NTO — $24.99' : 'Explore paid PDF bundles — $24.99'}</span><span aria-hidden="true">→</span></a>
+  <a class="ml-0 mt-4 block text-sm font-medium text-navy-700 underline sm:ml-5 sm:inline" href="/mechanics-lien/form/">Check the required project information</a>
+</aside>

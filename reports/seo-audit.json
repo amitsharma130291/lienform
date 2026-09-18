@@ -1,0 +1,329 @@
+{
+  "generatedAt": "2026-09-18T04:20:28.069Z",
+  "indexedPages": 24,
+  "errors": [],
+  "warnings": [],
+  "newPages": [
+    {
+      "path": "/mechanics-lien/illinois/",
+      "words": 935,
+      "inbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/colorado/",
+        "/mechanics-lien/michigan/",
+        "/mechanics-lien/new-york/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/release/"
+      ],
+      "outbound": [
+        "/",
+        "/mechanics-lien/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/form/",
+        "/mechanics-lien/michigan/",
+        "/mechanics-lien/new-york/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/release/"
+      ]
+    },
+    {
+      "path": "/mechanics-lien/new-york/",
+      "words": 1004,
+      "inbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/california/",
+        "/mechanics-lien/florida/",
+        "/mechanics-lien/illinois/",
+        "/mechanics-lien/north-carolina/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/release/"
+      ],
+      "outbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/form/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/release/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/illinois/",
+        "/mechanics-lien/north-carolina/"
+      ]
+    },
+    {
+      "path": "/mechanics-lien/florida/",
+      "words": 942,
+      "inbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/north-carolina/",
+        "/mechanics-lien/form/",
+        "/notice-to-owner/florida/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/release/"
+      ],
+      "outbound": [
+        "/",
+        "/mechanics-lien/",
+        "/notice-to-owner/florida/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/release/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/north-carolina/",
+        "/mechanics-lien/new-york/"
+      ]
+    },
+    {
+      "path": "/mechanics-lien/north-carolina/",
+      "words": 967,
+      "inbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/florida/",
+        "/mechanics-lien/georgia/",
+        "/mechanics-lien/new-york/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/release/"
+      ],
+      "outbound": [
+        "/",
+        "/mechanics-lien/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/release/",
+        "/mechanics-lien/florida/",
+        "/mechanics-lien/new-york/"
+      ]
+    },
+    {
+      "path": "/mechanics-lien/colorado/",
+      "words": 1013,
+      "inbound": [
+        "/",
+        "/mechanics-lien/",
+        "/mechanics-lien/arizona/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/release/"
+      ],
+      "outbound": [
+        "/",
+        "/mechanics-lien/",
+        "/notice-of-intent-to-lien/",
+        "/mechanics-lien/form/",
+        "/lien-waiver/conditional/",
+        "/mechanics-lien/release/",
+        "/mechanics-lien/illinois/",
+        "/mechanics-lien/arizona/"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "title": "Mechanics Lien PDF Preparation Tools — $24.99",
+      "description": "Prepare a mechanics lien PDF for seven supported states or a Florida Notice to Owner for $24.99. Read state guides, preview your details, and download.",
+      "words": 597
+    },
+    {
+      "path": "/mechanics-lien/",
+      "title": "Mechanics Lien State Guides & Available PDF Tools",
+      "description": "Compare twelve state mechanics lien guides. Find notice, recording, and enforcement rules, plus paid PDF preparation tools for seven supported states.",
+      "words": 603
+    },
+    {
+      "path": "/mechanics-lien/arizona/",
+      "title": "Arizona Mechanics Lien Deadlines: 20-Day Notice, Filing & Service",
+      "description": "Learn Arizona's preliminary 20-day notice, mechanics lien filing deadline, required attachments, service, completion rules, and six-month foreclosure period.",
+      "words": 1572
+    },
+    {
+      "path": "/mechanics-lien/california/",
+      "title": "California Mechanics Lien Form & Completion Deadlines",
+      "description": "Generate a California mechanics lien under Civil Code §8000–9566 (SB 189, 2019). 20-day Preliminary Notice auto-included for subs. Instant PDF bundle, $24.99.",
+      "words": 1552
+    },
+    {
+      "path": "/mechanics-lien/colorado/",
+      "title": "Colorado Mechanics Lien: 10-Day Notice & Filing Rules",
+      "description": "Plan Colorado's ten-day notice of intent, verified lien statement, four-month general filing rule, labor exception, and separate enforcement tasks.",
+      "words": 1013
+    },
+    {
+      "path": "/mechanics-lien/florida/",
+      "title": "Florida Mechanics Lien: 90-Day Filing & Owner Notices",
+      "description": "Understand Florida's first-furnishing Notice to Owner, 90-day claim recording, owner service, and enforcement deadlines. Explore the paid NTO tool.",
+      "words": 942
+    },
+    {
+      "path": "/mechanics-lien/georgia/",
+      "title": "Georgia Mechanics Lien: 90-Day Filing and 2-Day Service Rules",
+      "description": "Learn who can file a Georgia mechanics lien, the 90-day recording deadline, required claim language, service rules, and the 365-day enforcement period.",
+      "words": 1726
+    },
+    {
+      "path": "/mechanics-lien/illinois/",
+      "title": "Illinois Mechanics Lien: Notices & Four-Month Filing",
+      "description": "Check Illinois lien notices, the four-month third-party deadline, verified claim contents, residential protections, and the separate enforcement period.",
+      "words": 935
+    },
+    {
+      "path": "/mechanics-lien/michigan/",
+      "title": "Michigan Mechanics Lien Form & 90-Day Filing Rule",
+      "description": "Generate a Michigan mechanics lien form for construction projects. Role-aware deadline calculator. MCL 570.1101–570.1305. Instant PDF bundle, $24.99.",
+      "words": 2726
+    },
+    {
+      "path": "/mechanics-lien/new-york/",
+      "title": "New York Mechanics Lien: 4/8-Month Filing & Service",
+      "description": "Understand New York's four- or eight-month lien filing window, verified notice contents, owner service, 35-day proof deadline, and one-year duration.",
+      "words": 1004
+    },
+    {
+      "path": "/mechanics-lien/north-carolina/",
+      "title": "North Carolina Mechanics Lien: 120/180-Day Deadlines",
+      "description": "Check North Carolina lien-agent notice, the $40,000 general threshold, liens upon funds, superior-court filing, and the 120-day and 180-day clocks.",
+      "words": 967
+    },
+    {
+      "path": "/mechanics-lien/ohio/",
+      "title": "Ohio Mechanics Lien Deadlines: 60, 75 or 120 Days?",
+      "description": "Understand Ohio mechanics lien deadlines, Notice of Commencement and Notice of Furnishing rules, affidavit contents, recording, service, and enforcement.",
+      "words": 1642
+    },
+    {
+      "path": "/mechanics-lien/texas/",
+      "title": "Texas Mechanics Lien Form & Monthly Notice Rules",
+      "description": "Prepare a Texas mechanics lien draft for $24.99. Review month-based affidavit deadlines, monthly notices, owner service, and separate retainage requirements.",
+      "words": 1337
+    },
+    {
+      "path": "/mechanics-lien/washington/",
+      "title": "Washington Mechanics Lien: 90-Day Filing and Notice Deadlines",
+      "description": "Understand Washington construction lien notices, the 90-day recording deadline, 14-day owner service, required claim contents, and eight-month enforcement period.",
+      "words": 1501
+    },
+    {
+      "path": "/mechanics-lien/form/",
+      "title": "Mechanics Lien Form Guide: Requirements, Filing and Deadlines",
+      "description": "Use a mechanics lien form correctly: identify the right state form, gather the required facts, avoid common defects, record it on time, and complete post-filing service.",
+      "words": 1837
+    },
+    {
+      "path": "/notice-to-owner/florida/",
+      "title": "Florida Notice to Owner Preparation Tool — $24.99",
+      "description": "Prepare a Florida Notice to Owner draft for $24.99. Review first-furnishing timing, recipients, statutory service, and the separate service-planning checklist.",
+      "words": 650
+    },
+    {
+      "path": "/preliminary-notice/california/",
+      "title": "California 20-Day Preliminary Notice: Service & Timing",
+      "description": "Check California preliminary notice recipients, the twenty-day lookback for late service, direct-contractor lender notice, and preparation and service records.",
+      "words": 675
+    },
+    {
+      "path": "/lien-waiver/conditional/",
+      "title": "Conditional Lien Waiver: Payment, Scope & State Forms",
+      "description": "Review conditional versus unconditional waivers, progress and final payments, reserved claims, and statutory forms in California, Texas, Florida, and Michigan.",
+      "words": 521
+    },
+    {
+      "path": "/notice-of-intent-to-lien/",
+      "title": "Notice of Intent to Lien: Required Notice or Payment Demand?",
+      "description": "Distinguish a statutory notice of intent from an optional collection letter. Plan Colorado notice lead time and avoid confusing preliminary notices with filing.",
+      "words": 560
+    },
+    {
+      "path": "/mechanics-lien/release/",
+      "title": "Mechanics Lien Release: Recorded Claim Discharge Checklist",
+      "description": "Learn how to identify and discharge a recorded mechanics lien after settlement. Compare full and partial releases, execution, filing, and payment waivers.",
+      "words": 587
+    },
+    {
+      "path": "/about/",
+      "title": "About MechanicsLienForm — Tools, Coverage & Limits",
+      "description": "Learn what MechanicsLienForm prepares, which states have paid tools, and what remains your responsibility before filing or serving a document.",
+      "words": 387
+    },
+    {
+      "path": "/contact/",
+      "title": "Contact LienForm",
+      "description": "Get in touch with the LienForm team. Questions about mechanics lien forms, filing deadlines, or the service.",
+      "words": 123
+    },
+    {
+      "path": "/privacy-policy/",
+      "title": "Privacy Policy — MechanicsLienForm",
+      "description": "How MechanicsLienForm uses browser storage, payment details, PDF email delivery, contact messages, hosting logs, and Google Analytics.",
+      "words": 385
+    },
+    {
+      "path": "/terms-of-service/",
+      "title": "Terms of Service — LienForm",
+      "description": "LienForm terms of service. Conditions of use for the mechanics lien generator.",
+      "words": 290
+    }
+  ],
+  "highestSimilarity": [
+    {
+      "a": "/",
+      "b": "/mechanics-lien/",
+      "jaccard": 0.176
+    },
+    {
+      "a": "/mechanics-lien/illinois/",
+      "b": "/mechanics-lien/north-carolina/",
+      "jaccard": 0.033
+    },
+    {
+      "a": "/mechanics-lien/florida/",
+      "b": "/mechanics-lien/illinois/",
+      "jaccard": 0.031
+    },
+    {
+      "a": "/mechanics-lien/florida/",
+      "b": "/mechanics-lien/north-carolina/",
+      "jaccard": 0.031
+    },
+    {
+      "a": "/mechanics-lien/colorado/",
+      "b": "/mechanics-lien/illinois/",
+      "jaccard": 0.03
+    },
+    {
+      "a": "/mechanics-lien/florida/",
+      "b": "/mechanics-lien/new-york/",
+      "jaccard": 0.03
+    },
+    {
+      "a": "/mechanics-lien/illinois/",
+      "b": "/mechanics-lien/new-york/",
+      "jaccard": 0.03
+    },
+    {
+      "a": "/mechanics-lien/new-york/",
+      "b": "/mechanics-lien/north-carolina/",
+      "jaccard": 0.03
+    },
+    {
+      "a": "/mechanics-lien/colorado/",
+      "b": "/mechanics-lien/florida/",
+      "jaccard": 0.029
+    },
+    {
+      "a": "/mechanics-lien/colorado/",
+      "b": "/mechanics-lien/new-york/",
+      "jaccard": 0.029
+    }
+  ]
+}

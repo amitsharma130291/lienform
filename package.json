@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "test:products": "node scripts/product-regression.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

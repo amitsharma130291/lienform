@@ -1,5 +1,20 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "astro"
+  "framework": "astro",
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": ".+\\.vercel\\.app" }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.mechanicslienform.com" }],
+      "destination": "https://mechanicslienform.com/:path*",
+      "permanent": true
+    }
+  ]
 }

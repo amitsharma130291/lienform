@@ -1,49 +1,12 @@
 ---
 import StatePage from '../../layouts/StatePage.astro';
 ---
-<StatePage title="Privacy Policy — LienForm" description="LienForm privacy policy. How we collect, use, and protect your information." canonical="https://mechanicslienform.com/privacy-policy/">
-  <div class="max-w-3xl mx-auto px-4 py-12 prose prose-lg">
-    <h1>Privacy Policy</h1>
-    <p class="text-gray-500 text-sm">Last updated: July 2026</p>
-
-    <h2>1. What We Collect</h2>
-    <p>When you use LienForm, we may collect the following information:</p>
-    <ul>
-      <li><strong>Form data you enter:</strong> Property address, owner name, contract amounts, dates, and other project details you type into the lien generator. This data is processed client-side in your browser to generate your PDF — it is not stored on our servers.</li>
-      <li><strong>Contact form submissions:</strong> Name, email address, and message content when you contact us through the Contact page.</li>
-      <li><strong>Usage data:</strong> Standard web server logs including IP address, browser type, pages visited, and time of access. This is collected automatically by our hosting provider (Vercel).</li>
-    </ul>
-
-    <h2>2. How We Use Your Information</h2>
-    <ul>
-      <li>To provide and improve the LienForm service</li>
-      <li>To respond to inquiries submitted through the contact form</li>
-      <li>To diagnose technical issues and monitor service performance</li>
-      <li>We do not sell, rent, or share your personal information with third parties for marketing purposes</li>
-    </ul>
-
-    <h2>3. PDF Generation</h2>
-    <p>All lien documents are generated entirely in your browser using client-side JavaScript (jsPDF). The project details you enter are not transmitted to or stored on LienForm servers. Your document data stays on your device.</p>
-
-    <h2>4. Cookies</h2>
-    <p>LienForm may use essential cookies required for the site to function. If analytics are added in the future, we will update this policy and provide opt-out options. We do not currently use advertising cookies.</p>
-
-    <h2>5. Third-Party Services</h2>
-    <ul>
-      <li><strong>Vercel:</strong> Our hosting provider. Vercel may collect standard access logs. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel's Privacy Policy</a>.</li>
-      <li><strong>Resend:</strong> Used to deliver contact form emails. Contact form data (name, email, message) is transmitted to Resend for delivery. See <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Resend's Privacy Policy</a>.</li>
-    </ul>
-
-    <h2>6. Data Retention</h2>
-    <p>Contact form submissions are retained only as long as necessary to respond to your inquiry. Server access logs are retained per Vercel's standard policies.</p>
-
-    <h2>7. Your Rights</h2>
-    <p>You may request deletion of any personal data we hold about you by contacting us at <a href="mailto:amitsharma00261@gmail.com">amitsharma00261@gmail.com</a>.</p>
-
-    <h2>8. Changes</h2>
-    <p>We may update this policy as the service evolves. Material changes will be noted with an updated date above.</p>
-
-    <h2>9. Contact</h2>
-    <p>Questions about this policy? <a href="/contact/">Contact us</a> or email <a href="mailto:amitsharma00261@gmail.com">amitsharma00261@gmail.com</a>.</p>
-  </div>
+<StatePage title="Privacy Policy — MechanicsLienForm" description="How MechanicsLienForm uses browser storage, payment details, PDF email delivery, contact messages, hosting logs, and Google Analytics." canonical="https://mechanicslienform.com/privacy-policy/">
+<article class="mx-auto max-w-4xl px-4 py-12 prose prose-lg">
+<h1>Privacy policy</h1><p>Updated September 18, 2026.</p><h2>Project information and browser storage</h2><p>The preparation tools collect project parties, addresses, amounts, dates, and other information you enter. PDF generation occurs in your browser. The site stores a pending order and its form data in browser local storage so it can generate your download after checkout. This information may remain on the device until cleared. Avoid shared devices for sensitive projects, and clear site storage when appropriate.</p>
+<h2>Checkout and email delivery</h2><p>The current checkout sends the selected product and email address to a server endpoint and uses Dodo Payments for hosted payment processing. Payment information is handled by that provider. Payment events may be logged for order handling and troubleshooting.</p><p>When PDF email delivery is requested by the download workflow, the generated PDF, recipient address, and delivery information are sent to our server. The server uses Gmail email delivery, and an administrative copy is sent to the service operator. Your document information therefore does not stay solely on your device. Delivery messages and attachments can remain in mailboxes.</p>
+<h2>Contact messages and service logs</h2><p>Contact submissions include the name, email, and message you provide and are delivered through Gmail. Hosting is provided by Vercel, which may process IP addresses, request details, and operational logs. We use messages and delivery records to answer inquiries, provide the service, and investigate failures.</p>
+<h2>Analytics and cookies</h2><p>The site loads Google Analytics 4 to measure site use, including page visits and browser interactions. Google Analytics may use cookies and device or browser information. Browser privacy controls and Google's analytics opt-out tools can limit collection. Hosted checkout has its own storage and cookie practices.</p>
+<h2>Service providers</h2><p>Relevant providers include <a href="https://vercel.com/legal/privacy-policy">Vercel</a>, <a href="https://policies.google.com/privacy">Google, including Gmail and Analytics</a>, and <a href="https://dodopayments.com/privacy-policy">Dodo Payments</a>. Consult their policies for their processing practices. We do not sell your project information.</p>
+<h2>Retention and requests</h2><p>Browser storage, email messages, payment records, and hosting logs have different retention mechanisms. We do not promise immediate automatic deletion or a fixed retention period. You can clear local site data in your browser and <a href="/contact/">contact us</a> to request access, correction, or deletion of information we hold, subject to applicable operational and recordkeeping needs.</p><h2>Policy changes</h2><p>We update this page when the described workflow changes. Questions can be sent through the <a href="/contact/">contact page</a> or to <a href="mailto:amitsharma00261@gmail.com">amitsharma00261@gmail.com</a>.</p></article>
 </StatePage>
