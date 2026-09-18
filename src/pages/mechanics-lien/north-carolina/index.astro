@@ -1,0 +1,43 @@
+---
+import StateGuide from '../../../layouts/StateGuide.astro';
+const faqs = [
+ { question: 'Where is a North Carolina real-property lien filed?', answer: 'With the clerk of superior court in the county where the property is located, rather than the register of deeds. Check additional counties when the improvement spans county lines.' },
+ { question: 'Is the North Carolina lien-agent threshold still $30,000?', answer: 'The current general threshold in section 44A-11.1 is $40,000. Exceptions and specialized provisions exist, including an existing owner-occupied single-family residence and incidental accessory work. Check the specific project.' },
+ { question: 'Does filing give me another 180 days to sue?', answer: 'No. The usual filing period is 120 days after last furnishing, and enforcement is 180 days after last furnishing. They run from the work, not sequentially from the filing date.' },
+];
+const sources = [
+ { title: 'G.S. 44A-11.1 — designation of lien agent', url: 'https://www3.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-11.1.html' },
+ { title: 'G.S. 44A-11.2 — notice to lien agent and priority', url: 'https://www3.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-11.2.html' },
+ { title: 'G.S. 44A-12 — filing and statutory claim form', url: 'https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-12.html' },
+ { title: 'G.S. 44A-13 — enforcement action', url: 'https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-13.html' },
+ { title: 'G.S. 44A-18 — liens upon funds', url: 'https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-18.html' },
+];
+---
+<StateGuide name="North Carolina" slug="north-carolina" title="North Carolina Mechanics Lien: 120/180-Day Deadlines" description="Check North Carolina lien-agent notice, the $40,000 general threshold, liens upon funds, superior-court filing, and the 120-day and 180-day clocks." heading="North Carolina mechanics lien: lien agents, court filing, and funds" summary="A North Carolina claim may involve early notice to a lien agent, a lien upon funds, and a claim against real property. The usual property-claim filing and enforcement limits are 120 and 180 days after last furnishing, respectively." faqs={faqs} sources={sources}>
+ <nav aria-label="On this page"><a href="#agent">Lien agent</a> · <a href="#funds">Liens upon funds</a> · <a href="#filing">Court filing</a> · <a href="#enforcement">Enforcement</a> · <a href="#faq">Questions</a></nav>
+ <p>North Carolina's Chapter 44A separates remedies that other states sometimes group together. Begin by drawing the contract chain: owner, prime contractor, each subcontractor, and your own business. Include who owes you money and who still holds project funds. That map helps determine which notice and claim routes require attention.</p>
+ <h2 id="agent">Find the lien agent early and verify the project threshold</h2>
+ <p>Section 44A-11.1 uses a current general $40,000 improvement threshold for owner designation of a lien agent. Exceptions include improvements to an existing owner-occupied single-family residence and incidental accessory work. Specialized provisions need separate analysis. Do not copy an older $30,000 threshold into a new project checklist.</p>
+ <p>Under section 44A-11.2, receipt of notice by the lien agent within 15 days after first furnishing is important to protection against later conveyances and security interests. Later receipt requires analysis of the statute's other conditions; it is not a universal extension. An agent notice is not the same as filing a matured real-property claim.</p>
+ <p>Ask for the designated agent's details at project intake. Record the notice contents, date received, delivery confirmation, and project identifier. Reconcile them with the property and contract information. For a lengthy project, also check the statute's notice expiration and renewal provisions rather than assuming an early notice remains effective indefinitely.</p>
+ <h2 id="funds">Subcontractors should distinguish money owed from land security</h2>
+ <p>Section 44A-18 provides liens upon funds owed through the contracting chain, with tier-specific rules. These can interact with real-property rights through subrogation. A lower-tier supplier should not simply substitute its name into a direct-contractor property claim and assume the same rights.</p>
+ <p>Build a funds worksheet showing the party you contracted with, the party above it, outstanding invoices, and known payment events. Preserve payment applications and correspondence identifying where funds sit. An attorney can assess the correct recipients, statutory notice of claim upon funds, and the effect of payments made after receipt.</p>
+ <p>A general <a href="/notice-of-intent-to-lien/">notice of intent to lien</a> may support collection conversations, but it does not automatically satisfy a lien-agent notice or a notice of claim upon funds. Label each document by its purpose so the collection file does not hide an uncompleted statutory step.</p>
+ <h2 id="filing">File the property claim with the clerk of superior court</h2>
+ <p>Section 44A-12 ordinarily requires a real-property claim within 120 days after last furnishing at the improvement. Filing is with the clerk of superior court in the property county, not the register of deeds. The statute supplies a claim format identifying parties, property, contracting information, furnishing dates, and the claimed amount.</p>
+ <ol>
+  <li>Confirm your statutory route from the contract chain and notice records.</li>
+  <li>Obtain a reliable property description and current record-owner information.</li>
+  <li>Reconcile the claimed balance and preserve supporting invoices and credits.</li>
+  <li>Use the statutory form and verify current clerk submission requirements.</li>
+  <li>Keep filing evidence and check the claim's service requirements.</li>
+ </ol>
+ <p>The <a href="/mechanics-lien/form/">form preparation guide</a> can help assemble evidence, but a generic county-recorder instruction is unsuitable here. Ask the court clerk about administrative submission procedures and fees; obtain legal advice about eligibility, tier rights, and contested dates.</p>
+ <h2 id="enforcement">The 180-day enforcement clock does not restart at filing</h2>
+ <p>Section 44A-13 generally requires an enforcement action within 180 days after last furnishing. Filing on day 120 therefore does not create a fresh 180-day period. Counsel should also review lis pendens and county-specific requirements for protecting the pending action.</p>
+ <p>Keep separate entries for first furnishing, last furnishing, agent-notice receipt, claim filing, and enforcement. Review the file while enough time remains to correct information and arrange representation. Waiting for a slow payment negotiation should not become the default deadline strategy.</p>
+ <h2>Close the claim and compare neighboring workflows</h2>
+ <p>After payment, distinguish a <a href="/lien-waiver/conditional/">payment waiver</a> from a <a href="/mechanics-lien/release/">discharge of a filed claim</a>. Link settlement records to the exact court filing and retain the final acknowledgment.</p>
+ <p><a href="/mechanics-lien/florida/">Florida</a> uses a different early owner-notice process, while <a href="/mechanics-lien/new-york/">New York</a> generally measures recording in calendar months. Neither is a substitute for this court-filing framework. Return to the <a href="/mechanics-lien/">state directory</a> for other property locations.</p>
+</StateGuide>

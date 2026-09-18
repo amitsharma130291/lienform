@@ -61,6 +61,7 @@ export const COUNTY_CONTACTS: Record<string, Record<string, CountyContact>> = {
  *   show `deadlineCaveat` instead.
  */
 export type DeadlineRule =
+  | { kind: 'daysFromFirstFurnishing'; days: number }
   | { kind: 'daysFromLastFurnishing'; days: number }
   | { kind: 'projectTypeDaysFromLastFurnishing'; residentialDays: number; commercialDays: number }
   | { kind: 'texasMonthDay15'; residentialMonths: number; commercialMonths: number }
@@ -348,7 +349,7 @@ export const STATE_LIEN_RULES: Record<string, StateLienRule> = {
 1. A Notice to Owner (NTO) must be served on the property owner within 45 days of first furnishing.
 2. File the lien with the Clerk of the Circuit Court.
 3. After filing a lien, a lawsuit to enforce must be filed within 1 year.`,
-    deadlineRule: { kind: 'daysFromLastFurnishing', days: 45 },
+    deadlineRule: { kind: 'daysFromFirstFurnishing', days: 45 },
     recordingOfficeTerm: 'Clerk of the Circuit Court',
     enforcement: { deadlineText: 'within 1 year after recording the lien' },
     needsPreliminaryNoticeBundleItem: true,
@@ -504,10 +505,14 @@ export function addDays(date: Date, days: number): Date {
  */
 export function computeLienDeadline(
   rule: DeadlineRule,
-  params: { lastFurnishingDate: string; role: string; projectType?: ProjectType }
+  params: { lastFurnishingDate: string; firstFurnishingDate?: string; role: string; projectType?: ProjectType }
 ): Date | null {
   const { lastFurnishingDate, role, projectType = 'residential' } = params;
   if (rule.kind === 'notComputable') return null;
+  if (rule.kind === 'daysFromFirstFurnishing') {
+    const first = parseLocalDate(params.firstFurnishingDate || '');
+    return first ? addDays(first, rule.days) : null;
+  }
 
   const last = parseLocalDate(lastFurnishingDate);
   if (!last) return null;

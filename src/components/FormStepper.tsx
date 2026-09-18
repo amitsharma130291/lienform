@@ -119,7 +119,8 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     if (!formData.county?.trim()) e.county = 'Required.';
     if (!formData.contractAmount?.trim()) e.contractAmount = 'Required.';
     if (!formData.firstFurnishingDate?.trim()) e.firstFurnishingDate = 'Required.';
-    if (!formData.lastFurnishingDate?.trim()) e.lastFurnishingDate = 'Required.';
+    if (documentType !== 'notice-to-owner' && !formData.lastFurnishingDate?.trim()) e.lastFurnishingDate = 'Required.';
+    if (documentType === 'notice-to-owner' && !formData.ownerAddress?.trim()) e.ownerAddress = 'Complete the owner service address.';
     if (!formData.email?.trim()) e.email = 'Required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Invalid email.';
 
@@ -195,6 +196,12 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
    */
   const advisories: string[] = (() => {
     const out: string[] = [];
+    if (documentType === 'notice-to-owner') {
+      const limit = computeLienDeadline(STATE_LIEN_RULES.florida.deadlineRule, { lastFurnishingDate: '', firstFurnishingDate: formData.firstFurnishingDate || '', role: formData.role || '' });
+      out.push('The Notice to Owner must also precede the applicable final owner disbursement. Verify recipients and statutory service; this calculator checks only the 45-day first-furnishing period.');
+      if (limit && daysBetween(new Date(), limit) <= 7) out.push('Your calculated notice period is close or has passed. Obtain Florida legal advice promptly; late notice does not automatically preserve future work.');
+      return out;
+    }
     const completion = parseLocalDate(formData.projectCompletionDate || '');
     const last = parseLocalDate(formData.lastFurnishingDate || '');
     if (completion && last && completion.getTime() < last.getTime()) {
@@ -211,6 +218,7 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
     const deadlineRule = stateRule?.deadlineRule;
     const deadline = deadlineRule ? computeLienDeadline(deadlineRule, {
       lastFurnishingDate: formData.lastFurnishingDate || '',
+      firstFurnishingDate: formData.firstFurnishingDate,
       role: formData.role || '',
       projectType: formData.projectType === 'commercial' ? 'commercial' : 'residential',
     }) : null;
@@ -243,12 +251,12 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
         <label className="block text-sm font-medium text-slate-700 mb-1">Project State <span className="text-red-500">*</span></label>
         <select className="block w-full px-4 py-2.5 rounded-lg border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-600 text-sm bg-white" value={formData.state || ''} onChange={(e) => update('state', e.target.value)}>
           <option value="" disabled>Select a state...</option>
-          {US_STATES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+          {US_STATES.filter(s => documentType === 'notice-to-owner' ? s.value === 'florida' : s.value !== 'florida').map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
         </select>
       </div>
       <div className="mt-4 p-4 bg-navy-50 rounded-lg border border-navy-100">
         <p className="text-xs text-navy-700 font-medium">Document type: <span className="capitalize">{documentType.replace(/-/g, ' ')}</span></p>
-        <p className="text-xs text-slate-500 mt-1">We'll generate the correct form for your state's requirements.</p>
+        <p className="text-xs text-slate-500 mt-1">Preview your details and review the draft against statutory and local requirements before use.</p>
       </div>
     </div>
   );
@@ -550,11 +558,11 @@ export default function FormStepper({ defaultState = '', documentType = 'mechani
             <input type="date" className={fieldClass('firstFurnishingDate')} value={formData.firstFurnishingDate || ''} onChange={(e) => update('firstFurnishingDate', e.target.value)} />
             <FieldError field="firstFurnishingDate" />
           </div>
-          <div>
+          {documentType !== 'notice-to-owner' && <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Last Furnishing Date <span className="text-red-500">*</span></label>
             <input type="date" className={fieldClass('lastFurnishingDate')} value={formData.lastFurnishingDate || ''} onChange={(e) => update('lastFurnishingDate', e.target.value)} />
             <FieldError field="lastFurnishingDate" />
-          </div>
+          </div>}
         </div>
 
         {/* Prepared By — only needed when someone other than the claimant drafted this document */}

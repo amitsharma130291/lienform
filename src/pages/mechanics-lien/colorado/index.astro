@@ -1,0 +1,41 @@
+---
+import StateGuide from '../../../layouts/StateGuide.astro';
+const faqs = [
+ { question: 'Must I send notice before recording a Colorado mechanics lien?', answer: 'Section 38-22-109(3) requires notice of intent at least ten days before filing the lien statement, served on the owner or reputed owner and the principal contractor or agent. Service proof accompanies the recorded statement.' },
+ { question: 'Does every Colorado claimant have four months?', answer: 'No. Most claims use four months after last furnishing under section 38-22-109(5). The labor-by-day-or-piece category has a separate two-month period after completion under subsection (4). Other provisions can affect protection or timing.' },
+ { question: 'Does recording start a fresh six-month lawsuit clock?', answer: 'No. Section 38-22-110 ties enforcement to the relevant work or completion event, not simply recording. Both commencement of the action and recording notice of the action require timely attention.' },
+];
+const sources = [
+ { title: 'Colorado Revised Statutes, Title 38, Article 22 — sections 109, 110, and 125 (2025 compilation)', url: 'https://olls.info/crs/crs2025-title-38.htm' },
+ { title: 'Colorado Court of Appeals, Galiant v. Denver — lien timing discussion (2025)', url: 'https://www.coloradojudicial.gov/system/files/opinions-2025-01/23CA1649-PD%20.pdf' },
+];
+---
+<StateGuide name="Colorado" slug="colorado" title="Colorado Mechanics Lien: 10-Day Notice & Filing Rules" description="Plan Colorado's ten-day notice of intent, verified lien statement, four-month general filing rule, labor exception, and separate enforcement tasks." heading="Colorado mechanics lien: give notice before recording" summary="Colorado's required notice of intent creates a lead-time requirement before filing. Most claimants use a four-month last-furnishing period, but labor-only categories and separate enforcement rules make a single countdown insufficient." faqs={faqs} sources={sources}>
+ <nav aria-label="On this page"><a href="#notice">Ten-day notice</a> · <a href="#timing">Filing period</a> · <a href="#statement">Statement checklist</a> · <a href="#planning">Planning worksheet</a> · <a href="#faq">Questions</a></nav>
+ <p>A Colorado private-project lien file should begin with a contract map and a notice plan. Identify the property owner, principal contractor, party that hired you, type of furnishing, and evidence of the last work. Those facts determine the route; a collection letter and a recording receipt answer only part of the problem.</p>
+ <h2 id="notice">Give the statutory notice of intent before the lien statement</h2>
+ <p>Section 38-22-109 requires notice to the owner or reputed owner and principal contractor or agent at least ten days before filing. It provides personal-service or certified-mail procedures; attach proof of service to the recorded statement. Most claimants have four months after last furnishing, while laborers by day or piece have a two-month completion-based rule. Section 38-22-110 separately requires timely enforcement and recorded notice of the action within its six-month framework. Residential purchaser protections can also affect recovery.</p>
+ <p>The <a href="/notice-of-intent-to-lien/">notice of intent guide</a> explains the distinction between statutory service and an optional payment demand. For Colorado, plan this step before the recording window becomes tight. Keep a copy of the notice, recipient details, mailing or service evidence, and the statement intended for filing together.</p>
+ <p>Do not assume a text message to a site superintendent completes legal service. Check the statute's recipient and method requirements. If an address or recipient is uncertain, resolve it early enough to allow proper service and the required waiting period.</p>
+ <h2 id="timing">Classify the claim before choosing a recording date</h2>
+ <p>The four-month general rule and the labor category use different triggering events. Ask whether you supplied materials, furnished other labor, or personally worked by day or piece. Capture the relevant completion information alongside your own furnishing log. If the project is unfinished, or a statutory extension notice is being considered, obtain a specific legal review.</p>
+ <p>Calendar months are not a fixed 120-day interval. Also distinguish original contract work from later warranty visits, corrections, and disputed extras. Do not assume that returning to the property resets an expired period. Preserve the scope and date of each visit so counsel can assess it.</p>
+ <p>A property sale adds another question: the residential purchaser protections in section 38-22-125 should be reviewed independently of the general filing date. Ask about a planned closing at intake and during collection rather than discovering it from a rejected settlement proposal.</p>
+ <h2 id="statement">Prepare the verified statement and a complete evidence file</h2>
+ <p>Read the statement-content provisions in section 38-22-109 alongside the <a href="/mechanics-lien/form/">mechanics lien form checklist</a>. Organize the claimant, owner, contractor, property description, claimed balance, verification, and required service proof. Ask the county clerk and recorder for administrative formatting and fee requirements.</p>
+ <p>Create a ledger that connects each unpaid charge with the agreement or authorized change supporting it. Record payments and credits on the same sheet. Keep disputed collection costs separate until their lienability has been reviewed. A clear ledger is useful even if negotiations resolve the matter before filing.</p>
+ <ol>
+  <li>Match the property description with reliable ownership records.</li>
+  <li>Confirm the claimant's correct legal business name.</li>
+  <li>Check notice recipients and preserve proof of statutory service.</li>
+  <li>Complete the verification and county submission requirements.</li>
+  <li>Keep the recorded statement and instrument information in the claim file.</li>
+ </ol>
+ <h2 id="planning">Use a worksheet with separate notice and enforcement tasks</h2>
+ <p>Work backward from a verified recording limit to leave time for service, the ten-day lead period, county processing, and corrections. This is a planning buffer, not an extension of a statutory deadline. Schedule legal review before the buffer disappears.</p>
+ <p>After recording, assign the enforcement review to a named person. Include both the lawsuit and the notice of that lawsuit on the task list. A recorded claim does not keep itself alive while the claimant waits for an owner's promised payment.</p>
+ <p>Keep a log of incoming documents, recipient changes, and settlement offers. If a lender, buyer, owner, or contractor challenges the claim, save the entire communication and get timely advice about its effect. This gives the reviewer a usable record rather than a summary reconstructed months later.</p>
+ <h2>Resolve payment and use the right state guide</h2>
+ <p>Review <a href="/lien-waiver/conditional/">conditional waivers</a> before exchanging payment documents, and follow the <a href="/mechanics-lien/release/">release checklist</a> for an already recorded claim. Match the discharge to its recording number and preserve evidence of cleared funds.</p>
+ <p><a href="/mechanics-lien/illinois/">Illinois</a> also uses a four-month concept, but for a different statutory purpose. <a href="/mechanics-lien/arizona/">Arizona</a> uses project-completion triggers. Select the property state from the <a href="/mechanics-lien/">directory</a> rather than reusing a neighboring state's timeline.</p>
+</StateGuide>

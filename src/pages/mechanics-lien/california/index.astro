@@ -2,63 +2,9 @@
 import StatePage from '../../../layouts/StatePage.astro';
 import LienFormApp from '../../../components/LienFormApp';
 
-const title = "California Mechanics Lien Form 2024 — Civil Code §8000 Generator (Not §3082)";
+const title = "California Mechanics Lien Form & Completion Deadlines";
 const description = "Generate a California mechanics lien under Civil Code §8000–9566 (SB 189, 2019). 20-day Preliminary Notice auto-included for subs. Instant PDF bundle, $24.99.";
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What California Civil Code governs mechanics liens?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "California mechanics liens are governed by Civil Code §8000–9566, enacted by SB 189 (effective July 1, 2012). The previous statute (§3082–3267) was repealed. Any form citing §3082 is outdated."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need a Preliminary Notice before filing a California mechanics lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, if you are a subcontractor, material supplier, or anyone without a direct contract with the owner. You must serve a 20-day Preliminary Notice (Civ. Code §8200) within 20 days of first furnishing. Without it, your lien rights are limited to work done in the 20 days before you served it."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the deadline to file a California mechanics lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It depends on your role and whether the owner recorded a Notice of Completion or Cessation — it does not run from your own last day of work. Direct contractors get the earlier of 90 days after completion of the whole project, or 60 days after a properly served Notice of Completion. Subcontractors and suppliers get 90 days after completion by default, shortened to 30 days after a properly served Notice of Completion. Because this depends on project-level completion and Notice of Completion status rather than your own furnishing date, verify the exact date against county records or with an attorney."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where do I record a California mechanics lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "With the county recorder in the county where the property is located. Recording fees are approximately $15–$25 per page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need to serve the owner after recording a California mechanics lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Under Civ. Code §8416, you must serve a copy of the claim of mechanics lien on the owner (or, if the owner cannot be served, the construction lender or original contractor) no later than the time you record it — not a fixed number of days afterward. Service may be personal, or by registered, certified, or first-class mail with a certificate of mailing. Failure to serve as required makes the lien unenforceable."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is a 20-day Preliminary Notice the same as a mechanics lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. The 20-day Preliminary Notice (§8200) is a prerequisite for filing a lien — it must be served within 20 days of starting work. The mechanics lien (§8410) is filed later if payment is not received."
-      }
-    }
-  ]
-};
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -93,7 +39,7 @@ const breadcrumbSchema = {
   ]
 };
 
-const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
+const schema = JSON.stringify([howToSchema, breadcrumbSchema]);
 ---
 
 <StatePage title={title} description={description} canonical="https://mechanicslienform.com/mechanics-lien/california/" schema={schema}>
@@ -144,6 +90,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p class="text-navy-800 font-medium">A California mechanics lien is a legal claim against real property under <strong>Civil Code §8000–9566 (SB 189)</strong>. Note: the old §3082 statute is <strong>repealed</strong> — any form citing §3082 is outdated. Subcontractors and material suppliers must first serve a 20-Day Preliminary Notice (§8200) within 20 days of first furnishing before filing a lien.</p>
     </div>
 
+    <div id="generator"></div>
     <LienFormApp
       client:load
       defaultState="california"
@@ -178,26 +125,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p><strong>Structure of the current statute:</strong></p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Code Section</th>
-            <th>Subject</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>§8000–8048</td><td>Definitions</td></tr>
-          <tr><td>§8100–8132</td><td>Preliminary Notice requirements</td></tr>
-          <tr><td>§8170–8190</td><td>Stop Payment Notice</td></tr>
-          <tr><td>§8200–8216</td><td>20-day Preliminary Notice (for claimants not in privity with owner)</td></tr>
-          <tr><td>§8300–8320</td><td>Completion of work of improvement</td></tr>
-          <tr><td>§8400–8424</td><td>Mechanics lien claims</td></tr>
-          <tr><td>§8410–8414</td><td>Claim of lien form requirements</td></tr>
-          <tr><td>§8416</td><td>Claim of lien form and service on owner (no later than the time of recording — not a fixed post-recording window)</td></tr>
-          <tr><td>§8460–8470</td><td>Enforcement (foreclosure)</td></tr>
-          <tr><td>§8480–8494</td><td>Release, expiration, and discharge</td></tr>
-        </tbody>
-      </table>
+      <p>Use sections 8200–8216 for private-project preliminary notices, 8412–8414 for completion-based recording periods, 8416 for claim contents and owner service, 8460 for enforcement, and 8480 onward for expired-lien proceedings. General notice requirements begin at section 8100.</p>
 
       <h2>20-Day Preliminary Notice — Required for Subs and Suppliers</h2>
 
@@ -216,7 +144,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p><strong>Who is exempt:</strong></p>
 
       <ul>
-        <li>Direct contractors (those with a direct written contract with the owner) — they do not need to serve a 20-day Preliminary Notice</li>
+        <li>Laborers are exempt. Direct owner-contract claimants still give preliminary notice to the construction lender or reputed construction lender, if any, under section 8200(e).</li>
       </ul>
 
       <p><strong>The 20-day rule:</strong> The Preliminary Notice must be served within <strong>20 days of first furnishing</strong> labor, materials, or equipment to the project. "First furnishing" means the very first day you provided anything to the project.</p>
@@ -283,7 +211,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
         <li>Claimant's signature and date</li>
       </ol>
 
-      <p><strong>The "Notice of Mechanic's Lien" warning:</strong> California law requires that every recorded lien include a statutory warning block at the top of the document advising the owner of the lien and the 90-day foreclosure deadline. Civ. Code §8416 specifies the exact language. LienForm generates this warning automatically.</p>
+      <p><strong>The "Notice of Mechanic's Lien" warning:</strong> California law requires that every recorded lien include a statutory warning block at the top of the document advising the owner of the lien and the 90-day foreclosure deadline. Civ. Code §8416 specifies the exact language. Review the downloaded draft and add or verify the full statutory warning and service declaration before recording; the preparation tool does not establish legal sufficiency.</p>
 
       <p><strong>Serving the owner — no later than the time of recording (Civ. Code §8416):</strong></p>
 
@@ -296,7 +224,7 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
       <p>For California subcontractors and suppliers, the $24.99 bundle automatically includes:</p>
 
       <ul>
-        <li><strong>Claim of Lien</strong> (Civ. Code §8410 compliant, with required statutory warning)</li>
+        <li><strong>Claim of Lien</strong> (draft; verify required statutory warning and service declaration)</li>
         <li><strong>20-day Preliminary Notice</strong> (§8200) — auto-included for non-owner-contract claimants</li>
         <li><strong>Deadline confirmation</strong> covering the direct-contractor and subcontractor/supplier rules (California's deadline depends on project completion and Notice of Completion status, so this isn't an automatic countdown)</li>
         <li><strong>County recorder filing instructions</strong> for your specific county</li>
@@ -310,59 +238,19 @@ const schema = JSON.stringify([faqSchema, howToSchema, breadcrumbSchema]);
 
       <p>A California mechanics lien must be recorded with the county recorder in the county where the property is located:</p>
 
-      <table>
-        <thead>
-          <tr>
-            <th>County</th>
-            <th>Recorder Office</th>
-            <th>Recording Fee (approx.)</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Los Angeles</td>
-            <td>12400 Imperial Hwy., Norwalk</td>
-            <td>$15–$25/page</td>
-            <td>Also accepts e-recording via third-party services</td>
-          </tr>
-          <tr>
-            <td>San Francisco</td>
-            <td>City Hall, Room 190</td>
-            <td>$15–$25/page</td>
-            <td>City and County combined</td>
-          </tr>
-          <tr>
-            <td>San Diego</td>
-            <td>1600 Pacific Hwy., San Diego</td>
-            <td>$15–$25/page</td>
-            <td>E-recording available</td>
-          </tr>
-          <tr>
-            <td>Orange</td>
-            <td>630 N. Broadway, Santa Ana</td>
-            <td>$15–$25/page</td>
-            <td>E-recording available</td>
-          </tr>
-          <tr>
-            <td>Riverside</td>
-            <td>2720 Gateway Dr., Riverside</td>
-            <td>$15–$25/page</td>
-            <td>Call ahead for current fees</td>
-          </tr>
-        </tbody>
-      </table>
+      <p>Check the property county recorder directly for current fees, addresses, electronic submission options, and formatting. Fees and office details change; no fixed fee estimate is provided here.</p>
 
-      <p>Recording fees in California are set by state law and charged per page. As of 2024, the base recording fee is approximately $15 for the first page and $3 per additional page, though some counties charge slightly more. Contact the specific county recorder or check their website to confirm current fees.</p>
+      <p>Check the property county recorder for the current fee schedule, applicable document surcharges, formatting, and submission procedure. Recording and mailing costs are separate from the preparation fee.</p>
 
-      <p><strong>Generate Your California Mechanics Lien — $24.99:</strong> For subcontractors and suppliers: Includes Preliminary Notice automatically · Claim of Lien (Civ. Code §8000 compliant, not the repealed §3082) · Deadline confirmation · County recorder guide · Proof of service affidavit · Lien release</p>
+      <p><strong>Generate Your California Mechanics Lien — $24.99:</strong> For subcontractors and suppliers: Includes Preliminary Notice automatically · Claim of Lien (draft; verify statutory contents before recording) · Deadline confirmation · County recorder guide · Proof of service affidavit · Lien release</p>
 
       <p>No account required. Instant download.</p>
 
       <p><em>Content reviewed for accuracy against California Civil Code §8000–9566 (SB 189, effective July 1, 2012). References to the repealed §3082–3267 scheme are not used. This is not legal advice. Consult a licensed California attorney for advice specific to your situation.</em></p>
 
-      <p>Filing on a different property? See <a href="/mechanics-lien/arizona/">Arizona</a> for a neighboring state that uses a different completion-based deadline, or the guides for <a href="/mechanics-lien/michigan/">Michigan</a>, <a href="/mechanics-lien/texas/">Texas</a>, <a href="/mechanics-lien/georgia/">Georgia</a>, <a href="/mechanics-lien/ohio/">Ohio</a>, and <a href="/mechanics-lien/washington/">Washington</a>. California's own <a href="/preliminary-notice/california/">preliminary notice</a> and <a href="/20-day-preliminary-notice/california/">20-day notice</a> guides cover the pre-lien step in more depth.</p>
+      <p>Filing on a different property? See <a href="/mechanics-lien/arizona/">Arizona</a> for a neighboring state that uses a different completion-based deadline, or the guides for <a href="/mechanics-lien/michigan/">Michigan</a>, <a href="/mechanics-lien/texas/">Texas</a>, <a href="/mechanics-lien/georgia/">Georgia</a>, <a href="/mechanics-lien/ohio/">Ohio</a>, and <a href="/mechanics-lien/washington/">Washington</a>. California's own <a href="/preliminary-notice/california/">preliminary notice</a> guide covers the pre-lien step in more depth.</p>
 
     </div>
   </div>
+<p class="mx-auto max-w-4xl px-4">Compare another property-state workflow: <a class="underline" href="/mechanics-lien/new-york/">New York calendar-month and service-proof rules</a>.</p>
 </StatePage>

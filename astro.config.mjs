@@ -7,5 +7,10 @@ export default defineConfig({
   output: 'hybrid',
   adapter: vercel(),
   integrations: [tailwind(), react()],
-  site: 'https://lienform.com',
+  site: 'https://mechanicslienform.com',
+  // Vercel normalizes HTML URLs; accept extension-bearing endpoints without a slash.
+  trailingSlash: 'ignore',
+  redirects: {
+    '/20-day-preliminary-notice/california/': { status: 301, destination: '/preliminary-notice/california/' },
+  },
 });

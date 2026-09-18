@@ -1,0 +1,6 @@
+---
+import { statePages } from '../data/sitePages';
+---
+<div class="not-prose grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+ {statePages.map(s => <a href={`/mechanics-lien/${s.slug}/`} class="rounded-xl border border-slate-200 p-5 hover:border-navy-600 hover:bg-navy-50"><span class="block text-xl font-bold text-navy-900">{s.name}</span><span class="my-2 block text-sm text-slate-600">{s.topic}</span><span class="text-sm font-semibold text-navy-700">{s.generator ? 'Guide + paid preparation tool' : 'State filing guide'}</span></a>)}
+</div>
